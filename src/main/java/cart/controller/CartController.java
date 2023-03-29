@@ -36,7 +36,7 @@ public class CartController {
         throws AccessDeniedException {
         AuthInfo authInfo = authService.checkBasicAuth(Authorization);
         return ResponseEntity.ok()
-            .body(cartService.cart(authInfo.getEmail(), authInfo.getPassword()).getCarts());
+            .body(cartService.list(authInfo.getEmail(), authInfo.getPassword()).getCarts());
     }
 
     @PostMapping(value = "/cart/add/{productId}")
