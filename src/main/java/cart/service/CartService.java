@@ -21,7 +21,7 @@ public class CartService {
         return cartDAO.insertCart(cart);
     }
 
-    public Carts cart(String email, String password) {
+    public Carts list(String email, String password) {
         return cartDAO.list(email, password);
     }
 

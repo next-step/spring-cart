@@ -1,6 +1,7 @@
 package cart.infrastructure;
 
 import cart.dto.AuthInfo;
+import java.nio.file.AccessDeniedException;
 import javax.servlet.http.HttpServletRequest;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -14,11 +15,9 @@ public class BasicAuthorizationExtractor implements AuthorizationExtractor<AuthI
     private static final Logger logger = LogManager.getLogger(BasicAuthorizationExtractor.class);
 
     @Override
-    public AuthInfo extract(HttpServletRequest request) {
-        String header = request.getHeader(AUTHORIZATION);
-
+    public AuthInfo extract(String header) throws AccessDeniedException {
         if (header == null) {
-            return null;
+            throw new AccessDeniedException("인증 정보가 존재하지 않습니다.");
         }
 
         if ((header.toLowerCase().startsWith(BASIC_TYPE.toLowerCase()))) {

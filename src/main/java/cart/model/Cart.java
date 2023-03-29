@@ -11,9 +11,7 @@ public class Cart {
     private int price;
 
     public Cart(String email, String password, int productId) {
-        this.email = email;
-        this.password = password;
-        this.productId = productId;
+        this(email, password, productId, "", "", 0);
     }
 
     public Cart(String email, String password, int productId, String name, String image,
@@ -36,10 +34,6 @@ public class Cart {
 
     public int getProductId() {
         return productId;
-    }
-
-    public String getName() {
-        return name;
     }
 
     public String getImage() {

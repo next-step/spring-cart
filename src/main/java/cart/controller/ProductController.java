@@ -12,7 +12,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
-@RequestMapping("/product")
 public class ProductController {
 
     private final ProductService productService;
@@ -21,23 +20,23 @@ public class ProductController {
         this.productService = productService;
     }
 
-    @PostMapping("/create")
+    @PostMapping("/product/create")
     public ResponseEntity<Integer> create(@RequestBody Product product) {
         return ResponseEntity.ok().body(productService.insert(product));
     }
 
-    @PostMapping("/{id}")
+    @PostMapping("/product/{id}")
     public ResponseEntity<Product> create(@PathVariable int id) {
         return ResponseEntity.ok().body(productService.product(id));
     }
 
-    @PostMapping("/update")
+    @PostMapping("/product/update")
     public ResponseEntity<Integer> update(@RequestBody Product product) {
         System.out.println(product.getId());
         return ResponseEntity.ok().body(productService.update(product));
     }
 
-    @GetMapping("/delete/{id}")
+    @GetMapping("/product/delete/{id}")
     public ResponseEntity<Integer> delete(@PathVariable int id) {
         return ResponseEntity.ok().body(productService.delete(id));
     }
