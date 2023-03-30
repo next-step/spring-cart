@@ -31,7 +31,7 @@ public class ProductService {
         System.out.println("### productList");
         List<Product> result = productDAO.selectProducts();
         System.out.println(result.toString());
-        return productDAO.selectProducts();
+        return result;
     }
 
 
