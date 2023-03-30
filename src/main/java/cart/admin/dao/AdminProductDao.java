@@ -24,21 +24,21 @@ public class AdminProductDao {
 
         this.insertProduct = new SimpleJdbcInsert(dataSource)
                 .withTableName("product_list")
-                .usingGeneratedKeyColumns("product_id")
-                .usingColumns("product_name","product_path","product_price");
+                .usingGeneratedKeyColumns("id")
+                .usingColumns("name", "image_url", "price");
     }
 
-    public Product insertProduct(Product product){
+    public Product insertProduct(Product product) {
 
         Map<String, Object> parameters = new HashMap<String, Object>(3);
 
-        parameters.put("product_name", product.getProductName());
-        parameters.put("product_path", product.getProductPath());
-        parameters.put("product_price",product.getProductPrice());
+        parameters.put("name", product.getName());
+        parameters.put("image_url", product.getImageUrl());
+        parameters.put("price", product.getPrice());
 
         int productId = insertProduct.executeAndReturnKey(parameters).intValue();
 
-        return new Product(productId, product.getProductName(), product.getProductPath(), product.getProductPrice());
+        return new Product(productId, product.getName(), product.getImageUrl(), product.getPrice());
     }
 
     /*
@@ -50,36 +50,36 @@ public class AdminProductDao {
     */
 
     public List<Product> selectProducts() {
-        String sql = "select product_id,product_name,product_path,product_price,created_at from product_list";
+        String sql = "select id,name,image_url,price,created_at from product_list";
         return jdbcTemplate.query(
                 sql,
                 (resultSet, rowNum) -> {
                     Product prodouct = new Product(
-                            resultSet.getInt( "product_id"),
-                            resultSet.getString("product_name"),
-                            resultSet.getString("product_path"),
-                            resultSet.getInt("product_price")
+                            resultSet.getInt("id"),
+                            resultSet.getString("name"),
+                            resultSet.getString("image_url"),
+                            resultSet.getInt("price")
                     );
                     return prodouct;
                 });
     }
 
-    public Product selectOneProduct( int productId ) {
-        String sql = "select product_id,product_name,product_path,product_price from product_list where product_id = ?";
+    public Product selectOneProduct(int id) {
+        String sql = "select id,name, image_url,price from product_list where id = ?";
 
         try {
             return jdbcTemplate.queryForObject(
                     sql,
                     (resultSet, rowNum) -> {
                         Product product = new Product(
-                                resultSet.getInt("product_id"),
-                                resultSet.getString("product_name"),
-                                resultSet.getString("product_path"),
-                                resultSet.getInt("product_price")
+                                resultSet.getInt("id"),
+                                resultSet.getString("name"),
+                                resultSet.getString("image_url"),
+                                resultSet.getInt("price")
                         );
                         return product;
-                    }, productId);
-        }catch (EmptyResultDataAccessException e){
+                    }, id);
+        } catch (EmptyResultDataAccessException e) {
 
             return null;
         }
@@ -87,12 +87,12 @@ public class AdminProductDao {
     }
 
     public void updateProduct(Product insertProduct) {
-        String sql = "update product_list set product_name=?, product_path = ?, product_price = ? where product_id = ?";
-        jdbcTemplate.update(sql, insertProduct.getProductName(), insertProduct.getProductPath(), insertProduct.getProductPrice(), insertProduct.getProductId());
+        String sql = "update product_list set name=?, image_url = ?, price = ? where id = ?";
+        jdbcTemplate.update(sql, insertProduct.getName(), insertProduct.getImageUrl(), insertProduct.getPrice(), insertProduct.getId());
     }
 
-    public void deleteProdect(int productId ) {
-        String sql = "delete from product_list where product_id = ?";
-        jdbcTemplate.update(sql, productId);
+    public void deleteProdect(int id) {
+        String sql = "delete from product_list where id = ?";
+        jdbcTemplate.update(sql, id);
     }
 }

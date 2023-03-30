@@ -2,49 +2,54 @@ package cart.admin.domain;
 
 public class Product {
 
-    private Integer productId;
-    private String productName;
-    private String productPath;
-    private Integer productPrice;
+    private Integer id;
+    private String name;
+    private String imageUrl;
+    private Integer price;
 
-    public Product(Integer productId, String productName, String productPath, Integer productPrice) {
-        this.productId = productId;
-        this.productName = productName;
-        this.productPath = productPath;
-        this.productPrice = productPrice;
+    public Product(Integer id, String name, String imageUrl, Integer price) {
+        this.id = id;
+        this.name = name;
+        this.imageUrl = imageUrl;
+        this.price = price;
     }
 
-    public Product(String productName, String productPath, Integer productPrice) {
-        this.productName = productName;
-        this.productPath = productPath;
-        this.productPrice = productPrice;
+    public Product(String name, String imageUrl, Integer price) {
+        this.name = name;
+        this.imageUrl = imageUrl;
+        this.price = price;
     }
 
-    public Integer getProductId() {
-        return productId;
+    public Integer getId() {
+        return id;
     }
 
-    public String getProductName() {
-        return productName;
+    public void setId(Integer id) {
+        this.id = id;
     }
 
-    public String getProductPath() {
-        return productPath;
+    public String getName() {
+        return name;
     }
 
-    public Integer getProductPrice() {
-        return productPrice;
+    public void setName(String name) {
+        this.name = name;
     }
 
-    public void setProductName(String productName) {
-        this.productName = productName;
+    public String getImageUrl() {
+        return imageUrl;
     }
 
-    public void setProductPath(String productPath) {
-        this.productPath = productPath;
+    public void setImageUrl(String imageUrl) {
+        this.imageUrl = imageUrl;
     }
 
-    public void setProductPrice(Integer productPrice) {
-        this.productPrice = productPrice;
+    public Integer getPrice() {
+        return price;
     }
+
+    public void setPrice(Integer price) {
+        this.price = price;
+    }
+    
 }

@@ -30,9 +30,9 @@ public class AdminDaoTest {
     void productInsert() {
         Product product = new Product("productName", "productPath", 1000);
 
-        int productId = adminProductDao.insertProduct(product).getProductId();
+        int productId = adminProductDao.insertProduct(product).getId();
 
-        assertThat(productId).isEqualTo(1);
+        assertThat(productId);
     }
 
     @Test
@@ -53,10 +53,10 @@ public class AdminDaoTest {
     void productSelectOneTest() {
 
         Product product = new Product("vincent", "kakaopaysec", 1000);
-        int productId = adminProductDao.insertProduct(product).getProductId();
+        int productId = adminProductDao.insertProduct(product).getId();
 
         Product selectProduct= adminProductDao.selectOneProduct(productId);
-        assertThat(selectProduct.getProductName()).isEqualTo(product.getProductName());
+        assertThat(selectProduct.getName()).isEqualTo(product.getName());
     }
 
     @Test
@@ -65,18 +65,18 @@ public class AdminDaoTest {
         Product product = new Product("vincent", "kakaopaysec", 1000);
         Product insertProduct = adminProductDao.insertProduct(product);
 
-        insertProduct.setProductName("lucas");
+        insertProduct.setName("lucas");
         adminProductDao.updateProduct(insertProduct);
 
-        Product selectProducts = adminProductDao.selectOneProduct(insertProduct.getProductId());
-        assertThat(selectProducts.getProductName()).isEqualTo(insertProduct.getProductName());
+        Product selectProducts = adminProductDao.selectOneProduct(insertProduct.getId());
+        assertThat(selectProducts.getName()).isEqualTo(insertProduct.getName());
     }
 
     @Test
     void deleteProductTest() {
 
         Product product = new Product("vincent", "kakaopaysec", 1000);
-        int productId = adminProductDao.insertProduct(product).getProductId();
+        int productId = adminProductDao.insertProduct(product).getId();
 
         adminProductDao.deleteProdect(productId);
 

@@ -7,7 +7,7 @@ const showAddModal = () => {
 
 const showEditModal = (product) => {
     const elements = modal.getElementsByTagName('input');
-    for (const element of elements) {
+    for (const element of elements) {updateProduct
         element.value = product[element.getAttribute('name')];
     }
     modal.dataset.formType = 'edit';
