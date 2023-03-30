@@ -33,9 +33,13 @@
             window.location.href = '/settings';
             return;
         }
+        let cart = {};
+        cart['productId'] = '21';
 
         axios.request({
-            url: '',
+            method: 'post',
+            url: '/cart/add',
+            data : cart,
             headers: {
                 'Authorization': `Basic ${credentials}`
             }

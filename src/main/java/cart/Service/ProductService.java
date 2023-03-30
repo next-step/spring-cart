@@ -28,9 +28,7 @@ public class ProductService {
 
 
     public List<Product> productList(){
-        System.out.println("### productList");
         List<Product> result = productDAO.selectProducts();
-        System.out.println(result.toString());
         return result;
     }
 
