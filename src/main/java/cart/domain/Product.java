@@ -1,13 +1,16 @@
 package cart.domain;
 
-public class Cart {
+public class Product {
 
     private int id;
     private String name;
-    private int price;
+    private Integer price;
     private String imagename;
 
-    public Cart(String name, int price, String imagename) {
+    public Product() {
+    }
+
+    public Product(String name, Integer price, String imagename) {
         this.name = name;
         this.price = price;
         this.imagename = imagename;
@@ -26,7 +29,7 @@ public class Cart {
         return price;
     }
 
-    public void setPrice(int price) {
+    public void setPrice(Integer price) {
         this.price = price;
     }
 
@@ -36,5 +39,15 @@ public class Cart {
 
     public void setImagename(String imagename) {
         this.imagename = imagename;
+    }
+
+    @Override
+    public String toString() {
+        return "Cart{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", price=" + price +
+                ", imagename='" + imagename + '\'' +
+                '}';
     }
 }
