@@ -18,14 +18,24 @@ public class AdminController {
     }
 
     @GetMapping("/admin")
-    public String admin( Model model) {
-        model.addAttribute("products", productService.productList().getProducts());
+    public String admin(Model model) {
+        model.addAttribute("products", productService.productList());
         return "admin";
     }
 
     @PostMapping("/createProduct")
     public ResponseEntity<Integer> createProduct(@RequestBody Product product) {
         return ResponseEntity.ok(productService.addProduct(product));
+    }
+
+    @PostMapping("/removeProduct")
+    public ResponseEntity<Integer> removeProduct(@RequestBody Product product) {
+        return ResponseEntity.ok(productService.removeProduct(product));
+    }
+
+    @PostMapping("/changeProduct")
+    public ResponseEntity<Integer> changeProduct(@RequestBody Product product) {
+        return ResponseEntity.ok(productService.changeProduct(product));
     }
 
 }

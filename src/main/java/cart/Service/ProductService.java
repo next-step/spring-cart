@@ -19,8 +19,20 @@ public class ProductService {
         return productDAO.insertProduct(product);
     }
 
-//    public List<Product> productList(){
-//
-//    }
+    public int removeProduct(Product product) {
+        return productDAO.deleteProduct(product);
+    }
+    public int changeProduct(Product product) {
+        return productDAO.updateProduct(product);
+    }
+
+
+    public List<Product> productList(){
+        System.out.println("### productList");
+        List<Product> result = productDAO.selectProducts();
+        System.out.println(result.toString());
+        return productDAO.selectProducts();
+    }
+
 
 }
