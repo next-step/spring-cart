@@ -57,7 +57,7 @@ const createProduct = (product) => {
         url: 'createProduct',
         data: product
     }).then((response) => {
-         // window.location.reload();
+          window.location.reload();
     }).catch((error) => {
         console.error(error);
     });
