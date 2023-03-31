@@ -8,8 +8,18 @@ public class Cart {
 
     private int productId;
 
+    private  Product product;
+
+    public Cart() {
+    }
+
     public Cart(String email, int productId) {
         this.email = email;
+        this.productId = productId;
+    }
+
+    public Cart(int id, int productId) {
+        this.id = id;
         this.productId = productId;
     }
 
@@ -35,5 +45,13 @@ public class Cart {
 
     public void setProductId(int productId) {
         this.productId = productId;
+    }
+
+    public Product getProduct() {
+        return product;
+    }
+
+    public void setProduct(Product product) {
+        this.product = product;
     }
 }

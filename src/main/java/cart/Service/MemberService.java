@@ -16,11 +16,14 @@ public class MemberService {
     }
 
 
-    public List<Member> memberList(){
+    public List<Member> memberList() {
         List<Member> result = memberDAO.selectMembers();
-        System.out.println(result.toString());
         return result;
     }
 
+    public boolean certification(Member member) {
+
+        return memberDAO.countMember(member);
+    }
 
 }
