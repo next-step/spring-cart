@@ -38,4 +38,11 @@ public class AdminService {
         return adminProductDao.selectOneProduct(id);
     }
 
+
+    @Override
+    public String toString() {
+        return "AdminService{" +
+                "adminProductDao=" + adminProductDao +
+                '}';
+    }
 }

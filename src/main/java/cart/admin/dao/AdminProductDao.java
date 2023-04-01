@@ -41,14 +41,6 @@ public class AdminProductDao {
         return new Product(productId, product.getName(), product.getImageUrl(), product.getPrice());
     }
 
-    /*
-        product_id INT      NOT NULL AUTO_INCREMENT,
-        product_name varchar(200)      NOT NULL,
-        product_path varchar(200)      NOT NULL,
-        product_price INT              NOT NULL,
-        created_at DATETIME NOT NULL default current_timestamp,
-    */
-
     public List<Product> selectProducts() {
         String sql = "select id,name,image_url,price,created_at from product_list";
         return jdbcTemplate.query(
