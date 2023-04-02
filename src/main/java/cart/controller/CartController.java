@@ -13,6 +13,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.List;
 
 @Controller
 @RequestMapping("/cart")
@@ -28,14 +29,33 @@ public class CartController {
     public String cart(Model model) {
         return "cart";
     }
+
     @PostMapping("/add")
     public ResponseEntity<Integer> add(@RequestBody Cart cart, HttpServletRequest request) {
 
         String email = (String) request.getAttribute("email");
-        System.out.println("cartatatatat"+cart.getProductId());
         cart.setEmail(email);
-
         return ResponseEntity.ok(cartService.addCart(cart));
     }
+
+    @PostMapping("/remove")
+    public ResponseEntity<Integer> remove(@RequestBody Cart cart, HttpServletRequest request) {
+
+        String email = (String) request.getAttribute("email");
+        cart.setEmail(email);
+
+        return ResponseEntity.ok(cartService.removeCart(cart));
+    }
+
+    @PostMapping("/list")
+    public ResponseEntity<List<Cart>> list(HttpServletRequest request) {
+
+        String email = (String) request.getAttribute("email");
+        Cart cart = new Cart();
+        cart.setEmail(email);
+
+        return ResponseEntity.ok(cartService.productCarts(cart));
+    }
+
 
 }

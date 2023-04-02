@@ -8,7 +8,7 @@ public class Cart {
 
     private int productId;
 
-    private  Product product;
+    private Product product;
 
     public Cart() {
     }
@@ -27,9 +27,6 @@ public class Cart {
         return id;
     }
 
-    public void setId(int id) {
-        this.id = id;
-    }
 
     public String getEmail() {
         return email;
@@ -43,9 +40,6 @@ public class Cart {
         return productId;
     }
 
-    public void setProductId(int productId) {
-        this.productId = productId;
-    }
 
     public Product getProduct() {
         return product;

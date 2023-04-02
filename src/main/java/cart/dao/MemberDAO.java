@@ -20,22 +20,21 @@ public class MemberDAO {
                 sql, (rs, rowNum) -> {
                     return new Member(
                             rs.getString("member_email")
-                            ,rs.getString("member_password")
+                            , rs.getString("member_password")
                     );
                 });
     }
 
-    public boolean countMember(Member member){
+    public boolean countMember(Member member) {
         String sql = "SELECT count(1) cnt FROM MEMBER where member_email = ? and member_password = ?";
 
-       int cnt  =jdbcTemplate.queryForObject(sql ,Integer.class,member.getEmail(),member.getPassword()  );
+        int cnt = jdbcTemplate.queryForObject(sql, Integer.class, member.getEmail(), member.getPassword());
 
-       if(cnt > 0){
-           return true;
-       }
-       else {
-           return  false;
-       }
+        if (cnt > 0) {
+            return true;
+        } else {
+            return false;
+        }
     }
 
 

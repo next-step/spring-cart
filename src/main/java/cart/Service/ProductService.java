@@ -22,12 +22,13 @@ public class ProductService {
     public int removeProduct(Product product) {
         return productDAO.deleteProduct(product);
     }
+
     public int changeProduct(Product product) {
         return productDAO.updateProduct(product);
     }
 
 
-    public List<Product> productList(){
+    public List<Product> productList() {
         List<Product> result = productDAO.selectProducts();
         return result;
     }

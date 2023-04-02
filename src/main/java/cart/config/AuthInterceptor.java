@@ -24,10 +24,7 @@ public class AuthInterceptor extends HandlerInterceptorAdapter {
         if(!memberService.certification(member)){
             throw  new Exception("인증에 실패하였습니다.");
         }
-
         request.setAttribute("email", member.getEmail());
-        System.out.println(member.toString());
-        //System.out.println(memberService.memberList().toString());
 
         return super.preHandle(request, response, handler);
     }

@@ -21,7 +21,7 @@ public class CartDAO {
     }
 
     public int deleteCart(Cart cart) {
-        String sql = "delete from CART where product_id = ?";
+        String sql = "delete from CART where cart_id = ?";
         return jdbcTemplate.update(sql, cart.getId());
     }
 
@@ -34,6 +34,7 @@ public class CartDAO {
                             rs.getInt("product_id")
                     );
                     return result;
-                });
+                }
+                ,cart.getEmail());
     }
 }

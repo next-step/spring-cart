@@ -11,11 +11,11 @@ public class BasicAuthorizationExtractor implements AuthorizationExtractor<Membe
     private static final String DELIMITER = ":";
 
     @Override
-    public Member extract(HttpServletRequest request) {
+    public Member extract(HttpServletRequest request) throws Exception {
         String header = request.getHeader(AUTHORIZATION);
 
         if (header == null) {
-            return null;
+            throw new Exception("인증에 실패하였습니다.");
         }
 
         if ((header.toLowerCase().startsWith(BASIC_TYPE.toLowerCase()))) {
