@@ -12,6 +12,9 @@ const showEditModal = (product) => {
     }
     modal.dataset.formType = 'edit';
     modal.dataset.productId = product.id;
+    modal.dataset.name = product.name;
+    modal.dataset.image = product.image;
+    modal.dataset.price = product.price;
     modal.style.display = 'block';
 };
 
@@ -46,9 +49,8 @@ form.addEventListener('submit', (event) => {
 
 // TODO: [1단계] 상품 관리 CRUD API에 맞게 변경
 const createProduct = (product) => {
-    axios.request({
-        url: '',
-    }).then((response) => {
+    axios.post('/product/create', product
+    ).then((response) => {
         window.location.reload();
     }).catch((error) => {
         console.error(error);
@@ -59,9 +61,8 @@ const createProduct = (product) => {
 const updateProduct = (product) => {
     const { id } = product;
 
-    axios.request({
-        url: '',
-    }).then((response) => {
+    axios.put('/product/update', product
+    ).then((response) => {
         window.location.reload();
     }).catch((error) => {
         console.error(error);
@@ -70,9 +71,9 @@ const updateProduct = (product) => {
 
 // TODO: [1단계] 상품 관리 CRUD API에 맞게 변경
 const deleteProduct = (id) => {
-    axios.request({
-        url: '',
-    }).then((response) => {
+
+    axios.delete("/product/delete/" + id
+    ).then((response) => {
         window.location.reload();
     }).catch((error) => {
         console.error(error);
