@@ -2,6 +2,7 @@ package cart.admin.dao;
 
 import cart.admin.domain.Product;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -22,10 +23,11 @@ public class AdminDaoTest {
     private AdminProductDao adminProductDao;
 
     @BeforeEach
-    void setting(){
+    void setting() {
         jdbcTemplate.execute("delete from product_list");
     }
 
+    @DisplayName("상품 DB INSERT 테스트")
     @Test
     void productInsert() {
         Product product = new Product("productName", "productPath", 1000);
@@ -35,6 +37,7 @@ public class AdminDaoTest {
         assertThat(productId);
     }
 
+    @DisplayName("상품 DB 다건 SELECT 테스트")
     @Test
     void productSelectTest() {
 
@@ -49,16 +52,18 @@ public class AdminDaoTest {
                 hasSize(2);
     }
 
+    @DisplayName("상품 DB 단건 SELECT 테스트")
     @Test
     void productSelectOneTest() {
 
         Product product = new Product("vincent", "kakaopaysec", 1000);
         int productId = adminProductDao.insertProduct(product).getId();
 
-        Product selectProduct= adminProductDao.selectOneProduct(productId);
+        Product selectProduct = adminProductDao.selectOneProduct(productId);
         assertThat(selectProduct.getName()).isEqualTo(product.getName());
     }
 
+    @DisplayName("상품 DB UPDATE 테스트")
     @Test
     void productUpdateTest() {
 
@@ -72,6 +77,7 @@ public class AdminDaoTest {
         assertThat(selectProducts.getName()).isEqualTo(insertProduct.getName());
     }
 
+    @DisplayName("상품 DB DELETE 테스트")
     @Test
     void deleteProductTest() {
 
@@ -80,7 +86,7 @@ public class AdminDaoTest {
 
         adminProductDao.deleteProdect(productId);
 
-        Product selectProduct= adminProductDao.selectOneProduct(productId);
+        Product selectProduct = adminProductDao.selectOneProduct(productId);
         assertThat(selectProduct).isNull();
     }
 }

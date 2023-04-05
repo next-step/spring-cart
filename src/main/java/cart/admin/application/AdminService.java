@@ -2,6 +2,7 @@ package cart.admin.application;
 
 import cart.admin.dao.AdminProductDao;
 import cart.admin.domain.Product;
+import cart.admin.dto.ProductDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -18,11 +19,17 @@ public class AdminService {
         this.adminProductDao = adminProductDao;
     }
 
-    public int createProduct(Product product) {
+    public int createProduct(ProductDto productDto) {
+
+        Product product = new Product(productDto.getName(), productDto.getImageUrl(), productDto.getPrice());
+
         return adminProductDao.insertProduct(product).getId();
     }
 
-    public void updateProduct(Product product) {
+    public void updateProduct(ProductDto productDto) {
+
+        Product product = new Product(productDto.getId(), productDto.getName(), productDto.getImageUrl(), productDto.getPrice());
+
         adminProductDao.updateProduct(product);
     }
 
@@ -30,11 +37,11 @@ public class AdminService {
         adminProductDao.deleteProdect(id);
     }
 
-    public List<Product> selectAllProduct () {
+    public List<Product> selectAllProduct() {
         return adminProductDao.selectProducts();
     }
 
-    public Product selectOneProduct(int id){
+    public Product selectOneProduct(int id) {
         return adminProductDao.selectOneProduct(id);
     }
 

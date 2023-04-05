@@ -2,6 +2,7 @@ package cart.admin.api;
 
 import cart.admin.application.AdminService;
 import cart.admin.domain.Product;
+import cart.admin.dto.ProductDto;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -20,30 +21,30 @@ public class AdminController {
         this.adminService = adminService;
     }
 
-    @GetMapping("/select")
+    @GetMapping
     public String adminProductList(Model model) {
         model.addAttribute("products", adminService.selectAllProduct());
         return "admin";
     }
 
-    @PostMapping("/create")
-    public ResponseEntity createProduct(@RequestBody Product product){
+    @PostMapping
+    public ResponseEntity createProduct(@RequestBody ProductDto product) {
         adminService.createProduct(product);
 
         return ResponseEntity.created(URI.create("/admin")).build();
     }
 
-    @PostMapping("/update")
-    public ResponseEntity updateProduct(@RequestBody Product product){
+    @PutMapping
+    public ResponseEntity updateProduct(@RequestBody ProductDto product) {
         adminService.updateProduct(product);
 
         return ResponseEntity.accepted().build();
     }
 
-    @PostMapping(value = "/delete")
-    public ResponseEntity deleteProduct(@RequestBody Product product){
+    @DeleteMapping(value = "/{productId}")
+    public ResponseEntity deleteProduct(@PathVariable Integer productId) {
 
-        adminService.deleteProduct(product.getId());
+        adminService.deleteProduct(productId);
 
         return ResponseEntity.accepted().build();
     }

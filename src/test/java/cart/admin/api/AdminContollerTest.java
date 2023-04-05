@@ -5,6 +5,7 @@ import cart.admin.dao.AdminProductDao;
 import cart.admin.domain.Product;
 import io.restassured.RestAssured;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -33,19 +34,20 @@ public class AdminContollerTest {
     @Autowired
     private AdminProductDao adminProductDao;
 
-
+    @DisplayName("관리자페이지 상품 조회 테스트")
     @Test
     public void getAdminProducts() {
         var result = given()
                 .contentType(MediaType.APPLICATION_JSON_VALUE)
                 .when()
-                .get("/admin/product/select")
+                .get("/admin/product/")
                 .then()
                 .extract();
 
         assertThat(result.statusCode()).isEqualTo(HttpStatus.OK.value());
     }
 
+    @DisplayName("관리자페이지 상품 생성 테스트")
     @Test
     void postAdminProduct() {
 
@@ -55,13 +57,14 @@ public class AdminContollerTest {
                 .contentType(MediaType.APPLICATION_JSON_VALUE)
                 .when()
                 .body(product)
-                .post("/admin/product/create")
+                .post("/admin/product/")
                 .then()
                 .extract();
 
         assertThat(result.statusCode()).isEqualTo(HttpStatus.CREATED.value());
     }
 
+    @DisplayName("관리자페이지 상품 업데이트 테스트")
     @Test
     void putAdminProduct() {
 
@@ -74,7 +77,7 @@ public class AdminContollerTest {
                 .contentType(MediaType.APPLICATION_JSON_VALUE)
                 .when()
                 .body(product)
-                .post("/admin/product/update")
+                .put("/admin/product/")
                 .then()
                 .extract();
 
@@ -82,19 +85,15 @@ public class AdminContollerTest {
     }
 
 
+    @DisplayName("관리자페이지 상품 삭제 테스트")
     @Test
     void deleteAdminProduct() {
         Product product = adminProductDao.insertProduct(new Product("test", "url", 55));
 
-        Map<String, Object> map = new HashMap<>();
-
-        map.put("id", product.getId());
-
         var result = given()
+                .pathParam("productId", product.getId())
                 .when()
-                .contentType(MediaType.APPLICATION_JSON_VALUE)
-                .body(map)
-                .post("/admin/product/delete")
+                .delete("/admin/product/{productId}")
                 .then()
                 .extract();
 
