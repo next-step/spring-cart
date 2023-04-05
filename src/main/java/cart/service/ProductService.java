@@ -25,6 +25,7 @@ public class ProductService {
         return create(product);
     }
 
+    @Transactional
     public Product find(long id) {
         return productRepository.findById(id).orElse(null);
     }
@@ -34,6 +35,7 @@ public class ProductService {
         productRepository.deleteById(id);
     }
 
+    @Transactional
     public List<Product> getList() {
         return productRepository.findAll();
     }

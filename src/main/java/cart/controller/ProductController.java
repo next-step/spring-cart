@@ -17,18 +17,18 @@ import lombok.RequiredArgsConstructor;
 public class ProductController {
     private final ProductService productService;
 
-    @PostMapping(value = "/product/create")
+    @PostMapping(value = "/product")
     public ResponseEntity<Product> createProduct(@RequestBody Product product) {
         return ResponseEntity.ok().body(productService.create(product));
     }
 
-    @DeleteMapping("/product/delete/{id}")
+    @DeleteMapping("/product/{id}")
     public String delete(@PathVariable("id") long id) {
         productService.delete(id);
         return "redirect:/product";
     }
 
-    @PutMapping("/product/update")
+    @PutMapping("/product")
     public ResponseEntity<Product> update(@RequestBody Product product) {
         return ResponseEntity.ok().body(productService.update(product));
     }
