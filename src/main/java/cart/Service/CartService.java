@@ -4,11 +4,9 @@ package cart.Service;
 import cart.dao.CartDAO;
 import cart.dao.ProductDAO;
 import cart.domain.Cart;
-import cart.domain.Product;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
 public class CartService {
@@ -20,23 +18,18 @@ public class CartService {
         this.cartDAO = cartDAO;
     }
 
-    public int addCart(Cart cart) {
+    public int add(Cart cart) {
         return cartDAO.insertCart(cart);
     }
 
-    public int removeCart(Cart cart) {
+    public int remove(Cart cart) {
+
         return cartDAO.deleteCart(cart);
     }
 
-    public List<Cart> productCarts(Cart cart) {
+    public List<Cart> productCarts(String email) {
 
-        List<Cart> carts = cartDAO.selectCarts(cart);
-        carts.stream().map(res -> {
-            Product product = productDAO.selectProducts(res);
-            res.setProduct(product);
-            return res;
-        }).collect(Collectors.toList());
-
+        List<Cart> carts = cartDAO.findCartsByEmail(email);
         return carts;
     }
 

@@ -23,6 +23,12 @@ public class Cart {
         this.productId = productId;
     }
 
+    public Cart(int id, int productId, String name , Integer price, String imagename) {
+        this.id = id;
+        this.productId = productId;
+        this.product  = new Product(name,price,imagename);
+    }
+
     public int getId() {
         return id;
     }

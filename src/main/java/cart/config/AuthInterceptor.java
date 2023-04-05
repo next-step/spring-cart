@@ -22,9 +22,9 @@ public class AuthInterceptor extends HandlerInterceptorAdapter {
         Member member=  basicAuthorizationExtractor.extract(request);
 
         if(!memberService.certification(member)){
-            throw  new Exception("인증에 실패하였습니다.");
+            throw  new AuthorizationException("인증에 실패하였습니다.");
         }
-        request.setAttribute("email", member.getEmail());
+        request.getSession().setAttribute("email", member.getEmail());
 
         return super.preHandle(request, response, handler);
     }

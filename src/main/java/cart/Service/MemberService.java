@@ -23,7 +23,7 @@ public class MemberService {
 
     public boolean certification(Member member) {
 
-        return memberDAO.countMember(member);
+        return memberDAO.existMember(member);
     }
 
 }

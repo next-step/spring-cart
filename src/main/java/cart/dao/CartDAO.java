@@ -1,7 +1,6 @@
 package cart.dao;
 
 import cart.domain.Cart;
-import cart.domain.Product;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
@@ -25,16 +24,19 @@ public class CartDAO {
         return jdbcTemplate.update(sql, cart.getId());
     }
 
-    public List<Cart> selectCarts(Cart cart) {
-        String sql = "SELECT cart_id ,product_id FROM CART  where user_email = ? ";
+    public List<Cart> findCartsByEmail(String email) {
+        String sql = "SELECT c.cart_id ,c.product_id ,  p.product_name , p.product_price , p.product_imagename  FROM CART c ,PRODUCT p where c.product_id = p.product_id and  user_email = ?";
         return jdbcTemplate.query(
                 sql, (rs, rowNum) -> {
                     Cart result = new Cart(
                             rs.getInt("cart_id"),
-                            rs.getInt("product_id")
+                            rs.getInt("product_id"),
+                            rs.getString("product_name"),
+                            rs.getInt("product_price"),
+                            rs.getString("product_imagename")
                     );
                     return result;
                 }
-                ,cart.getEmail());
+                ,email);
     }
 }

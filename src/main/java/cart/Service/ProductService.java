@@ -15,15 +15,15 @@ public class ProductService {
         this.productDAO = productDAO;
     }
 
-    public int addProduct(Product product) {
+    public int add(Product product) {
         return productDAO.insertProduct(product);
     }
 
-    public int removeProduct(Product product) {
+    public int remove(Product product) {
         return productDAO.deleteProduct(product);
     }
-    
-    public int changeProduct(Product product) {
+
+    public int change(Product product) {
         return productDAO.updateProduct(product);
     }
 

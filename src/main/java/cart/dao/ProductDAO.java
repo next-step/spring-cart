@@ -45,16 +45,4 @@ public class ProductDAO {
                 });
     }
 
-    public Product selectProducts(Cart cart) {
-        String sql = "SELECT product_name , product_price , product_imagename   FROM PRODUCT where product_id = ?";
-        return jdbcTemplate.queryForObject(
-                sql, (rs, rowNum) -> {
-                    Product product = new Product(
-                            rs.getString("product_name"),
-                            rs.getInt("product_price"),
-                            rs.getString("product_imagename")
-                    );
-                    return product;
-                }, cart.getProductId());
-    }
 }

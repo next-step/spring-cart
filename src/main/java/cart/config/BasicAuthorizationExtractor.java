@@ -12,7 +12,7 @@ public class BasicAuthorizationExtractor implements AuthorizationExtractor<Membe
 
     @Override
     public Member extract(HttpServletRequest request) throws Exception {
-        String header = request.getHeader(AUTHORIZATION);
+        String header = request.getHeader("Authorization");
 
         if (header == null) {
             throw new Exception("인증에 실패하였습니다.");

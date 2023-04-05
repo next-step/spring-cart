@@ -25,7 +25,7 @@ public class MemberDAO {
                 });
     }
 
-    public boolean countMember(Member member) {
+    public boolean existMember(Member member) {
         String sql = "SELECT count(1) cnt FROM MEMBER where member_email = ? and member_password = ?";
 
         int cnt = jdbcTemplate.queryForObject(sql, Integer.class, member.getEmail(), member.getPassword());
