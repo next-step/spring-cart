@@ -17,37 +17,31 @@ public class Product {
         this.imagename = imagename;
     }
 
+    public Product(String name, Integer price, String imagename) {
+        this.name = name;
+        this.price = price;
+        this.imagename = imagename;
+    }
+
     public int getId() {
         return id;
     }
 
-    public void setId(int id) {
-        this.id = id;
-    }
 
     public String getName() {
         return name;
     }
 
-    public void setName(String name) {
-        this.name = name;
-    }
 
     public int getPrice() {
         return price;
     }
 
-    public void setPrice(Integer price) {
-        this.price = price;
-    }
 
     public String getImagename() {
         return imagename;
     }
 
-    public void setImagename(String imagename) {
-        this.imagename = imagename;
-    }
 
     @Override
     public String toString() {

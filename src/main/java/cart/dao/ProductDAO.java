@@ -1,5 +1,6 @@
 package cart.dao;
 
+import cart.domain.Cart;
 import cart.domain.Product;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
@@ -14,20 +15,22 @@ public class ProductDAO {
         this.jdbcTemplate = jdbcTemplate;
     }
 
-//
+    //
     public int insertProduct(Product product) {
         String sql = "insert into PRODUCT (product_name, product_price,product_imagename) values (?, ?, ?)";
-        return jdbcTemplate.update(sql,product.getName() ,product.getPrice() ,product.getImagename() );
+        return jdbcTemplate.update(sql, product.getName(), product.getPrice(), product.getImagename());
     }
+
     public int deleteProduct(Product product) {
         String sql = "delete from PRODUCT where product_id = ?";
-        return jdbcTemplate.update(sql,product.getId() );
+        return jdbcTemplate.update(sql, product.getId());
     }
 
     public int updateProduct(Product product) {
         String sql = "update PRODUCT set product_name = ?" + ", product_price = ?" + ",product_imagename = ?" + "   where product_id = ? ";
         return jdbcTemplate.update(sql, product.getName(), product.getPrice(), product.getImagename(), product.getId());
     }
+
     public List<Product> selectProducts() {
         String sql = "SELECT product_id ,product_name , product_price , product_imagename   FROM PRODUCT";
         return jdbcTemplate.query(
@@ -41,4 +44,5 @@ public class ProductDAO {
                     return product;
                 });
     }
+
 }

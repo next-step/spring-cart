@@ -25,17 +25,17 @@ public class AdminController {
 
     @PostMapping("/createProduct")
     public ResponseEntity<Integer> createProduct(@RequestBody Product product) {
-        return ResponseEntity.ok(productService.addProduct(product));
+        return ResponseEntity.ok(productService.add(product));
     }
 
     @PostMapping("/removeProduct")
     public ResponseEntity<Integer> removeProduct(@RequestBody Product product) {
-        return ResponseEntity.ok(productService.removeProduct(product));
+        return ResponseEntity.ok(productService.remove(product));
     }
 
     @PostMapping("/changeProduct")
     public ResponseEntity<Integer> changeProduct(@RequestBody Product product) {
-        return ResponseEntity.ok(productService.changeProduct(product));
+        return ResponseEntity.ok(productService.change(product));
     }
 
 }
