@@ -3,11 +3,12 @@ package cart.controller;
 import cart.service.ProductService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-@RestController
+@Controller
 @RequiredArgsConstructor
 public class IndexController {
     private final ProductService productService;
@@ -18,6 +19,6 @@ public class IndexController {
                 "products",
                 productService.getProducts()
                 );
-        return "index";
+        return "/index";
     }
 }
