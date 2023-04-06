@@ -14,7 +14,7 @@ const addCartItem = (productId) => {
     //     }
     // }).then((response) => {
     axios
-        .post("/cart", cart, {
+        .post("/cart", productId, {
             headers: {
                 Authorization: `Basic ${credentials}`,
             },
@@ -45,7 +45,7 @@ const removeCartItem = (id) => {
     //     })
     //     .then((response) => {
     axios
-        .delete("/cart", cart, {
+        .delete("/cart", id, {
             headers: {
                 Authorization: `Basic ${credentials}`,
             },
