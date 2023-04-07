@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.function.Supplier;
 
 @Service
 public class AdminService {
@@ -19,21 +20,21 @@ public class AdminService {
         this.adminProductDao = adminProductDao;
     }
 
-    public int createProduct(ProductDto productDto) {
+    public int createProduct(Supplier<Product> productSupplier) {
 
-        Product product = new Product(productDto.getName(), productDto.getImageUrl(), productDto.getPrice());
+        Product product = productSupplier.get();
 
         return adminProductDao.insertProduct(product).getId();
     }
 
-    public void updateProduct(ProductDto productDto) {
+    public void updateProduct(Supplier<Product> productSupplier) {
 
-        Product product = new Product(productDto.getId(), productDto.getName(), productDto.getImageUrl(), productDto.getPrice());
+        Product product = productSupplier.get();
 
         adminProductDao.updateProduct(product);
     }
 
-    public void deleteProduct(int id) {
+    public void deleteProduct(Integer id) {
         adminProductDao.deleteProdect(id);
     }
 

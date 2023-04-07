@@ -28,20 +28,20 @@ public class AdminServiceTest {
         jdbcTemplate.execute("delete from product_list");
     }
 
-    @DisplayName("상품 생성 테스트")
+    @DisplayName("AdminService 상품 생성 테스트")
     @Test
     public void createProduct() {
-        int id = adminService.createProduct(new ProductDto("productName", "productPath", 1000));
+        int id = adminService.createProduct(() -> new ProductDto("productName", "productPath", 1000).toEntity());
 
         assertThat(id).isNotNull();
     }
 
-    @DisplayName("상품 조회 테스트")
+    @DisplayName("AdminService 상품 조회 테스트")
     @Test
     public void selectProductTest() {
 
         ProductDto product = new ProductDto("productName", "productPath", 1000);
-        int id = adminService.createProduct(product);
+        int id = adminService.createProduct(() -> product.toEntity());
 
         Product selectProduct = adminService.selectOneProduct(id);
 
@@ -49,16 +49,17 @@ public class AdminServiceTest {
         assertThat(selectProduct.getId()).isEqualTo(id);
     }
 
-    @DisplayName("상품 업데이트 테스트")
+    @DisplayName("AdminService 상품 업데이트 테스트")
     @Test
     public void updateProduct() {
 
         ProductDto product = new ProductDto("productName", "productPath", 1000);
-        int id = adminService.createProduct(product);
+        int id = adminService.createProduct(() -> product.toEntity());
 
         Product selectProduct = adminService.selectOneProduct(id);
 
-        adminService.updateProduct(new ProductDto(selectProduct.getId(), "test", "url", 1000));
+        ProductDto tmpProductDto = new ProductDto(selectProduct.getId(), "test", "url", 1000);
+        adminService.updateProduct(() -> tmpProductDto.toEntity());
 
         selectProduct = adminService.selectOneProduct(id);
 
@@ -67,12 +68,12 @@ public class AdminServiceTest {
 
     }
 
-    @DisplayName("상품삭제 테스트")
+    @DisplayName("AdminService 상품 삭제 테스트")
     @Test
     public void deleteProduct() {
 
         ProductDto product = new ProductDto("productName", "productPath", 1000);
-        int id = adminService.createProduct(product);
+        int id = adminService.createProduct(() -> product.toEntity());
 
         adminService.deleteProduct(id);
 
@@ -81,13 +82,13 @@ public class AdminServiceTest {
 
     }
 
-    @DisplayName("상품전체 조회 서비스 테스트")
+    @DisplayName("AdminService 상품 전체 조회 서비스 테스트")
     @Test
     public void selectAllProduct() {
 
-        adminService.createProduct(new ProductDto("LUCAS", "imageUrl", 1000));
-        adminService.createProduct(new ProductDto("VINCENT", "imageUrl", 2000));
-        adminService.createProduct(new ProductDto("KAI", "imageUrl", 3000));
+        adminService.createProduct(() -> new ProductDto("LUCAS", "imageUrl", 1000).toEntity());
+        adminService.createProduct(() -> new ProductDto("VINCENT", "imageUrl", 2000).toEntity());
+        adminService.createProduct(() -> new ProductDto("KAI", "imageUrl", 3000).toEntity());
 
         int length = adminService.selectAllProduct().size();
         assertThat(length).isEqualTo(3);

@@ -1,5 +1,6 @@
 package cart.admin.api;
 
+import cart.RestAssuredApiSteps;
 import cart.admin.application.AdminService;
 import cart.admin.dao.AdminProductDao;
 import cart.admin.domain.Product;
@@ -22,13 +23,14 @@ import static org.assertj.core.api.Assertions.assertThat;
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 public class AdminContollerTest {
 
-
+    RestAssuredApiSteps<Product> productRestAssuredApiSteps;
     @LocalServerPort
     private int port;
 
     @BeforeEach
     void setUp() {
         RestAssured.port = port;
+        productRestAssuredApiSteps = new RestAssuredApiSteps<>();
     }
 
     @Autowired
@@ -37,12 +39,7 @@ public class AdminContollerTest {
     @DisplayName("관리자페이지 상품 조회 테스트")
     @Test
     public void getAdminProducts() {
-        var result = given()
-                .contentType(MediaType.APPLICATION_JSON_VALUE)
-                .when()
-                .get("/admin/product/")
-                .then()
-                .extract();
+        var result = productRestAssuredApiSteps.getUrl("/admin/products/");
 
         assertThat(result.statusCode()).isEqualTo(HttpStatus.OK.value());
     }
@@ -53,13 +50,7 @@ public class AdminContollerTest {
 
         Product product = new Product("lucas", "url", 5000);
 
-        var result = given()
-                .contentType(MediaType.APPLICATION_JSON_VALUE)
-                .when()
-                .body(product)
-                .post("/admin/product/")
-                .then()
-                .extract();
+        var result = productRestAssuredApiSteps.createUrlWithBody("/admin/product/", product);
 
         assertThat(result.statusCode()).isEqualTo(HttpStatus.CREATED.value());
     }
@@ -73,13 +64,7 @@ public class AdminContollerTest {
         product.setName("change");
         product.setPrice(77);
 
-        var result = given()
-                .contentType(MediaType.APPLICATION_JSON_VALUE)
-                .when()
-                .body(product)
-                .put("/admin/product/")
-                .then()
-                .extract();
+        var result = productRestAssuredApiSteps.updateUrlWithBody("/admin/product/", product);
 
         assertThat(result.statusCode()).isEqualTo(HttpStatus.ACCEPTED.value());
     }
@@ -98,6 +83,20 @@ public class AdminContollerTest {
                 .extract();
 
         assertThat(result.statusCode()).isEqualTo(HttpStatus.ACCEPTED.value());
+    }
+
+    @DisplayName("관리자페이지 상품 삭제 테스트 삭제 ID 없을 경우")
+    @Test
+    void deleteAdminProductExceptionTest() {
+        Product product = adminProductDao.insertProduct(new Product("test", "url", 55));
+
+        var result = given()
+                .when()
+                .delete("/admin/product/")
+                .then()
+                .extract();
+
+        assertThat(result.statusCode()).isEqualTo(HttpStatus.METHOD_NOT_ALLOWED.value());
     }
 
 }
