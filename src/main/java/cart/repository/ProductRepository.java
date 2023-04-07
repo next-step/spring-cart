@@ -29,4 +29,19 @@ public class ProductRepository {
                 }
         );
     }
+
+    public void insert(Product product) {
+        String sql = "INSERT INTO product (id, name, image, price) values(?,?,?,?)";
+        jdbcTemplate.update(sql,
+                product.getId(),
+                product.getName(),
+                product.getImage(),
+                product.getPrice()
+        );
+    }
+
+    public void delete(Long id) {
+        String sql = "DELETE * FROM PRODUCT WHERE id=?";
+        jdbcTemplate.update(sql, Long.valueOf(id));
+    }
 }

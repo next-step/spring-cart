@@ -14,4 +14,11 @@ public class ProductService {
     public List<Product> getProducts() {
         return productRepository.findAll();
     }
+
+    public void setProduct(Product product) {
+        productRepository.insert(product);
+    }
+    public void deleteProduct(Long id) {
+        productRepository.delete(id);
+    }
 }
