@@ -7,7 +7,7 @@ const showAddModal = () => {
 
 const showEditModal = (product) => {
     const elements = modal.getElementsByTagName('input');
-    for (const element of elements) {
+    for (const element of elements) {updateProduct
         element.value = product[element.getAttribute('name')];
     }
     modal.dataset.formType = 'edit';
@@ -28,10 +28,9 @@ const form = document.getElementById('form');
 form.addEventListener('submit', (event) => {
     event.preventDefault();
 
-    const formData = new FormData(event.target);
+    const formData = new FormData(form);
     let product = {};
-    for (const entry of formData.entries()) {
-        const [key, value] = entry;
+    for (const [key, value] of formData) {
         product[key] = value;
     }
 
@@ -44,10 +43,12 @@ form.addEventListener('submit', (event) => {
     createProduct(product);
 });
 
-// TODO: [1단계] 상품 관리 CRUD API에 맞게 변경
 const createProduct = (product) => {
-    axios.request({
-        url: '',
+    axios.post('/admin/product/'
+        ,JSON.stringify(product), {
+        headers: {
+            "Content-Type": `application/json`,
+        },
     }).then((response) => {
         window.location.reload();
     }).catch((error) => {
@@ -55,24 +56,24 @@ const createProduct = (product) => {
     });
 };
 
-// TODO: [1단계] 상품 관리 CRUD API에 맞게 변경
 const updateProduct = (product) => {
     const { id } = product;
 
-    axios.request({
-        url: '',
-    }).then((response) => {
+    axios.put('/admin/product/'
+        ,JSON.stringify(product), {
+            headers: {
+                "Content-Type": `application/json`,
+            },
+        }).then((response) => {
         window.location.reload();
     }).catch((error) => {
         console.error(error);
     });
 };
 
-// TODO: [1단계] 상품 관리 CRUD API에 맞게 변경
-const deleteProduct = (id) => {
-    axios.request({
-        url: '',
-    }).then((response) => {
+const deleteProduct = (_id) => {
+    axios.delete('/admin/product/'+_id)
+        .then((response) => {
         window.location.reload();
     }).catch((error) => {
         console.error(error);
