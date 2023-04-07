@@ -14,10 +14,9 @@ public class CartService {
         this.productDAO = productDAO;
     }
 
-    public List<Product> productList(){
+    public List<Product> showProduct(){
         List<Product> result = productDAO.selectProductList();
         return result;
     }
-
 
 }

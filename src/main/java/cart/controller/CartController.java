@@ -16,8 +16,14 @@ public class CartController {
     }
 
     @GetMapping("/")
-    public String admin(Model model) {
-        model.addAttribute("products", cartService.productList());
+    public String main(Model model) {
+        model.addAttribute("products", cartService.showProduct());
         return "index";
+    }
+
+    @GetMapping("/admin")
+    public String admin(Model model) {
+        model.addAttribute("products", cartService.showProduct());
+        return "admin";
     }
 }
