@@ -12,12 +12,12 @@ import java.util.List;
 import java.util.Map;
 
 @Repository
-public class CartDao {
+public class SpringCartDao {
     private final JdbcTemplate jdbcTemplate;
     private final SimpleJdbcInsert insertProduct;
 
 
-    public CartDao(DataSource dataSource) {
+    public SpringCartDao(DataSource dataSource) {
 
         this.jdbcTemplate = new JdbcTemplate(dataSource);
         this.insertProduct = new SimpleJdbcInsert(dataSource)

@@ -2,7 +2,7 @@ package cart.controller;
 
 
 import cart.domain.Product;
-import cart.service.CartService;
+import cart.service.SpringCartService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -12,41 +12,41 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
 @Controller
-public class CartController {
+public class SpringCartController {
 
-    private CartService cartService;
+    private SpringCartService springCartService;
 
-    public CartController(CartService cartService) {
-        this.cartService = cartService;
+    public SpringCartController(SpringCartService springCartService) {
+        this.springCartService = springCartService;
     }
 
     @GetMapping("/")
     public String main(Model model) {
-        model.addAttribute("products", cartService.showProduct());
+        model.addAttribute("products", springCartService.showProduct());
         return "index";
     }
 
     @GetMapping("/admin")
     public String admin(Model model) {
-        model.addAttribute("products", cartService.showProduct());
+        model.addAttribute("products", springCartService.showProduct());
         return "admin";
     }
 
     @PostMapping("/createProduct")
     public ResponseEntity createProduct(@RequestBody Product product) {
-        cartService.createProduct(product);
+        springCartService.createProduct(product);
         return new ResponseEntity(HttpStatus.OK);
     }
 
     @PostMapping("/removeProduct")
     public ResponseEntity deleteProduct(@RequestBody Product product) {
-        cartService.deleteProduct(product);
+        springCartService.deleteProduct(product);
         return new ResponseEntity(HttpStatus.OK);
     }
 
     @PostMapping("/changeProduct")
     public ResponseEntity<Integer> updateProduct(@RequestBody Product product) {
-        cartService.updateProduct(product);
+        springCartService.updateProduct(product);
         return new ResponseEntity(HttpStatus.OK);
     }
 

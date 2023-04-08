@@ -2,7 +2,7 @@ DROP TABLE IF EXISTS PRODUCT;
 CREATE TABLE PRODUCT
 (
     id INT      NOT NULL AUTO_INCREMENT,
-    name varchar(200)      NOT NULL,
+    name varchar(100)      NOT NULL,
     image_url varchar(200)      NOT NULL,
     price INT              NOT NULL,
     created_at DATETIME NOT NULL default current_timestamp,
