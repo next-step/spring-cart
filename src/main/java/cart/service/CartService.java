@@ -14,8 +14,20 @@ public class CartService {
         this.productDAO = productDAO;
     }
 
+    public void createProduct(Product product) {
+        productDAO.insertProduct(product.getName(), product.getImageUrl(), product.getPrice());
+    }
+
+    public void deleteProduct(Product product) {
+        productDAO.deleteProduct(product.getId());
+    }
+
+    public void updateProduct(Product product) {
+        productDAO.updateProduct(product);
+    }
+
     public List<Product> showProduct(){
-        List<Product> result = productDAO.selectProductList();
+        List<Product> result = productDAO.selectProduct();
         return result;
     }
 

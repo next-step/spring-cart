@@ -1,10 +1,10 @@
--- TODO: 기능 구현에 필요한 내용을 추가하거나 수정하세요.
+DROP TABLE IF EXISTS PRODUCT;
 CREATE TABLE PRODUCT
 (
     id INT      NOT NULL AUTO_INCREMENT,
     name varchar(200)      NOT NULL,
-    price INT              NOT NULL,
     image_url varchar(200)      NOT NULL,
+    price INT              NOT NULL,
     created_at DATETIME NOT NULL default current_timestamp,
     PRIMARY KEY (id)
 );

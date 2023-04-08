@@ -14,8 +14,8 @@ public class Product {
     public Product(int id, String name, int price, String imageUrl) {
         this.id = id;
         this.name = name;
-        this.price = price;
         this.imageUrl = imageUrl;
+        this.price = price;
     }
 
     public int getId() {
@@ -55,8 +55,8 @@ public class Product {
         return "Cart{" +
                 "id=" + id +
                 ", name='" + name + '\'' +
-                ", price=" + price +
                 ", imageUrl='" + imageUrl + '\'' +
+                ", price=" + price +
                 '}';
     }
 }
