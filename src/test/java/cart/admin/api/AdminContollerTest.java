@@ -50,7 +50,7 @@ public class AdminContollerTest {
 
         Product product = new Product("lucas", "url", 5000);
 
-        var result = productRestAssuredApiSteps.createUrlWithBody("/admin/product/", product);
+        var result = productRestAssuredApiSteps.createUrlWithBody("/admin/products/", product);
 
         assertThat(result.statusCode()).isEqualTo(HttpStatus.CREATED.value());
     }
@@ -64,7 +64,7 @@ public class AdminContollerTest {
         product.setName("change");
         product.setPrice(77);
 
-        var result = productRestAssuredApiSteps.updateUrlWithBody("/admin/product/", product);
+        var result = productRestAssuredApiSteps.updateUrlWithBody("/admin/products/", product);
 
         assertThat(result.statusCode()).isEqualTo(HttpStatus.ACCEPTED.value());
     }
@@ -78,7 +78,7 @@ public class AdminContollerTest {
         var result = given()
                 .pathParam("productId", product.getId())
                 .when()
-                .delete("/admin/product/{productId}")
+                .delete("/admin/products/{productId}")
                 .then()
                 .extract();
 
@@ -92,7 +92,7 @@ public class AdminContollerTest {
 
         var result = given()
                 .when()
-                .delete("/admin/product/")
+                .delete("/admin/products/")
                 .then()
                 .extract();
 
