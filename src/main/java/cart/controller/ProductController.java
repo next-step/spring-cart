@@ -2,7 +2,7 @@ package cart.controller;
 
 
 import cart.domain.Product;
-import cart.service.MemberShipService;
+import cart.service.MemberService;
 import cart.service.ProductService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -13,11 +13,13 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
 @Controller
-public class SpringCartController {
+public class ProductController {
 
     private ProductService productService;
 
-    public SpringCartController(ProductService productService) {
+    private MemberService memberService;
+
+    public ProductController(ProductService productService) {
         this.productService = productService;
     }
 
