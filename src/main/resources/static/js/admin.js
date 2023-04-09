@@ -79,3 +79,4 @@ const deleteProduct = (_id) => {
         console.error(error);
     });
 };
+
