@@ -1,16 +1,16 @@
 package cart.service;
 
-import cart.dao.SpringCartDao;
+import cart.dao.ProductDao;
 import cart.domain.Product;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Service
-public class SpringCartService {
-    private SpringCartDao productDAO;
+public class ProdunctService {
+    private ProductDao productDAO;
 
-    public SpringCartService(SpringCartDao productDAO) {
+    public ProdunctService(ProductDao productDAO) {
         this.productDAO = productDAO;
     }
 

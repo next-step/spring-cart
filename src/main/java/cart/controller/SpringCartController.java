@@ -2,7 +2,7 @@ package cart.controller;
 
 
 import cart.domain.Product;
-import cart.service.SpringCartService;
+import cart.service.ProdunctService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -14,9 +14,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 @Controller
 public class SpringCartController {
 
-    private SpringCartService springCartService;
+    private ProdunctService springCartService;
 
-    public SpringCartController(SpringCartService springCartService) {
+    public SpringCartController(ProdunctService springCartService) {
         this.springCartService = springCartService;
     }
 
