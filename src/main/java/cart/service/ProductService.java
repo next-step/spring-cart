@@ -15,7 +15,7 @@ public class ProductService {
         return productRepository.findAll();
     }
 
-    public void setProduct(Product product) {
+    public void addProduct(Product product) {
         productRepository.insert(product);
     }
     public void deleteProduct(Long id) {

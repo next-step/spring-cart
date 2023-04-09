@@ -1,6 +1,7 @@
 package cart.controller;
 
 import cart.service.ProductService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -8,11 +9,12 @@ import org.springframework.web.bind.annotation.GetMapping;
 
 
 @Controller
+@RequiredArgsConstructor
 public class AdminController {
-    ProductService productService;
+    private final ProductService productService;
 
-    @GetMapping("/")
-    public String index(Model model) {
+    @GetMapping("/admin")
+    public String admin(Model model) {
         model.addAttribute(
                 "products",
                 productService.getProducts()

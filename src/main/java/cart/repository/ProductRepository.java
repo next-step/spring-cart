@@ -1,7 +1,6 @@
 package cart.repository;
 
 import cart.domain.Product;
-import lombok.RequiredArgsConstructor;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
@@ -41,7 +40,7 @@ public class ProductRepository {
     }
 
     public void delete(Long id) {
-        String sql = "DELETE * FROM PRODUCT WHERE id=?";
-        jdbcTemplate.update(sql, Long.valueOf(id));
+        String sql = "DELETE FROM PRODUCT WHERE id=?";
+        jdbcTemplate.update(sql, id);
     }
 }
