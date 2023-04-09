@@ -8,26 +8,26 @@ import java.util.List;
 
 @Service
 public class ProdunctService {
-    private ProductDao productDAO;
+    private ProductDao productDao;
 
-    public ProdunctService(ProductDao productDAO) {
-        this.productDAO = productDAO;
+    public ProdunctService(ProductDao productDao) {
+        this.productDao = productDao;
     }
 
     public void createProduct(Product product) {
-        productDAO.insertProduct(product.getName(), product.getImageUrl(), product.getPrice());
+        productDao.insertProduct(product.getName(), product.getImageUrl(), product.getPrice());
     }
 
     public void deleteProduct(Product product) {
-        productDAO.deleteProduct(product.getId());
+        productDao.deleteProduct(product.getId());
     }
 
     public void updateProduct(Product product) {
-        productDAO.updateProduct(product);
+        productDao.updateProduct(product);
     }
 
     public List<Product> showProduct(){
-        List<Product> result = productDAO.selectProduct();
+        List<Product> result = productDao.selectProduct();
         return result;
     }
 
