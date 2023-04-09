@@ -40,9 +40,9 @@ public class SpringCartDao {
         jdbcTemplate.update(sql, id);
     }
 
-    public int updateProduct(Product product) {
+    public void updateProduct(Product product) {
         String sql = "update PRODUCT set name = ?" + ", price = ?" + ", image_url = ?" + "   where id = ? ";
-        return jdbcTemplate.update(sql, product.getName(), product.getPrice(), product.getImageUrl(), product.getId());
+        jdbcTemplate.update(sql, product.getName(), product.getPrice(), product.getImageUrl(), product.getId());
     }
 
     public List<Product> selectProduct() {
