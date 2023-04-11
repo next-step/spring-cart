@@ -27,7 +27,19 @@ public class ProductIntegrationTest {
         var result = given()
                 .contentType(MediaType.APPLICATION_JSON_VALUE)
                 .when()
-                .get("/products")
+                .get("/")
+                .then()
+                .extract();
+
+        assertThat(result.statusCode()).isEqualTo(HttpStatus.OK.value());
+    }
+
+    @Test
+    public void testAdmin() {
+        var result = given()
+                .contentType(MediaType.APPLICATION_JSON_VALUE)
+                .when()
+                .get("/admin")
                 .then()
                 .extract();
 
