@@ -28,7 +28,7 @@ public class ProductDao {
     public void insertProduct(Product product) {
 
         Map<String, Object> parameters = new HashMap<>();
-        parameters.put("name", product.getId());
+        parameters.put("name", product.getName());
         parameters.put("image_url", product.getImageUrl());
         parameters.put("price", product.getPrice());
         parameters.put("created_at", LocalDateTime.now());
