@@ -1,6 +1,8 @@
-package cart.domain;
+package cart.dto;
 
-public class Product {
+import cart.domain.Product;
+
+public class ProductDto {
 
     private int id;
     private String name;
@@ -8,17 +10,11 @@ public class Product {
     private String imageUrl;
 
 
-    public Product() {
+    public ProductDto() {
     }
 
-    public Product(int id, String name, int price, String imageUrl) {
+    public ProductDto(int id, String name, int price, String imageUrl) {
         this.id = id;
-        this.name = name;
-        this.imageUrl = imageUrl;
-        this.price = price;
-    }
-
-    public Product(String name, Integer price, String imageUrl) {
         this.name = name;
         this.imageUrl = imageUrl;
         this.price = price;
@@ -54,6 +50,10 @@ public class Product {
 
     public void setImageUrl(String imageUrl) {
         this.imageUrl = imageUrl;
+    }
+
+    public Product toEntity(){
+        return new Product(id, name, price, imageUrl);
     }
 
 }

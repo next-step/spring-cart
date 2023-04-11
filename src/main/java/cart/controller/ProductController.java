@@ -2,6 +2,7 @@ package cart.controller;
 
 
 import cart.domain.Product;
+import cart.dto.ProductDto;
 import cart.service.ProductService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -33,20 +34,20 @@ public class ProductController {
     }
 
     @PostMapping("/createProduct")
-    public ResponseEntity createProduct(@RequestBody Product product) {
-        productService.createProduct(product);
+    public ResponseEntity createProduct(@RequestBody ProductDto product) {
+        productService.createProduct(product.toEntity());
         return new ResponseEntity(HttpStatus.CREATED);
     }
 
     @PostMapping("/removeProduct")
-    public ResponseEntity deleteProduct(@RequestBody Product product) {
-        productService.deleteProduct(product);
+    public ResponseEntity deleteProduct(@RequestBody ProductDto product) {
+        productService.deleteProduct(product.toEntity());
         return new ResponseEntity(HttpStatus.OK);
     }
 
     @PostMapping("/changeProduct")
-    public ResponseEntity<Integer> updateProduct(@RequestBody Product product) {
-        productService.updateProduct(product);
+    public ResponseEntity<Integer> updateProduct(@RequestBody ProductDto product) {
+        productService.updateProduct(product.toEntity());
         return new ResponseEntity(HttpStatus.OK);
     }
 

@@ -15,11 +15,11 @@ public class ProductService {
     }
 
     public void createProduct(Product product) {
-        productDao.insertProduct(product.getName(), product.getImageUrl(), product.getPrice());
+        productDao.insertProduct(product);
     }
 
     public void deleteProduct(Product product) {
-        productDao.deleteProduct(product.getId());
+        productDao.deleteProduct(product);
     }
 
     public void updateProduct(Product product) {

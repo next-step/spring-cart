@@ -25,19 +25,19 @@ public class ProductDao {
                 .usingGeneratedKeyColumns("id");
     }
 
-    public void insertProduct(String name, String imageUrl, int price) {
+    public void insertProduct(Product product) {
 
         Map<String, Object> parameters = new HashMap<>();
-        parameters.put("name", name);
-        parameters.put("image_url", imageUrl);
-        parameters.put("price", price);
+        parameters.put("name", product.getId());
+        parameters.put("image_url", product.getImageUrl());
+        parameters.put("price", product.getPrice());
         parameters.put("created_at", LocalDateTime.now());
         insertProduct.execute(parameters);
     }
 
-    public void deleteProduct(int id) {
+    public void deleteProduct(Product product) {
         String sql = "delete from PRODUCT where id = ?";
-        jdbcTemplate.update(sql, id);
+        jdbcTemplate.update(sql, product.getId());
     }
 
     public void updateProduct(Product product) {
