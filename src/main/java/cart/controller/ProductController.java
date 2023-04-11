@@ -1,7 +1,5 @@
 package cart.controller;
 
-
-import cart.domain.Product;
 import cart.dto.ProductDto;
 import cart.service.ProductService;
 import org.springframework.http.HttpStatus;
@@ -42,13 +40,13 @@ public class ProductController {
     @PostMapping("/removeProduct")
     public ResponseEntity deleteProduct(@RequestBody ProductDto product) {
         productService.deleteProduct(product.toEntity());
-        return new ResponseEntity(HttpStatus.OK);
+        return new ResponseEntity(HttpStatus.ACCEPTED);
     }
 
     @PostMapping("/changeProduct")
     public ResponseEntity<Integer> updateProduct(@RequestBody ProductDto product) {
         productService.updateProduct(product.toEntity());
-        return new ResponseEntity(HttpStatus.OK);
+        return new ResponseEntity(HttpStatus.ACCEPTED);
     }
 
 }
