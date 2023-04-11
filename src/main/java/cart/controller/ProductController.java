@@ -2,7 +2,6 @@ package cart.controller;
 
 
 import cart.domain.Product;
-import cart.service.MemberService;
 import cart.service.ProductService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -17,21 +16,19 @@ public class ProductController {
 
     private ProductService productService;
 
-    private MemberService memberService;
-
     public ProductController(ProductService productService) {
         this.productService = productService;
     }
 
     @GetMapping("/")
     public String main(Model model) {
-        model.addAttribute("products", productService.showProduct());
+        model.addAttribute("products", productService.showProducts());
         return "index";
     }
 
     @GetMapping("/admin")
     public String admin(Model model) {
-        model.addAttribute("products", productService.showProduct());
+        model.addAttribute("products", productService.showProducts());
         return "admin";
     }
 

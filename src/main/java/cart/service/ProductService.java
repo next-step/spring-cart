@@ -26,7 +26,7 @@ public class ProductService {
         productDao.updateProduct(product);
     }
 
-    public List<Product> showProduct(){
+    public List<Product> showProducts(){
         List<Product> result = productDao.selectProduct();
         return result;
     }
