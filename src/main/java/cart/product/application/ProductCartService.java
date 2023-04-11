@@ -29,16 +29,10 @@ public class ProductCartService {
 
     public List<ProductCartDto> getCarts(AuthInfo authInfo) {
 
-        List<Cart> carts = productCartDao.selectCarts(authInfo.getEmail());
-
-        return carts.stream().map(cart -> {
-                    Product product = productDao.selectOneProduct(cart.getProductId());
-                    return new ProductCartDto(cart.getId(), product.getName(), product.getImageUrl(), product.getPrice());
-                })
-                .collect(Collectors.toList());
+        return productCartDao.selectCarts(authInfo.getEmail());
     }
 
-    public void deleteCart(Integer id){
+    public void deleteCart(Integer id) {
         productCartDao.deleteCart(id);
     }
 

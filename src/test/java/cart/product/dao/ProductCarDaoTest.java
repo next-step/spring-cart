@@ -1,6 +1,7 @@
 package cart.product.dao;
 
 import cart.product.domain.Cart;
+import cart.product.dto.ProductCartDto;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -13,8 +14,8 @@ import java.util.Arrays;
 import java.util.List;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.NONE)
-public class ProductCarDaoTest {
 
+public class ProductCarDaoTest {
 
     @Autowired
     private JdbcTemplate jdbcTemplate;
@@ -46,7 +47,7 @@ public class ProductCarDaoTest {
         carts.stream().forEach(cart ->
                 assertThat(productCartDao.insertProduct(cart)));
 
-        List<Cart> selectCarts = productCartDao.selectCarts("test@1");
+        List<ProductCartDto> selectCarts = productCartDao.selectCarts("test@1");
 
         assertThat(selectCarts).hasSize(1);
     }

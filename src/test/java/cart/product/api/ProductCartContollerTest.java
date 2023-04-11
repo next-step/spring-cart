@@ -1,7 +1,11 @@
 package cart.product.api;
 
 import cart.RestAssuredApiSteps;
+import cart.admin.dao.AdminProductDao;
 import cart.admin.domain.Product;
+import cart.auth.config.AuthConfigration;
+import cart.product.ProductTestConfig;
+import cart.product.application.ProductCartService;
 import cart.product.dao.ProductCartDao;
 import cart.product.domain.Cart;
 import io.restassured.RestAssured;
@@ -9,6 +13,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.web.servlet.ServletWebServerFactoryAutoConfiguration;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.server.LocalServerPort;
 import org.springframework.http.HttpStatus;
@@ -20,10 +25,14 @@ import static org.assertj.core.api.Assertions.assertThat;
 import org.apache.tomcat.util.codec.binary.Base64;
 import org.springframework.jdbc.core.JdbcTemplate;
 
+import javax.sql.DataSource;
 import java.util.Arrays;
 import java.util.List;
 
-@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
+@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT
+, classes = {AuthConfigration.class, ProductCartController.class, ServletWebServerFactoryAutoConfiguration.class
+        , ProductCartService.class, ProductCartDao.class
+        , ProductTestConfig.class, AdminProductDao.class})
 public class ProductCartContollerTest {
 
     @LocalServerPort
@@ -32,6 +41,8 @@ public class ProductCartContollerTest {
     private String base64;
 
     @Autowired
+    private DataSource dataSource;
+
     private JdbcTemplate jdbcTemplate;
 
     @Autowired
@@ -41,6 +52,9 @@ public class ProductCartContollerTest {
 
     @BeforeEach
     void setUp() {
+        jdbcTemplate = new JdbcTemplate(dataSource);
+
+
         RestAssured.port = port;
         this.base64 = Base64.encodeBase64String("test@1:password1".getBytes());
         jdbcTemplate.execute("delete from cart_list");

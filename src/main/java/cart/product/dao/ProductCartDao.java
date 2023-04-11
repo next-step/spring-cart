@@ -1,6 +1,7 @@
 package cart.product.dao;
 
 import cart.product.domain.Cart;
+import cart.product.dto.ProductCartDto;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.simple.SimpleJdbcInsert;
 import org.springframework.stereotype.Repository;
@@ -38,21 +39,24 @@ public class ProductCartDao {
         return cartId;
     }
 
-    public List<Cart> selectCarts(String email) {
-        String sql = "select id, email, product_id from cart_list where email = ?";
+    public List<ProductCartDto> selectCarts(String email) {
+        String sql = "select a.id, b.product_name, b.image_url, b.price from cart_list a inner join product_list b on a.product_id = b.id where a.email = ?";
+
         return jdbcTemplate.query(
                 sql,
                 (resultSet, rowNum) -> {
-                    Cart cart = new Cart(
+                    ProductCartDto productCartDto = new ProductCartDto(
                             resultSet.getInt("id"),
-                            resultSet.getString("email"),
-                            resultSet.getInt("product_id")
+                            resultSet.getString("product_name"),
+                            resultSet.getString("image_url"),
+                            resultSet.getInt("price")
                     );
-                    return cart;
+                    
+                    return productCartDto;
                 }, email);
     }
 
-    public void deleteCart(Integer id){
+    public void deleteCart(Integer id) {
         String sql = "delete from cart_list where id = ?";
         jdbcTemplate.update(sql, id);
     }
