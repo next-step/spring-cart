@@ -31,7 +31,7 @@ public class CartController {
     // return ResponseEntity.ok().body(cartService.getList());
     // }
 
-    @GetMapping(value = "/cart")
+    @GetMapping("/cart")
     public String cart() {
         return "/cart";
     }
@@ -41,24 +41,18 @@ public class CartController {
         return ResponseEntity.ok().body(cartService.getList());
     }
 
-    @PostMapping(value = "/cart")
-    public ResponseEntity<Cart> create(@RequestHeader(value = "Authorization") String authorization,
-            @RequestBody long productId) {
+    // @PostMapping(value = "/cart")
+    // public ResponseEntity<Cart> create(@RequestHeader(value = "Authorization")
+    // String authorization,
+    // @RequestBody long productId) {
 
-        return ResponseEntity.ok().body(cartService.create(authorization, productId));
-    }
+    // return ResponseEntity.ok().body(cartService.create(authorization,
+    // productId));
+    // }
 
-    @DeleteMapping(value = "/cart/{id}")
-    public String delete(@PathVariable("id") long id) {
-        cartService.delete(id);
-        return "redirect:/cart";
-    }
-
-    // @GetMapping(value = "/cart")
-    // public String cartList(Model model) {
-    // System.out.println("++++test");
-    // // return ResponseEntity.ok().body(cartService.getList());
-    // model.addAttribute("products", response.data.getList());
-    // return "/cart";
+    // @DeleteMapping("/cart/{id}")
+    // public String delete(@PathVariable("id") long id) {
+    // cartService.delete(id);
+    // return "redirect:/cart";
     // }
 }
