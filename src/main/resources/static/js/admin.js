@@ -44,7 +44,7 @@ form.addEventListener('submit', (event) => {
 });
 
 const createProduct = (product) => {
-    axios.post('/admin/product/'
+    axios.post('/admin/products/'
         ,JSON.stringify(product), {
         headers: {
             "Content-Type": `application/json`,
@@ -59,7 +59,7 @@ const createProduct = (product) => {
 const updateProduct = (product) => {
     const { id } = product;
 
-    axios.put('/admin/product/'
+    axios.put('/admin/products/'
         ,JSON.stringify(product), {
             headers: {
                 "Content-Type": `application/json`,
@@ -72,10 +72,11 @@ const updateProduct = (product) => {
 };
 
 const deleteProduct = (_id) => {
-    axios.delete('/admin/product/'+_id)
+    axios.delete('/admin/products/'+_id)
         .then((response) => {
         window.location.reload();
     }).catch((error) => {
         console.error(error);
     });
 };
+
