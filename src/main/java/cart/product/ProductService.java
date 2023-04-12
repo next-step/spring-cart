@@ -32,8 +32,17 @@ public class ProductService {
     }
 
     @Transactional
+    public Product updateProduct(Product product) {
+
+        productRepository.findById(product.getId())
+                .orElseThrow(() -> new IllegalStateException("상품 미존재"));
+
+        return createProduct(product);
+    }
+
+    @Transactional
     public void deleteProduct(Long id) {
 
-        productRepository.deleteById(id.intValue());
+        productRepository.deleteById(id);
     }
 }
