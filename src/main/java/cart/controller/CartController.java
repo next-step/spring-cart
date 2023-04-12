@@ -26,6 +26,9 @@ public class CartController {
 
     @RequestMapping("/admin")
     public String admin(Model model) {
+
+        List<Product> products = productService.findAllProducts();
+        model.addAttribute("products", products);
         return "admin";
     }
 }

@@ -1,31 +1,23 @@
 package cart.domain;
 
+import lombok.Getter;
+
+import javax.persistence.*;
+
+@Getter
+@Entity
 public class Product {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id")
     private long id;
+
+    @Column(name = "name")
     private String name;
+
+    @Column(name = "image")
     private String image;
+
+    @Column(name = "price")
     private long price;
-
-    public Product(long id, String name, String image, long price) {
-        this.id = id;
-        this.name = name;
-        this.image = image;
-        this.price = price;
-    }
-
-    public long getId() {
-        return id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public String getImage() {
-        return image;
-    }
-
-    public long getPrice() {
-        return price;
-    }
 }
