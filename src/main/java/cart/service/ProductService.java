@@ -18,8 +18,8 @@ public class ProductService {
         productDao.insertProduct(product);
     }
 
-    public void deleteProduct(Product product) {
-        productDao.deleteProduct(product);
+    public void deleteProduct(Long id) {
+        productDao.deleteProduct(id);
     }
 
     public void updateProduct(Product product) {

@@ -35,9 +35,9 @@ public class ProductDao {
         insertProduct.execute(parameters);
     }
 
-    public void deleteProduct(Product product) {
+    public void deleteProduct(Long id) {
         String sql = "delete from PRODUCT where id = ?";
-        jdbcTemplate.update(sql, product.getId());
+        jdbcTemplate.update(sql, id);
     }
 
     public void updateProduct(Product product) {

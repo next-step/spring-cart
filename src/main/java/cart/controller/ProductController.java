@@ -6,9 +6,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.*;
 
 @Controller
 public class ProductController {
@@ -31,19 +29,19 @@ public class ProductController {
         return "admin";
     }
 
-    @PostMapping("/createProduct")
+    @PostMapping ("/createProduct")
     public ResponseEntity createProduct(@RequestBody ProductDto product) {
         productService.createProduct(product.toEntity());
         return new ResponseEntity(HttpStatus.CREATED);
     }
 
-    @PostMapping("/removeProduct")
-    public ResponseEntity deleteProduct(@RequestBody ProductDto product) {
-        productService.deleteProduct(product.toEntity());
+    @DeleteMapping("/removeProduct")
+    public ResponseEntity deleteProduct(@RequestParam Long id) {
+        productService.deleteProduct(id);
         return new ResponseEntity(HttpStatus.ACCEPTED);
     }
 
-    @PostMapping("/changeProduct")
+    @PutMapping("/changeProduct")
     public ResponseEntity<Integer> updateProduct(@RequestBody ProductDto product) {
         productService.updateProduct(product.toEntity());
         return new ResponseEntity(HttpStatus.ACCEPTED);
