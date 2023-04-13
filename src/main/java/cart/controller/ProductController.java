@@ -2,7 +2,6 @@ package cart.controller;
 
 import cart.domain.Product;
 import cart.service.ProductService;
-import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -11,10 +10,13 @@ import java.util.List;
 
 @Controller
 @RequestMapping("/")
-@RequiredArgsConstructor
-public class CartController {
+public class ProductController {
 
     private final ProductService productService;
+
+    public ProductController(ProductService productService) {
+        this.productService = productService;
+    }
 
     @RequestMapping("/")
     public String index(Model model) {
