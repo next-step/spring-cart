@@ -25,6 +25,7 @@ public class AdminController {
         return "/admin";
     }
 
+
     @PostMapping("/admin")
     public ResponseEntity<Product> createProduct(@Valid @RequestBody Product product) {
 
