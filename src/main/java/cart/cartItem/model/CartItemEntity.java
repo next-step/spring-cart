@@ -8,7 +8,8 @@ import javax.persistence.*;
 @Entity
 @Table(name = "cart")
 @Getter
-@NoArgsConstructor
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
+@AllArgsConstructor
 @EqualsAndHashCode(of = "id")
 public class CartItemEntity {
 
@@ -26,9 +27,4 @@ public class CartItemEntity {
     @OneToOne
     @JoinColumn(name = "id")
     private ProductEntity productEntity;
-
-    public CartItemEntity (Long memberId, Long productId) {
-        this.memberId = memberId;
-        this.productId = productId;
-    }
 }

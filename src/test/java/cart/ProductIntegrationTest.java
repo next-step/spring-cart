@@ -1,13 +1,9 @@
 package cart;
 
-import cart.cartItem.CartItemRepository;
-import cart.cartItem.CartItemService;
-import cart.member.model.Member;
 import cart.product.model.Product;
 import io.restassured.RestAssured;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.server.LocalServerPort;
 import org.springframework.http.HttpStatus;
@@ -28,7 +24,7 @@ public class ProductIntegrationTest {
     }
 
     @Test
-    public void getProducts() {
+    public void getProductsTest() {
         var result = given()
                 .contentType(MediaType.APPLICATION_JSON_VALUE)
                 .when()
@@ -59,12 +55,12 @@ public class ProductIntegrationTest {
     }
 
     @Test
-    public void updateProduct() {
+    public void updateProductTest() {
 
         var product = new Product();
-        product.setId(Long.valueOf(1));
-        product.setName("orange");
-        product.setImage("image/orange.jpg");
+        product.setId(Long.valueOf(2));
+        product.setName("banana");
+        product.setImage("image/banana.jpg");
         product.setPrice(2000);
 
         var result = given()
@@ -101,6 +97,7 @@ public class ProductIntegrationTest {
     public void cartList() {
         var result = given()
                 .contentType(MediaType.APPLICATION_JSON_VALUE)
+                .headers("Authorization", "Basic dGVzdDAxQGdtYWlsLmNvbToxMjM0")
                 .when()
                 .get("/cart/list")
                 .then()
@@ -128,7 +125,7 @@ public class ProductIntegrationTest {
         var result = given()
                 .contentType(MediaType.APPLICATION_JSON_VALUE)
                 .when()
-                .put("/cart/delete/1")
+                .delete("/cart/delete/2")
                 .then()
                 .extract();
 

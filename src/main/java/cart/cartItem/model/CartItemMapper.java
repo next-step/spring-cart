@@ -15,4 +15,9 @@ public interface CartItemMapper {
     @Mapping(source = "productEntity.price", target = "product.price")
     CartItem toDto(CartItemEntity src);
 
+    @Mapping(target = "id", ignore = true)
+    @Mapping(source = "memberId", target = "memberId")
+    @Mapping(source = "productId", target = "productId")
+    CartItemEntity toEntity(Long memberId, Long productId);
+
 }

@@ -27,7 +27,7 @@ public class CartItemService {
     @Transactional
     public CartItem cartInsert(Long memberId, Long productId) {
 
-        var cartItemEntity = new CartItemEntity(memberId, productId);
+        var cartItemEntity = CartItemMapper.INSTANCE.toEntity(memberId, productId);
 
         return CartItemMapper.INSTANCE.toDto(cartItemRepository.save(cartItemEntity));
     }

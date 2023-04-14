@@ -32,7 +32,6 @@ public class CartItemController {
     @PostMapping("/cart/insert/{productId}")
     public ResponseEntity<CartItem> cartInsert(@AuthenticationPrincipal Long memberId,
                                                @PathVariable Long productId) {
-        System.out.println("=====> cartInsert");
 
         var result = cartItemService.cartInsert(memberId, productId);
 
