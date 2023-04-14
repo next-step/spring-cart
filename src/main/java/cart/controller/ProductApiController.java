@@ -27,8 +27,8 @@ public class ProductApiController {
         return ResponseEntity.ok().build();
     }
 
-    @DeleteMapping("/product")
-    public ResponseEntity<Void> updateProduct(@RequestBody long id) {
+    @DeleteMapping("/product/{id}")
+    public ResponseEntity<Void> updateProduct(@PathVariable long id) {
         productService.delete(id);
         return ResponseEntity.ok().build();
     }
