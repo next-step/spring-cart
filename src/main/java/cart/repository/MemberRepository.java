@@ -1,13 +1,13 @@
 package cart.repository;
 
 import cart.domain.Member;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
 
 import javax.sql.DataSource;
 import java.util.List;
-import java.util.Optional;
 
 @Repository
 public class MemberRepository {
@@ -26,18 +26,20 @@ public class MemberRepository {
 
 
     public List<Member> findAll() {
-        String sql = "SELECT ID, EMAIL, PASSWORD FROM MEMBER";
+        final String sql = "SELECT ID, EMAIL, PASSWORD FROM MEMBER";
         return this.jdbcTemplate.query(sql, rowMapper);
     }
 
     public Member find(String email, String password) {
-        String sql = "SELECT ID, EMAIL, PASSWORD FROM MEMBER WHERE EMAIL = ? AND PASSWORD = ?";
-        Optional<Member> member = Optional.ofNullable(this.jdbcTemplate.queryForObject(sql, rowMapper, email, password));
+        final String sql = "SELECT ID, EMAIL, PASSWORD FROM MEMBER WHERE EMAIL = ? AND PASSWORD = ?";
 
-        if (member.isEmpty()) {
+        final Member member;
+        try {
+            member = this.jdbcTemplate.queryForObject(sql, rowMapper, email, password);
+        } catch (EmptyResultDataAccessException e) {
             throw new IllegalArgumentException("존재하지 않는 사용자입니다.");
         }
 
-        return member.get();
+        return member;
     }
 }

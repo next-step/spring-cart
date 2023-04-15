@@ -1,6 +1,7 @@
 package cart.repository;
 
 import cart.domain.Product;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.simple.SimpleJdbcInsert;
@@ -36,17 +37,25 @@ public class ProductRepository {
     }
 
     public void update(Product product) {
-        String updateQuery = "UPDATE PRODUCT SET NAME = ? , IMAGE = ?, PRICE = ? WHERE ID = ?";
+        final String updateQuery = "UPDATE PRODUCT SET NAME = ? , IMAGE = ?, PRICE = ? WHERE ID = ?";
         jdbcTemplate.update(updateQuery, product.getName(), product.getImage(), product.getPrice(), product.getId());
     }
 
     public void deleteById(long id) {
-        String deleteQuery = "DELETE FROM PRODUCT WHERE ID = ?";
+        final String deleteQuery = "DELETE FROM PRODUCT WHERE ID = ?";
         jdbcTemplate.update(deleteQuery, id);
     }
 
     public Product findById(long productId) {
-        String sql = "SELECT ID, NAME, IMAGE, PRICE FROM PRODUCT WHERE ID = ?";
-        return this.jdbcTemplate.queryForObject(sql, rowMapper, productId);
+        final String sql = "SELECT ID, NAME, IMAGE, PRICE FROM PRODUCT WHERE ID = ?";
+
+        final Product product;
+        try {
+            product = this.jdbcTemplate.queryForObject(sql, rowMapper, productId);
+        } catch (EmptyResultDataAccessException e) {
+            throw new IllegalArgumentException("상품이 존재하지 않습니다.");
+        }
+
+        return product;
     }
 }

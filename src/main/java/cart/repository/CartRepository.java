@@ -28,7 +28,7 @@ public class CartRepository {
             resultSet.getLong("PRODUCT_ID"));
 
     public List<Cart> findAll(long memberId) {
-        String sql = "SELECT ID, MEMBER_ID, PRODUCT_ID FROM CART WHERE MEMBER_ID = ?";
+        final String sql = "SELECT ID, MEMBER_ID, PRODUCT_ID FROM CART WHERE MEMBER_ID = ?";
         return this.jdbcTemplate.query(sql, rowMapper, memberId);
     }
 
@@ -37,7 +37,7 @@ public class CartRepository {
     }
 
     public void deleteById(long id) {
-        String deleteQuery = "DELETE FROM CART WHERE ID = ?";
+        final String deleteQuery = "DELETE FROM CART WHERE ID = ?";
         jdbcTemplate.update(deleteQuery, id);
     }
 }
