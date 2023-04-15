@@ -1,6 +1,7 @@
 package cart.service;
 
 import cart.auth.AuthData;
+import cart.controller.response.CartResponse;
 import cart.controller.response.ProductResponse;
 import cart.domain.Cart;
 import cart.domain.Member;
@@ -33,12 +34,14 @@ public class CartService {
         cartRepository.save(new Cart(member.getId(), productId));
     }
 
-    public List<ProductResponse> findAll(AuthData authData) {
+    public List<CartResponse> findAll(AuthData authData) {
         Member member = memberRepository.find(authData.getEmail(), authData.getPassword());
 
         List<Cart> carts = cartRepository.findAll(member.getId());
-        return carts.stream().map(cart -> productRepository.findById(cart.getProductId()))
-                .map(Product::extractResponse).collect(Collectors.toList());
+        return carts.stream().map(cart -> {
+            Product product = productRepository.findById(cart.getProductId());
+            return CartResponse.extract(cart.getId(), product);
+        }).collect(Collectors.toList());
     }
 
     public void deleteById(Long id) {

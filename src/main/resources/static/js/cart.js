@@ -28,7 +28,6 @@ const removeCartItem = (id) => {
         return;
     }
 
-    // TODO: [2단계] 장바구니 CRUD API에 맞게 변경
     axios.request({
         method: 'DELETE',
         url: `/api/cart/${id}`,

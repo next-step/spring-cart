@@ -2,7 +2,7 @@ package cart.controller;
 
 import cart.auth.AuthData;
 import cart.auth.AuthInfo;
-import cart.controller.response.ProductResponse;
+import cart.controller.response.CartResponse;
 import cart.service.CartService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -35,7 +35,7 @@ public class CartApiController {
     }
 
     @GetMapping("/cart")
-    public ResponseEntity<List<ProductResponse>> addCart(@AuthInfo AuthData authData) {
+    public ResponseEntity<List<CartResponse>> addCart(@AuthInfo AuthData authData) {
 
         if (authData == null) {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
