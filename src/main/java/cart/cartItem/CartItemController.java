@@ -5,7 +5,6 @@ import cart.infra.AuthenticationPrincipal;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -17,7 +16,7 @@ public class CartItemController {
     private final CartItemService cartItemService;
 
     @GetMapping("/cart")
-    public String cart(Model model) {
+    public String cart() {
         return "cart";
     }
 

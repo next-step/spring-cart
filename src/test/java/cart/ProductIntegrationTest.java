@@ -1,9 +1,11 @@
 package cart;
 
+import cart.cartItem.CartItemService;
 import cart.product.model.Product;
 import io.restassured.RestAssured;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.server.LocalServerPort;
 import org.springframework.http.HttpStatus;
@@ -111,6 +113,7 @@ public class ProductIntegrationTest {
 
         var result = given()
                 .contentType(MediaType.APPLICATION_JSON_VALUE)
+                .headers("Authorization", "Basic dGVzdDAxQGdtYWlsLmNvbToxMjM0")
                 .when()
                 .post("/cart/insert/1")
                 .then()
@@ -119,13 +122,19 @@ public class ProductIntegrationTest {
         assertThat(result.statusCode()).isEqualTo(HttpStatus.OK.value());
     }
 
+    @Autowired
+    CartItemService cartItemService;
+
     @Test
     public void cartDelete() {
 
+        var insertResult = cartItemService.cartInsert(Long.valueOf(1), Long.valueOf(1));
+
         var result = given()
                 .contentType(MediaType.APPLICATION_JSON_VALUE)
+                .headers("Authorization", "Basic dGVzdDAxQGdtYWlsLmNvbToxMjM0")
                 .when()
-                .delete("/cart/delete/2")
+                .delete("/cart/delete/" + insertResult.getId())
                 .then()
                 .extract();
 
