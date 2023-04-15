@@ -1,11 +1,13 @@
 package cart.service;
 
+import cart.controller.response.ProductResponse;
 import cart.domain.Product;
 import cart.repository.ProductRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @Transactional
@@ -17,8 +19,10 @@ public class ProductService {
         this.productRepository = productRepository;
     }
 
-    public List<Product> findAllProducts() {
-        return productRepository.findAll();
+    public List<ProductResponse> findAllProducts() {
+        return productRepository.findAll().stream()
+                .map(product -> new ProductResponse(product.getId(), product.getName(), product.getImage(), product.getPrice()))
+                .collect(Collectors.toList());
     }
 
     public void save(Product product) {

@@ -2,11 +2,15 @@ package cart.repository;
 
 import cart.domain.Product;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.simple.SimpleJdbcInsert;
 import org.springframework.stereotype.Repository;
 
 import javax.sql.DataSource;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 public class ProductRepository {
@@ -14,6 +18,11 @@ public class ProductRepository {
     private final DataSource dataSource;
     private final JdbcTemplate jdbcTemplate;
     private final SimpleJdbcInsert jdbcInsert;
+    private final RowMapper<Product> rowMapper = (resultSet, rowNum)
+            -> new Product(resultSet.getLong("id"),
+            resultSet.getString("name"),
+            resultSet.getString("image"),
+            resultSet.getLong("price"));
 
     public ProductRepository(DataSource dataSource) {
         this.dataSource = dataSource;
@@ -22,7 +31,7 @@ public class ProductRepository {
     }
 
     public List<Product> findAll() {
-        return this.jdbcTemplate.query("SELECT ID, NAME, IMAGE, PRICE FROM PRODUCT", new Product.ProductMapper());
+        return this.jdbcTemplate.query("SELECT ID, NAME, IMAGE, PRICE FROM PRODUCT", rowMapper);
     }
 
     public void save(Product product) {
@@ -37,5 +46,10 @@ public class ProductRepository {
     public void deleteById(long id) {
         String deleteQuery = "DELETE FROM PRODUCT WHERE ID = ?";
         jdbcTemplate.update(deleteQuery, id);
+    }
+
+    public Product findById(long productId) {
+        String sql = "SELECT ID, NAME, IMAGE, PRICE FROM PRODUCT WHERE ID = ?";
+        return this.jdbcTemplate.queryForObject(sql, rowMapper, productId);
     }
 }

@@ -1,25 +1,54 @@
 package cart.controller;
 
-import cart.auth.AuthInfo;
 import cart.auth.AuthData;
-import org.apache.tomcat.util.codec.binary.Base64;
-import org.springframework.http.HttpHeaders;
+import cart.auth.AuthInfo;
+import cart.controller.response.ProductResponse;
+import cart.service.CartService;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/api")
 public class CartApiController {
 
+    private final CartService cartService;
+
+    public CartApiController(CartService cartService) {
+        this.cartService = cartService;
+    }
 
     @PostMapping("/cart/{productId}")
     public ResponseEntity<Void> addCart(
-            @RequestHeader(HttpHeaders.AUTHORIZATION) String authorization,
             @AuthInfo AuthData authData,
             @PathVariable Long productId) {
 
-        System.out.println("authData = " + authData);
+        if (authData == null) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+        }
 
+        cartService.save(authData, productId);
+
+        return ResponseEntity.ok().build();
+    }
+
+    @GetMapping("/cart")
+    public ResponseEntity<List<ProductResponse>> addCart(@AuthInfo AuthData authData) {
+
+        if (authData == null) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+        }
+        return ResponseEntity.ok().body(cartService.findAll(authData));
+    }
+
+    @DeleteMapping("/cart/{id}")
+    public ResponseEntity<Void> deleteCart(@AuthInfo AuthData authData, @PathVariable Long id) {
+        if (authData == null) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+        }
+        cartService.deleteById(id);
 
         return ResponseEntity.ok().build();
     }

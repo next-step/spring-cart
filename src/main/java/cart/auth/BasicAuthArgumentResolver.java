@@ -1,4 +1,4 @@
- package cart.auth;
+package cart.auth;
 
 import org.apache.tomcat.util.codec.binary.Base64;
 import org.springframework.core.MethodParameter;
@@ -12,6 +12,8 @@ public class BasicAuthArgumentResolver implements HandlerMethodArgumentResolver 
 
     private static final String BASIC_TYPE = "Basic";
     private static final String SEPARATOR = ":";
+    private static final int AUTH_INFO_DATA_SIZE = 2;
+
 
     @Override
     public boolean supportsParameter(MethodParameter parameter) {
@@ -21,19 +23,19 @@ public class BasicAuthArgumentResolver implements HandlerMethodArgumentResolver 
     @Override
     public Object resolveArgument(MethodParameter parameter, ModelAndViewContainer mavContainer, NativeWebRequest webRequest, WebDataBinderFactory binderFactory) throws Exception {
         String authorization = webRequest.getHeader(HttpHeaders.AUTHORIZATION);
-        if (authorization == null) {
+        if (authorization == null || !authorization.toLowerCase().startsWith(BASIC_TYPE.toLowerCase())) {
             return null;
         }
-
-        if ((authorization.toLowerCase().startsWith(BASIC_TYPE.toLowerCase()))) {
-            String authHeaderValue = authorization.substring(BASIC_TYPE.length()).trim();
-            byte[] decodedBytes = Base64.decodeBase64(authHeaderValue);
-            String decodedString = new String(decodedBytes);
-            String[] authInfoArray = decodedString.split(SEPARATOR);
-
-
-            return new AuthData(authInfoArray[0], authInfoArray[1]);
-        }
-        return null;
+        return parseAuthData(authorization);
     }
+
+    private AuthData parseAuthData(String authorization) {
+        String authHeaderValue = authorization.substring(BASIC_TYPE.length()).trim();
+        byte[] decodedBytes = Base64.decodeBase64(authHeaderValue);
+        String decodedString = new String(decodedBytes);
+        String[] authInfoArray = decodedString.split(SEPARATOR);
+
+        return authInfoArray.length == AUTH_INFO_DATA_SIZE ? new AuthData(authInfoArray[0], authInfoArray[1]) : null;
+    }
+
 }
