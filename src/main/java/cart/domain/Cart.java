@@ -2,6 +2,7 @@ package cart.domain;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 
 public class Cart {
     private final Long id;
@@ -14,8 +15,8 @@ public class Cart {
         this.productId = productId;
     }
 
-    public Cart(long id, Long productId) {
-        this(null, id, productId);
+    public Cart(long memberId, long productId) {
+        this(null, memberId, productId);
     }
 
     public long getId() {
@@ -34,5 +35,27 @@ public class Cart {
         parameters.put("member_id", cart.getMemberId());
         parameters.put("product_id", cart.getProductId());
         return parameters;
+    }
+
+    @Override
+    public String toString() {
+        return "Cart{" +
+                "id=" + id +
+                ", memberId=" + memberId +
+                ", productId=" + productId +
+                '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Cart cart = (Cart) o;
+        return memberId == cart.memberId && productId == cart.productId && Objects.equals(id, cart.id);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, memberId, productId);
     }
 }
