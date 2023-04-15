@@ -6,20 +6,24 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import cart.domain.Cart;
+import cart.domain.Member;
 import cart.domain.Product;
 import cart.repository.CartRepository;
-import cart.repository.ProductRepository;
 import lombok.RequiredArgsConstructor;
 
 @Service
 @RequiredArgsConstructor
 public class CartService {
     private final CartRepository cartRepository;
-    private final ProductRepository productRepository;
 
     @Transactional
     public List<Cart> getList() {
         return cartRepository.findAll();
+    }
+
+    @Transactional
+    public List<Cart> getList(Member member) {
+        return cartRepository.findByMember(member);
     }
 
     @Transactional
@@ -28,9 +32,8 @@ public class CartService {
     }
 
     @Transactional
-    public Cart create(String authorization, long productId) {
-        Product product = productRepository.findById(productId).orElse(null);
-        Cart cart = Cart.builder().product(product).build();
+    public Cart create(Member member, Product product) {
+        Cart cart = Cart.builder().product(product).member(member).build();
         return cartRepository.save(cart);
     }
 

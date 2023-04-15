@@ -18,4 +18,14 @@ public class MemberService {
     public List<Member> getList() {
         return memberRepository.findAll();
     }
+
+    @Transactional
+    public Member getMember(String email, String password) {
+        return memberRepository.findByEmailAndPassword(email, password);
+    }
+
+    @Transactional
+    public boolean hasMember(String email, String password) {
+        return getMember(email, password) != null;
+    }
 }
