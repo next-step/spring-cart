@@ -24,4 +24,19 @@ public class MemberRepositoryTest {
                 new Member(2, "abc@test.com", "password@@"));
         Assertions.assertThat(allProduct).containsExactly(expectList.toArray(Member[]::new));
     }
+
+    @Test
+    public void find() {
+        Member member = memberRepository.find("test@naver.com", "password!!");
+
+        Member expect = new Member(1, "test@naver.com", "password!!");
+        Assertions.assertThat(member).isEqualTo(expect);
+    }
+
+    @Test
+    public void findIllegalArgument() {
+        Assertions.assertThatThrownBy(() -> memberRepository.find("none", "password!!"))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessage("존재하지 않는 사용자입니다.");
+    }
 }
