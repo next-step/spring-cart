@@ -1,7 +1,5 @@
 package cart.domain;
 
-import cart.controller.response.ProductResponse;
-
 import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.Map;
@@ -21,9 +19,6 @@ public class Product {
     private final String image;
     private final long price;
 
-    public static ProductResponse extractResponse(Product product) {
-        return new ProductResponse(product.id, product.name, product.image, product.price);
-    }
 
     public long getId() {
         return id;
@@ -40,7 +35,6 @@ public class Product {
     public long getPrice() {
         return price;
     }
-
     public static Map<String, Object> getInsertParameter(Product product) {
         Map<String, Object> parameters = new HashMap<>(5);
         parameters.put("name", product.getName());

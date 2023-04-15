@@ -3,7 +3,6 @@ package cart.repository;
 import cart.domain.Member;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
-import org.springframework.jdbc.core.simple.SimpleJdbcInsert;
 import org.springframework.stereotype.Repository;
 
 import javax.sql.DataSource;
@@ -14,12 +13,10 @@ import java.util.Optional;
 public class MemberRepository {
     private final DataSource dataSource;
     private final JdbcTemplate jdbcTemplate;
-    private final SimpleJdbcInsert jdbcInsert;
 
     public MemberRepository(DataSource dataSource) {
         this.dataSource = dataSource;
         this.jdbcTemplate = new JdbcTemplate(dataSource);
-        this.jdbcInsert = new SimpleJdbcInsert(dataSource).withTableName("MEMBER");
     }
 
     private final RowMapper<Member> rowMapper = (resultSet, rowNum)
@@ -42,9 +39,5 @@ public class MemberRepository {
         }
 
         return member.get();
-    }
-
-    public void save(Member member) {
-        jdbcInsert.execute(Member.getInsertParameter(member));
     }
 }

@@ -1,5 +1,7 @@
 package cart.controller.response;
 
+import cart.domain.Member;
+
 public class MemberResponse {
     private final String email;
     private final String password;
@@ -12,8 +14,11 @@ public class MemberResponse {
     public String getEmail() {
         return email;
     }
-
     public String getPassword() {
         return password;
+    }
+
+    public static MemberResponse extract(Member member) {
+        return new MemberResponse(member.getEmail(), member.getPassword());
     }
 }

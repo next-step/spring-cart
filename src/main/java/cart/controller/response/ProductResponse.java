@@ -1,5 +1,7 @@
 package cart.controller.response;
 
+import cart.domain.Product;
+
 public class ProductResponse {
     public ProductResponse(long id, String name, String image, long price) {
         this.id = id;
@@ -27,6 +29,10 @@ public class ProductResponse {
 
     public long getPrice() {
         return price;
+    }
+
+    public static ProductResponse extract(Product product) {
+        return new ProductResponse(product.getId(), product.getName(), product.getImage(), product.getPrice());
     }
 
 }

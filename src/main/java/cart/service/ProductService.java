@@ -21,7 +21,7 @@ public class ProductService {
 
     public List<ProductResponse> findAllProducts() {
         return productRepository.findAll().stream()
-                .map(product -> new ProductResponse(product.getId(), product.getName(), product.getImage(), product.getPrice()))
+                .map(ProductResponse::extract)
                 .collect(Collectors.toList());
     }
 
