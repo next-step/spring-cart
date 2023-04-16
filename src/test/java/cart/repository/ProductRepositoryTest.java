@@ -72,7 +72,7 @@ public class ProductRepositoryTest {
     @Test
     public void save() {
 
-        Product test = new Product(7, "test", "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQS8d0Z2B1npEessiAoXj1HvBea-p8FptPwow&usqp=CAU", 25000);
+        Product test = new Product(null, "test", "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQS8d0Z2B1npEessiAoXj1HvBea-p8FptPwow&usqp=CAU", 25000);
         productRepository.save(test);
 
         List<Product> allProduct = productRepository.findAll();

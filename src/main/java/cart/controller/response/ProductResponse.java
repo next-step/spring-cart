@@ -2,6 +2,8 @@ package cart.controller.response;
 
 import cart.domain.Product;
 
+import java.util.Objects;
+
 public class ProductResponse {
     public ProductResponse(long id, String name, String image, long price) {
         this.id = id;
@@ -35,4 +37,26 @@ public class ProductResponse {
         return new ProductResponse(product.getId(), product.getName(), product.getImage(), product.getPrice());
     }
 
+    @Override
+    public String toString() {
+        return "ProductResponse{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", image='" + image + '\'' +
+                ", price=" + price +
+                '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        ProductResponse that = (ProductResponse) o;
+        return id == that.id && price == that.price && Objects.equals(name, that.name) && Objects.equals(image, that.image);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, name, image, price);
+    }
 }

@@ -21,18 +21,18 @@ public class CartApiController {
 
     @PostMapping("/cart/{productId}")
     public ResponseEntity<Void> addCart(@AuthMember MemberResponse memberResponse, @PathVariable Long productId) {
-        cartService.save(memberResponse, productId);
+        cartService.save(memberResponse.getId(), productId);
         return ResponseEntity.ok().build();
     }
 
     @GetMapping("/cart")
     public ResponseEntity<List<CartResponse>> addCart(@AuthMember MemberResponse memberResponse) {
-        return ResponseEntity.ok().body(cartService.findAll(memberResponse));
+        return ResponseEntity.ok().body(cartService.findAll(memberResponse.getId()));
     }
 
     @DeleteMapping("/cart/{id}")
     public ResponseEntity<Void> deleteCart(@AuthMember MemberResponse memberResponse, @PathVariable Long id) {
-        cartService.deleteById(memberResponse, id);
+        cartService.deleteById(memberResponse.getId(), id);
         return ResponseEntity.ok().build();
     }
 }

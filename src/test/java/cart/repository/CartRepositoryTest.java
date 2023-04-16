@@ -17,6 +17,7 @@ public class CartRepositoryTest {
 
     private final static long MEMBER1_ID = 1;
     private final static long MEMBER2_ID = 2;
+
     @Autowired
     private CartRepository cartRepository;
 

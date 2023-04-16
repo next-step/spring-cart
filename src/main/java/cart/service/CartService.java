@@ -23,20 +23,20 @@ public class CartService {
         this.productRepository = productRepository;
     }
 
-    public void save(MemberResponse memberResponse, Long productId) {
+    public void save(Long memberId, Long productId) {
         Product product = productRepository.findById(productId);
-        cartRepository.save(new Cart(memberResponse.getId(), product.getId()));
+        cartRepository.save(new Cart(memberId, product.getId()));
     }
 
-    public List<CartResponse> findAll(MemberResponse memberResponse) {
-        List<Cart> carts = cartRepository.findAll(memberResponse.getId());
+    public List<CartResponse> findAll(Long memberId) {
+        List<Cart> carts = cartRepository.findAll(memberId);
         return carts.stream().map(cart -> {
             Product product = productRepository.findById(cart.getProductId());
             return CartResponse.extract(cart.getId(), product);
         }).collect(Collectors.toList());
     }
 
-    public void deleteById(MemberResponse memberResponse, Long id) {
-        cartRepository.deleteById(memberResponse.getId(), id);
+    public void deleteById(Long memberId, Long id) {
+        cartRepository.deleteById(memberId, id);
     }
 }
