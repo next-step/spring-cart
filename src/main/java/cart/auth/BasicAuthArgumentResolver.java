@@ -32,7 +32,7 @@ public class BasicAuthArgumentResolver implements HandlerMethodArgumentResolver 
     public Object resolveArgument(MethodParameter parameter, ModelAndViewContainer mavContainer, NativeWebRequest webRequest, WebDataBinderFactory binderFactory) throws Exception {
         String authorization = webRequest.getHeader(HttpHeaders.AUTHORIZATION);
         if (authorization == null || !authorization.toLowerCase().startsWith(BASIC_TYPE.toLowerCase())) {
-            return null;
+            throw new InvalidParameterException();
         }
         return parseAuthData(authorization);
     }
