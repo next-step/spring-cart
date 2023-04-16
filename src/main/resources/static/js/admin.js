@@ -12,6 +12,7 @@ const showEditModal = (product) => {
     }
     modal.dataset.formType = 'edit';
     modal.dataset.productId = product.id;
+    modal.dataset.productName = product.name;
     modal.style.display = 'block';
 };
 
@@ -38,41 +39,54 @@ form.addEventListener('submit', (event) => {
     if (modal.dataset.formType === 'edit') {
         product['id'] = modal.dataset.productId;
         updateProduct(product);
-        return;
     }
 
-    createProduct(product);
+    if (modal.dataset.formType === 'add') {
+        product['id'] = modal.dataset.productId;
+        createProduct(product);
+    }
 });
 
-// TODO: [1단계] 상품 관리 CRUD API에 맞게 변경
 const createProduct = (product) => {
     axios.request({
-        url: '',
+        method: 'post',
+        url: '/product',
+        data: {
+            name : product.name,
+            price : product.price,
+            imageUrl : product.imageUrl
+        }
     }).then((response) => {
+        console.log(response);
         window.location.reload();
     }).catch((error) => {
         console.error(error);
     });
 };
 
-// TODO: [1단계] 상품 관리 CRUD API에 맞게 변경
 const updateProduct = (product) => {
-    const { id } = product;
-
     axios.request({
-        url: '',
+        method: 'put',
+        url: '/product/'+product.id,
+        data: {
+            name : product.name,
+            price : product.price,
+            imageUrl : product.imageUrl
+        }
     }).then((response) => {
+        console.log(response);
         window.location.reload();
     }).catch((error) => {
         console.error(error);
     });
 };
 
-// TODO: [1단계] 상품 관리 CRUD API에 맞게 변경
 const deleteProduct = (id) => {
     axios.request({
-        url: '',
+        method: 'delete',
+        url: '/product/'+id,
     }).then((response) => {
+        console.log(response);
         window.location.reload();
     }).catch((error) => {
         console.error(error);

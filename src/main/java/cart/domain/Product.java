@@ -4,20 +4,29 @@ import java.util.Objects;
 
 public class Product {
 
-    private final Long id;
-    private final String name;
-    private final String imageUrl;
-    private final Long price;
+    private Long id;
+    private String name;
+    private String imageUrl;
+    private Long price;
 
-    public Product(Long id, String name, String imageUrl, Long price) {
-        this.id = id;
+    public Product(String name, String imageUrl, Long price) {
         this.name = name;
         this.imageUrl = imageUrl;
         this.price = price;
     }
 
+    public void update(Product product) {
+        this.name = product.name;
+        this.price = product.price;
+        this.imageUrl = product.imageUrl;
+    }
+
     public Long getId() {
         return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public String getName() {
