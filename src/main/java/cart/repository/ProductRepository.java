@@ -12,8 +12,6 @@ import java.util.List;
 
 @Repository
 public class ProductRepository {
-
-    private final DataSource dataSource;
     private final JdbcTemplate jdbcTemplate;
     private final SimpleJdbcInsert jdbcInsert;
     private final RowMapper<Product> rowMapper = (resultSet, rowNum)
@@ -23,7 +21,6 @@ public class ProductRepository {
             resultSet.getLong("price"));
 
     public ProductRepository(DataSource dataSource) {
-        this.dataSource = dataSource;
         this.jdbcTemplate = new JdbcTemplate(dataSource);
         this.jdbcInsert = new SimpleJdbcInsert(dataSource).withTableName("PRODUCT");
     }

@@ -1,5 +1,6 @@
 package cart.repository;
 
+import cart.controller.response.MemberResponse;
 import cart.domain.Cart;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
@@ -11,13 +12,10 @@ import java.util.List;
 
 @Repository
 public class CartRepository {
-
-    private final DataSource dataSource;
     private final JdbcTemplate jdbcTemplate;
     private final SimpleJdbcInsert jdbcInsert;
 
     public CartRepository(DataSource dataSource) {
-        this.dataSource = dataSource;
         this.jdbcTemplate = new JdbcTemplate(dataSource);
         this.jdbcInsert = new SimpleJdbcInsert(dataSource).withTableName("CART");
     }
@@ -36,8 +34,8 @@ public class CartRepository {
         jdbcInsert.execute(Cart.getInsertParameter(cart));
     }
 
-    public void deleteById(long id) {
-        final String deleteQuery = "DELETE FROM CART WHERE ID = ?";
-        jdbcTemplate.update(deleteQuery, id);
+    public void deleteById(long memberId, long id) {
+        final String deleteQuery = "DELETE FROM CART WHERE ID = ? AND MEMBER_ID = ?";
+        jdbcTemplate.update(deleteQuery, id, memberId);
     }
 }

@@ -11,11 +11,9 @@ import java.util.List;
 
 @Repository
 public class MemberRepository {
-    private final DataSource dataSource;
     private final JdbcTemplate jdbcTemplate;
 
     public MemberRepository(DataSource dataSource) {
-        this.dataSource = dataSource;
         this.jdbcTemplate = new JdbcTemplate(dataSource);
     }
 
