@@ -31,9 +31,12 @@ public class Cart {
         return productId;
     }
     public static Map<String, Object> getInsertParameter(Cart cart) {
-        Map<String, Object> parameters = new HashMap<>(2);
-        parameters.put("member_id", cart.getMemberId());
-        parameters.put("product_id", cart.getProductId());
+        Map<String, Object> parameters = new HashMap<>();
+        parameters.put("member_id", cart.memberId);
+        parameters.put("product_id", cart.productId);
+        if (cart.id != null) {
+            parameters.put("id", cart.id);
+        }
         return parameters;
     }
 

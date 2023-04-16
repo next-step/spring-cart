@@ -13,7 +13,6 @@ import org.springframework.boot.test.web.server.LocalServerPort;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
-import org.springframework.test.annotation.DirtiesContext;
 
 import static io.restassured.RestAssured.given;
 import static io.restassured.RestAssured.rootPath;
@@ -21,7 +20,6 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.hamcrest.Matchers.containsInAnyOrder;
 import static org.hamcrest.Matchers.hasSize;
 
-@DirtiesContext(classMode = DirtiesContext.ClassMode.AFTER_EACH_TEST_METHOD)
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 public class CartIntegrationTest {
     private static final Header MEMBER1_AUTHORIZATION_VALUE = new Header(HttpHeaders.AUTHORIZATION, "Basic dGVzdEBuYXZlci5jb206cGFzc3dvcmQhIQ==");
@@ -43,16 +41,15 @@ public class CartIntegrationTest {
 
     @BeforeEach
     void before() {
-        cartRepository.save(new Cart(MEMBER1_ID, 1));
-        cartRepository.save(new Cart(MEMBER1_ID, 2));
-        cartRepository.save(new Cart(MEMBER2_ID, 2));
+        cartRepository.save(new Cart(1L, MEMBER1_ID, 1));
+        cartRepository.save(new Cart(2L, MEMBER1_ID, 2));
+        cartRepository.save(new Cart(3L, MEMBER2_ID, 2));
     }
 
     @AfterEach
     void after() {
-        cartRepository.deleteById(MEMBER1_ID, 1);
-        cartRepository.deleteById(MEMBER1_ID, 2);
-        cartRepository.deleteById(MEMBER2_ID, 3);
+        cartRepository.deleteAll(MEMBER1_ID);
+        cartRepository.deleteAll(MEMBER2_ID);
     }
 
 

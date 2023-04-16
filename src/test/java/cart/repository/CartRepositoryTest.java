@@ -7,12 +7,10 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
-@DirtiesContext(classMode = DirtiesContext.ClassMode.AFTER_EACH_TEST_METHOD)
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @Transactional
 public class CartRepositoryTest {
@@ -25,16 +23,15 @@ public class CartRepositoryTest {
     @BeforeEach
     void before() {
 
-        cartRepository.save(new Cart(MEMBER1_ID, 1));
-        cartRepository.save(new Cart(MEMBER1_ID, 2));
-        cartRepository.save(new Cart(MEMBER2_ID, 2));
+        cartRepository.save(new Cart(1L, MEMBER1_ID, 1));
+        cartRepository.save(new Cart(2L, MEMBER1_ID, 2));
+        cartRepository.save(new Cart(3L, MEMBER2_ID, 2));
     }
 
     @AfterEach
     void after() {
-        cartRepository.deleteById(MEMBER1_ID, 1);
-        cartRepository.deleteById(MEMBER1_ID, 2);
-        cartRepository.deleteById(MEMBER2_ID, 3);
+        cartRepository.deleteAll(MEMBER1_ID);
+        cartRepository.deleteAll(MEMBER2_ID);
     }
 
     @Test

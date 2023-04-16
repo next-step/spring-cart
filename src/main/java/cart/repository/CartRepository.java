@@ -38,4 +38,9 @@ public class CartRepository {
         final String deleteQuery = "DELETE FROM CART WHERE ID = ? AND MEMBER_ID = ?";
         jdbcTemplate.update(deleteQuery, id, memberId);
     }
+
+    public void deleteAll(long memberId) {
+        final String deleteQuery = "DELETE FROM CART WHERE MEMBER_ID = ?";
+        jdbcTemplate.update(deleteQuery, memberId);
+    }
 }
