@@ -2,7 +2,6 @@ package cart.service;
 
 import cart.auth.AuthData;
 import cart.controller.response.CartResponse;
-import cart.controller.response.ProductResponse;
 import cart.domain.Cart;
 import cart.domain.Member;
 import cart.domain.Product;
@@ -30,8 +29,8 @@ public class CartService {
 
     public void save(AuthData authData, Long productId) {
         Member member = memberRepository.find(authData.getEmail(), authData.getPassword());
-
-        cartRepository.save(new Cart(member.getId(), productId));
+        Product product = productRepository.findById(productId);
+        cartRepository.save(new Cart(member.getId(), product.getId()));
     }
 
     public List<CartResponse> findAll(AuthData authData) {
