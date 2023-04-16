@@ -1,6 +1,6 @@
 package cart.controller;
 
-import cart.auth.AuthInfo;
+import cart.auth.AuthMember;
 import cart.controller.response.CartResponse;
 import cart.controller.response.MemberResponse;
 import cart.service.CartService;
@@ -20,18 +20,18 @@ public class CartApiController {
     }
 
     @PostMapping("/cart/{productId}")
-    public ResponseEntity<Void> addCart(@AuthInfo MemberResponse memberResponse, @PathVariable Long productId) {
+    public ResponseEntity<Void> addCart(@AuthMember MemberResponse memberResponse, @PathVariable Long productId) {
         cartService.save(memberResponse, productId);
         return ResponseEntity.ok().build();
     }
 
     @GetMapping("/cart")
-    public ResponseEntity<List<CartResponse>> addCart(@AuthInfo MemberResponse memberResponse) {
+    public ResponseEntity<List<CartResponse>> addCart(@AuthMember MemberResponse memberResponse) {
         return ResponseEntity.ok().body(cartService.findAll(memberResponse));
     }
 
     @DeleteMapping("/cart/{id}")
-    public ResponseEntity<Void> deleteCart(@AuthInfo MemberResponse memberResponse, @PathVariable Long id) {
+    public ResponseEntity<Void> deleteCart(@AuthMember MemberResponse memberResponse, @PathVariable Long id) {
         cartService.deleteById(memberResponse, id);
         return ResponseEntity.ok().build();
     }
