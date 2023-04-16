@@ -50,9 +50,9 @@ public class CartIntegrationTest {
 
     @AfterEach
     void after() {
-        cartRepository.deleteById(1);
-        cartRepository.deleteById(2);
-        cartRepository.deleteById(3);
+        cartRepository.deleteById(MEMBER1_ID, 1);
+        cartRepository.deleteById(MEMBER1_ID, 2);
+        cartRepository.deleteById(MEMBER2_ID, 3);
     }
 
 

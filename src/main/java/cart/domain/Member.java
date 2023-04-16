@@ -1,7 +1,5 @@
 package cart.domain;
 
-import java.util.HashMap;
-import java.util.Map;
 import java.util.Objects;
 
 public class Member {
@@ -13,13 +11,6 @@ public class Member {
         this.id = id;
         this.email = email;
         this.password = password;
-    }
-
-    public static Map<String, String> getInsertParameter(Member member) {
-            Map<String, String> parameters = new HashMap<>(2);
-            parameters.put("email", member.getEmail());
-            parameters.put("password", member.getPassword());
-            return parameters;
     }
 
     public long getId() {

@@ -32,9 +32,9 @@ public class CartRepositoryTest {
 
     @AfterEach
     void after() {
-        cartRepository.deleteById(1);
-        cartRepository.deleteById(2);
-        cartRepository.deleteById(3);
+        cartRepository.deleteById(MEMBER1_ID, 1);
+        cartRepository.deleteById(MEMBER1_ID, 2);
+        cartRepository.deleteById(MEMBER2_ID, 3);
     }
 
     @Test
@@ -56,7 +56,7 @@ public class CartRepositoryTest {
 
     @Test
     public void delete() {
-        cartRepository.deleteById(2);
+        cartRepository.deleteById(MEMBER1_ID, 2);
 
         List<Cart> allCartProductsByMember1 = cartRepository.findAll(MEMBER1_ID);
         List<Cart> allCartProductsByMember2 = cartRepository.findAll(MEMBER2_ID);
