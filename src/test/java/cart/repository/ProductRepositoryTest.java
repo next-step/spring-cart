@@ -72,7 +72,7 @@ public class ProductRepositoryTest {
     @Test
     public void save() {
 
-        Product test = new Product(7, "test", "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQS8d0Z2B1npEessiAoXj1HvBea-p8FptPwow&usqp=CAU", 25000);
+        Product test = new Product(null, "test", "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQS8d0Z2B1npEessiAoXj1HvBea-p8FptPwow&usqp=CAU", 25000);
         productRepository.save(test);
 
         List<Product> allProduct = productRepository.findAll();
@@ -91,4 +91,20 @@ public class ProductRepositoryTest {
 
         Assertions.assertThat(allProduct).containsExactly(expectList.toArray(Product[]::new));
     }
+
+    @Test
+    public void findById() {
+        Product product1 = productRepository.findById(1);
+        Product expectProduct = new Product(1, "단짠단짠 피자", "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQS8d0Z2B1npEessiAoXj1HvBea-p8FptPwow&usqp=CAU", 25000);
+
+        Assertions.assertThat(product1).isEqualTo(expectProduct);
+    }
+
+    @Test
+    public void findIllegalArgument() {
+        Assertions.assertThatThrownBy(() -> productRepository.findById(999))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessage("상품이 존재하지 않습니다.");
+    }
+
 }

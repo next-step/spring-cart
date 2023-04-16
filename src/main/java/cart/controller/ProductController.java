@@ -1,6 +1,6 @@
 package cart.controller;
 
-import cart.domain.Product;
+import cart.controller.response.ProductResponse;
 import cart.service.ProductService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -21,7 +21,7 @@ public class ProductController {
     @RequestMapping("/")
     public String index(Model model) {
 
-        List<Product> products = productService.findAllProducts();
+        List<ProductResponse> products = productService.findAllProducts();
         model.addAttribute("products", products);
         return "index";
     }
@@ -29,7 +29,7 @@ public class ProductController {
     @RequestMapping("/admin")
     public String admin(Model model) {
 
-        List<Product> products = productService.findAllProducts();
+        List<ProductResponse> products = productService.findAllProducts();
         model.addAttribute("products", products);
         return "admin";
     }

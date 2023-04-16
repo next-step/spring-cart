@@ -31,7 +31,7 @@ public class ProductIntegrationTest {
 
     @Test
     public void postProducts() throws JsonProcessingException {
-        Product product = new Product(0, "name", "image", 10000L);
+        Product product = new Product(100, "name", "image", 10000L);
 
         var result = given()
                 .contentType(MediaType.APPLICATION_JSON_VALUE)
@@ -47,7 +47,7 @@ public class ProductIntegrationTest {
 
     @Test
     public void putProducts() throws JsonProcessingException {
-        Product product = new Product(1, "name", "image", 10000L);
+        Product product = new Product(100, "name", "image", 10000L);
 
         var result = given()
                 .contentType(MediaType.APPLICATION_JSON_VALUE)

@@ -76,8 +76,7 @@ const deleteProduct = (id) => {
     axios.request({
         headers: { 'Content-Type': 'application/json' },
         method: 'DELETE',
-        url: '/api/product',
-        data: JSON.stringify(id)
+        url: `/api/product/${id}`
     }).then((response) => {
         window.location.reload();
     }).catch((error) => {

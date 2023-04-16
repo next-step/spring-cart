@@ -1,27 +1,30 @@
 package cart.domain;
 
-import org.springframework.jdbc.core.RowMapper;
-
-import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 
 public class Product {
+    private final Long id;
+    private final String name;
+    private final String image;
+    private final long price;
 
-    public Product(long id, String name, String image, long price) {
+    public Product(Long id, String name, String image, long price) {
         this.id = id;
         this.name = name;
         this.image = image;
         this.price = price;
     }
 
-    private final long id;
-    private final String name;
-    private final String image;
-    private final long price;
+    public Product(long id, String name, String image, long price) {
+        this(Long.valueOf(id), name, image, price);
+    }
+
+    public Product() {
+        this(0, "", "", 0);
+    }
 
     public long getId() {
         return id;
@@ -39,21 +42,14 @@ public class Product {
         return price;
     }
 
-    public static class ProductMapper implements RowMapper<Product> {
-        @Override
-        public Product mapRow(ResultSet resultSet, int rowNum) throws SQLException {
-            return new Product(resultSet.getLong("id"),
-                    resultSet.getString("name"),
-                    resultSet.getString("image"),
-                    resultSet.getLong("price"));
-        }
-    }
-
     public static Map<String, Object> getInsertParameter(Product product) {
-        Map<String, Object> parameters = new HashMap<>(5);
-        parameters.put("name", product.getName());
-        parameters.put("image", product.getImage());
-        parameters.put("price", product.getPrice());
+        Map<String, Object> parameters = new HashMap<>();
+        if (product.id != null) {
+            parameters.put("id", product.id);
+        }
+        parameters.put("name", product.name);
+        parameters.put("image", product.image);
+        parameters.put("price", product.price);
         parameters.put("created_at", LocalDateTime.now());
         return parameters;
     }
