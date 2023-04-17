@@ -27,25 +27,23 @@ public class Product {
         return id;
     }
 
+    public void setName(String name) {
+        this.name = name;
+    }
     public String getName() {
         return name;
     }
 
-    public void setName(String name) {
-        this.name = name;
-    }
 
     public String getImageUrl() {
         return imageUrl;
-    }
-
-
-    public Integer getPrice() {
-        return price;
     }
 
     public void setPrice(Integer price) {
         this.price = price;
     }
 
+    public Integer getPrice() {
+        return price;
+    }
 }

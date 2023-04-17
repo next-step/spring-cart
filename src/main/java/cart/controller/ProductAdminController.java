@@ -12,6 +12,7 @@ import java.net.URI;
 @Controller
 @RequestMapping("/admin")
 
+
 public class ProductAdminController {
     private final ProductAdminService productAdminService;
 
@@ -19,22 +20,24 @@ public class ProductAdminController {
         this.productAdminService = adminService;
     }
 
+
+
     @GetMapping("/products")
     public String selectProducts(Model model) {
-        model.addAttribute("products", productAdminService.selectAllProduct());
+        model.addAttribute("products", productAdminService.selectAll());
         return "admin";
     }
 
     @PostMapping("/product")
     public ResponseEntity createProduct(@RequestBody ProductDto product) {
-        productAdminService.createProduct(() -> product.toEntity());
+        productAdminService.itemCreate(() -> product.toEntity());
 
         return ResponseEntity.created(URI.create("/admin")).build();
     }
 
     @PutMapping("/product")
     public ResponseEntity updateProduct(@RequestBody ProductDto product) {
-        productAdminService.updateProduct(() -> product.toEntity());
+        productAdminService.itemUpdate(() -> product.toEntity());
 
         return ResponseEntity.accepted().build();
     }
@@ -42,7 +45,7 @@ public class ProductAdminController {
     @DeleteMapping(value = "/product/{productId}")
     public ResponseEntity deleteProduct(@PathVariable Integer productId) {
 
-        productAdminService.deleteProduct(productId);
+        productAdminService.itemDelete(productId);
 
         return ResponseEntity.accepted().build();
     }

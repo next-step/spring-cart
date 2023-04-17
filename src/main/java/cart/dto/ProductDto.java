@@ -8,9 +8,8 @@ public class ProductDto {
     private String imageUrl;
     private Integer price;
 
-    public ProductDto() {
+    public ProductDto(){
     }
-
     public ProductDto(String name, String imageUrl, int price) {
         this.name = name;
         this.imageUrl = imageUrl;
@@ -29,29 +28,26 @@ public class ProductDto {
         return id;
     }
 
-    public String getName() {
-        return name;
-    }
-
     public void setName(String name) {
         this.name = name;
+    }
+
+    public String getName() {
+        return name;
     }
 
     public String getImageUrl() {
         return imageUrl;
     }
 
-
     public Integer getPrice() {
         return price;
     }
 
     public Product toEntity() {
-
         if (id == null) {
             new Product(name, imageUrl, price);
         }
-
         return new Product(id, name, imageUrl, price);
     }
 
