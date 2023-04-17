@@ -6,12 +6,12 @@ public class ProductRequest {
 
     private String name;
     private String imageUrl;
-    private Long price;
+    private int price;
 
     public ProductRequest() {
     }
 
-    public ProductRequest(String name, String imageUrl, Long price) {
+    public ProductRequest(String name, String imageUrl, int price) {
         this.name = name;
         this.imageUrl = imageUrl;
         this.price = price;
@@ -19,6 +19,10 @@ public class ProductRequest {
 
     public Product toEntity() {
         return new Product(name, imageUrl, price);
+    }
+
+    public Product toEntity(Long id) {
+        return new Product(id, name, imageUrl, price);
     }
 
     public String getName() {
@@ -29,7 +33,7 @@ public class ProductRequest {
         return imageUrl;
     }
 
-    public Long getPrice() {
+    public int getPrice() {
         return price;
     }
 }
