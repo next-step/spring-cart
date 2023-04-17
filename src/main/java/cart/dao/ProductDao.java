@@ -64,7 +64,7 @@ public class ProductDao {
                     (resultSet, rowNum) -> {
                         Product product = new Product(
                                 resultSet.getInt("id"),
-                                resultSet.getString("product_name"),
+                                resultSet.getString("name"),
                                 resultSet.getString("image_url"),
                                 resultSet.getInt("price")
                         );
@@ -78,7 +78,7 @@ public class ProductDao {
     }
 
     public void updateProduct(Product insertProduct) {
-        String sql = "update product_items set product_name=?, image_url = ?, price = ? where id = ?";
+        String sql = "update product_items set name=?, image_url = ?, price = ? where id = ?";
         jdbcTemplate.update(sql, insertProduct.getName(), insertProduct.getImageUrl(), insertProduct.getPrice(), insertProduct.getId());
     }
 

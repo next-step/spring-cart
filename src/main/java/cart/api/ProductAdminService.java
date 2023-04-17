@@ -47,8 +47,8 @@ public class ProductAdminService {
 
     @Override
     public String toString() {
-        return "AdminService{" +
-                "adminProductDao=" + productDao +
+        return "ProductAdminService{" +
+                "ProductDao=" + productDao +
                 '}';
     }
 }
