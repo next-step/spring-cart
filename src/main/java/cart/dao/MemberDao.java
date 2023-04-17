@@ -2,14 +2,10 @@ package cart.dao;
 
 import cart.domain.Member;
 import org.springframework.jdbc.core.JdbcTemplate;
-import org.springframework.jdbc.core.simple.SimpleJdbcInsert;
 import org.springframework.stereotype.Repository;
 
 import javax.sql.DataSource;
-import java.time.LocalDateTime;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 @Repository
 public class MemberDao {
@@ -31,5 +27,17 @@ public class MemberDao {
                     );
                     return member;
                 });
+    }
+
+    public boolean isValidMember(String email, String password) {
+        String sql = "SELECT count(1) cnt FROM MEMBER where member_email = ? and member_password = ?";
+
+        int cnt = jdbcTemplate.queryForObject(sql, Integer.class, email, password);
+
+        if (cnt > 0) {
+            return true;
+        } else {
+            return false;
+        }
     }
 }
