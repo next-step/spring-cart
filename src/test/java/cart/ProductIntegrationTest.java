@@ -1,6 +1,7 @@
 package cart;
 
 import cart.cartItem.CartItemService;
+import cart.product.ProductService;
 import cart.product.model.Product;
 import io.restassured.RestAssured;
 import org.junit.jupiter.api.BeforeEach;
@@ -56,19 +57,24 @@ public class ProductIntegrationTest {
         assertThat(result.statusCode()).isEqualTo(HttpStatus.OK.value());
     }
 
+    @Autowired
+    private ProductService productService;
+
     @Test
     public void updateProductTest() {
 
         var product = new Product();
-        product.setId(Long.valueOf(2));
         product.setName("banana");
         product.setImage("image/banana.jpg");
         product.setPrice(2000);
 
+        var insertResult = productService.createProduct(product);
+        insertResult.setName("apple");
+
         var result = given()
                 .contentType(MediaType.APPLICATION_JSON_VALUE)
                 .when()
-                .body(product)
+                .body(insertResult)
                 .put("/admin")
                 .then()
                 .extract();
@@ -84,11 +90,13 @@ public class ProductIntegrationTest {
         product.setImage("image/orange.jpg");
         product.setPrice(2000);
 
+        var insertResult = productService.createProduct(product);
+
         var result = given()
                 .contentType(MediaType.APPLICATION_JSON_VALUE)
                 .when()
                 .body(product)
-                .delete("/admin/1")
+                .delete("/admin/" + insertResult.getId())
                 .then()
                 .extract();
 
