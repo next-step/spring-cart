@@ -10,7 +10,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
-import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 @Controller
@@ -28,13 +27,13 @@ public class CartController {
     }
 
     @PostMapping("/cart/add")
-    public ResponseEntity<Integer> add(@AuthenticationPrincipal String email, @RequestBody Cart cart) {
+    public ResponseEntity add(@AuthenticationPrincipal String email, @RequestBody Cart cart) {
         cartService.addCart(email, cart);
         return new ResponseEntity(HttpStatus.CREATED);
     }
 
     @PostMapping("/cart/remove")
-    public ResponseEntity<Integer> remove(@AuthenticationPrincipal String email, @RequestBody Cart cart) {
+    public ResponseEntity remove(@AuthenticationPrincipal String email, @RequestBody Cart cart) {
         cartService.removeCart(email, cart);
         return new ResponseEntity(HttpStatus.ACCEPTED);
     }

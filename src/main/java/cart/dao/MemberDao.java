@@ -29,10 +29,10 @@ public class MemberDao {
                 });
     }
 
-    public boolean isValidMember(String email, String password) {
-        String sql = "SELECT count(1) cnt FROM MEMBER where member_email = ? and member_password = ?";
+    public boolean isValidMember(Member member) {
+        String sql = "SELECT count(1) cnt FROM MEMBER where email = ? and password = ?";
 
-        int cnt = jdbcTemplate.queryForObject(sql, Integer.class, email, password);
+        int cnt = jdbcTemplate.queryForObject(sql, Integer.class, member.getEmail(), member.getPassword());
 
         if (cnt > 0) {
             return true;

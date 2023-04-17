@@ -15,7 +15,7 @@ public class BasicAuthorizationExtractor implements AuthorizationExtractor<Membe
         String header = request.getHeader("Authorization");
 
         if (header == null) {
-            throw new Exception("인증에 실패하였습니다.");
+            throw new AuthorizationException("인증에 실패하였습니다.");
         }
 
         if ((header.toLowerCase().startsWith(BASIC_TYPE.toLowerCase()))) {

@@ -19,4 +19,8 @@ public class MemberService {
         return result;
     }
 
+    public boolean validMember(Member member) {
+        return memberDao.isValidMember(member);
+    }
+
 }
