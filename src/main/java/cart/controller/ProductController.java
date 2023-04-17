@@ -42,7 +42,7 @@ public class ProductController {
     }
 
     @PutMapping("/changeProduct")
-    public ResponseEntity<Integer> updateProduct(@RequestBody ProductDto product) {
+    public ResponseEntity updateProduct(@RequestBody ProductDto product) {
         productService.updateProduct(product.toEntity());
         return new ResponseEntity(HttpStatus.ACCEPTED);
     }
