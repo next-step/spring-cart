@@ -12,7 +12,6 @@ public class MemberDao {
     private final JdbcTemplate jdbcTemplate;
 
     public MemberDao(DataSource dataSource) {
-
         this.jdbcTemplate = new JdbcTemplate(dataSource);
     }
 
@@ -23,15 +22,13 @@ public class MemberDao {
                     Member member = new Member(
                             rs.getString("email"),
                             rs.getString("password")
-
                     );
                     return member;
                 });
     }
 
     public boolean isValidMember(Member member) {
-        String sql = "SELECT count(1) cnt FROM MEMBER where email = ? and password = ?";
-
+        String sql = "SELECT count(1) FROM MEMBER where email = ? and password = ?";
         int cnt = jdbcTemplate.queryForObject(sql, Integer.class, member.getEmail(), member.getPassword());
 
         if (cnt > 0) {

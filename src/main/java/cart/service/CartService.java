@@ -19,8 +19,8 @@ public class CartService {
         cartDao.insertCart(mail, cart);
     }
 
-    public void removeCart(String mail, Cart cart) {
-        cartDao.deleteCart(mail, cart);
+    public void removeCart(String mail, Long id) {
+        cartDao.deleteCart(mail, id);
     }
     public List<Cart> showCart(String mail){
         List<Cart> result = cartDao.selectCart(mail);

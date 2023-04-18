@@ -6,9 +6,7 @@ import cart.service.CartService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -32,9 +30,9 @@ public class CartController {
         return new ResponseEntity(HttpStatus.CREATED);
     }
 
-    @PostMapping("/cart/remove")
-    public ResponseEntity remove(@AuthenticationPrincipal String email, @RequestBody Cart cart) {
-        cartService.removeCart(email, cart);
+    @DeleteMapping("/cart/remove")
+    public ResponseEntity remove(@AuthenticationPrincipal String email, @RequestParam Long id) {
+        cartService.removeCart(email, id);
         return new ResponseEntity(HttpStatus.ACCEPTED);
     }
     @PostMapping("/cart/list")
