@@ -66,8 +66,6 @@ public class CartControllerTest {
     @Test
     void removeCart() {
 
-        Cart cart = new Cart(1, 1, "치킨", 10000, "url");
-
         var result = given()
                 .contentType(MediaType.APPLICATION_JSON_VALUE)
                 .header("Authorization", "Basic " + base64)
