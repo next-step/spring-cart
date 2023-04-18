@@ -9,7 +9,7 @@ import javax.validation.constraints.NotNull;
 @Data
 public class Product {
 
-    private int id;
+    private Long id;
 
     @NotEmpty(message = "상품 이름 입력 필요")
     private String name;
