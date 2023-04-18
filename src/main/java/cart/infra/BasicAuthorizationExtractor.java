@@ -10,7 +10,6 @@ public class BasicAuthorizationExtractor implements AuthorizationExtractor<AuthI
 
     @Override
     public AuthInfo extract(String header) {
-
         if (header == null) {
             return null;
         }

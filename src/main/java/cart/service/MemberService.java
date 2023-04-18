@@ -14,17 +14,17 @@ import lombok.RequiredArgsConstructor;
 public class MemberService {
     private final MemberRepository memberRepository;
 
-    @Transactional
+    @Transactional(readOnly = true)
     public List<Member> getList() {
         return memberRepository.findAll();
     }
 
-    @Transactional
+    @Transactional(readOnly = true)
     public Member getMember(String email, String password) {
         return memberRepository.findByEmailAndPassword(email, password);
     }
 
-    @Transactional
+    @Transactional(readOnly = true)
     public boolean hasMember(String email, String password) {
         return getMember(email, password) != null;
     }

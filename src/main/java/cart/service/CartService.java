@@ -16,12 +16,12 @@ import lombok.RequiredArgsConstructor;
 public class CartService {
     private final CartRepository cartRepository;
 
-    @Transactional
+    @Transactional(readOnly = true)
     public List<Cart> getList() {
         return cartRepository.findAll();
     }
 
-    @Transactional
+    @Transactional(readOnly = true)
     public List<Cart> getList(Member member) {
         return cartRepository.findByMember(member);
     }

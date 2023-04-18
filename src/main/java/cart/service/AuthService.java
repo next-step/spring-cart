@@ -18,6 +18,7 @@ public class AuthService {
 
     public AuthInfo createAuth(String authorization) throws AccessDeniedException {
         AuthInfo authInfo = basicAuthorizationExtractor.extract(authorization);
+
         if (checkInvalidLogin(authInfo.getEmail(), authInfo.getPassword())) {
             throw new AuthorizationException();
         }
