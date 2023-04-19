@@ -3,22 +3,17 @@ package cart.domain.product;
 import cart.domain.product.model.ProductModel;
 import org.springframework.stereotype.Component;
 
-import javax.annotation.PostConstruct;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
+import java.util.function.Function;
+import java.util.stream.Collectors;
 
 @Component
 public class ProductRepository {
 
     private static final List<ProductModel> PRODUCTS = new ArrayList<>();
     private static Long id = 0L;
-
-    @PostConstruct
-    public void mockData() {
-        save(new ProductModel("mock1", "mockUrl1", 10000L));
-        save(new ProductModel("mock2", "mockUrl2", 20000L));
-        save(new ProductModel("mock3", "mockUrl3", 30000L));
-    }
 
     public Long save(ProductModel productModel) {
         productModel.addId(++id);
@@ -27,7 +22,7 @@ public class ProductRepository {
     }
 
     public List<ProductModel> findAll() {
-        return PRODUCTS;
+        return new ArrayList<>(PRODUCTS);
     }
 
     public void deleteById(Long id) {
@@ -40,5 +35,11 @@ public class ProductRepository {
             .findAny()
             .orElseThrow()
             .update(product.getName(), product.getImageUrl(), product.getPrice());
+    }
+
+    public Map<Long, ProductModel> findByIds(List<Long> productIds) {
+        return PRODUCTS.stream()
+            .filter(productModel -> productIds.contains(productModel.getId()))
+            .collect(Collectors.toMap(ProductModel::getId, Function.identity()));
     }
 }
