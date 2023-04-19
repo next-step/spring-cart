@@ -1,24 +1,38 @@
 package cart.controller;
 
-import java.util.List;
+import java.nio.file.AccessDeniedException;
 
-import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.PathVariable;
 
-import cart.domain.Cart;
+import cart.domain.AuthInfo;
+import cart.domain.Member;
+import cart.domain.Product;
+import cart.infra.Authorization;
 import cart.service.CartService;
+import cart.service.MemberService;
+import cart.service.ProductService;
 import lombok.RequiredArgsConstructor;
 
-@RestController
+@Controller
 @RequiredArgsConstructor
 public class CartController {
     private final CartService cartService;
+    private final MemberService memberService;
+    private final ProductService productService;
 
-    @GetMapping(value = "/cart")
-    public ResponseEntity<List<Cart>> cart(@RequestBody Cart cart) {
-        return ResponseEntity.ok().body(cartService.getList());
+    @GetMapping("/cart")
+    public String cart() {
+        return "/cart";
+    }
+
+    @GetMapping("/cart/{id}")
+    public String create(@Authorization AuthInfo authInfo, @PathVariable("id") long id) throws AccessDeniedException {
+        Member member = memberService.getMember(authInfo.getEmail(), authInfo.getPassword());
+        Product product = productService.getProduct(id);
+        cartService.create(member, product);
+
+        return "/cart";
     }
 }
