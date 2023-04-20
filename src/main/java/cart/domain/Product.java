@@ -50,7 +50,7 @@ public class Product {
         }
         Product product = (Product) o;
         return Objects.equals(id, product.id) && Objects.equals(name, product.name)
-                && Objects.equals(imageUrl, product.imageUrl) && Objects.equals(price, product.price);
+            && Objects.equals(imageUrl, product.imageUrl) && Objects.equals(price, product.price);
     }
 
     @Override

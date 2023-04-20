@@ -52,9 +52,9 @@ const createProduct = (product) => {
         method: 'post',
         url: '/product',
         data: {
-            name : product.name,
-            price : product.price,
-            imageUrl : product.imageUrl
+            name: product.name,
+            price: product.price,
+            imageUrl: product.imageUrl
         }
     }).then((response) => {
         console.log(response);
@@ -67,11 +67,11 @@ const createProduct = (product) => {
 const updateProduct = (product) => {
     axios.request({
         method: 'put',
-        url: '/product/'+product.id,
+        url: '/product/' + product.id,
         data: {
-            name : product.name,
-            price : product.price,
-            imageUrl : product.imageUrl
+            name: product.name,
+            price: product.price,
+            imageUrl: product.imageUrl
         }
     }).then((response) => {
         console.log(response);
@@ -84,7 +84,7 @@ const updateProduct = (product) => {
 const deleteProduct = (id) => {
     axios.request({
         method: 'delete',
-        url: '/product/'+id,
+        url: '/product/' + id,
     }).then((response) => {
         console.log(response);
         window.location.reload();
