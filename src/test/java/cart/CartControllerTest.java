@@ -54,7 +54,7 @@ public class CartControllerTest {
                 .contentType(MediaType.APPLICATION_JSON_VALUE)
                 .header("Authorization", "Basic " + base64)
                 .body(cart)
-                .post("/cart/add")
+                .post("/cart")
                 .then()
                 .extract();
 
@@ -71,7 +71,7 @@ public class CartControllerTest {
                 .header("Authorization", "Basic " + base64)
                 .params("id",Long.valueOf("1"))
                 .when()
-                .delete("/cart/remove")
+                .delete("/cart")
                 .then()
                 .extract();
 
