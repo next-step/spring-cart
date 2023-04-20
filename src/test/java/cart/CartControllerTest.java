@@ -33,7 +33,6 @@ public class CartControllerTest {
     void selectCart() {
 
         var result = given()
-                .contentType(MediaType.APPLICATION_JSON_VALUE)
                 .header("Authorization", "Basic " + base64)
                 .when()
                 .post("/cart/list")
@@ -53,8 +52,9 @@ public class CartControllerTest {
         var result = given()
                 .contentType(MediaType.APPLICATION_JSON_VALUE)
                 .header("Authorization", "Basic " + base64)
+                .when()
                 .body(cart)
-                .post("/cart")
+                .post("/cart/add")
                 .then()
                 .extract();
 
@@ -71,7 +71,7 @@ public class CartControllerTest {
                 .header("Authorization", "Basic " + base64)
                 .params("id",Long.valueOf("1"))
                 .when()
-                .delete("/cart")
+                .delete("/cart/remove")
                 .then()
                 .extract();
 

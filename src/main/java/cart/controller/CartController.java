@@ -19,13 +19,13 @@ public class CartController {
         this.cartService = cartService;
     }
 
-    @PostMapping("/cart")
+    @PostMapping("/cart/add")
     public ResponseEntity add(@AuthenticationPrincipal String email, @RequestBody Cart cart) {
         cartService.addCart(email, cart);
         return new ResponseEntity(HttpStatus.CREATED);
     }
 
-    @DeleteMapping("/cart")
+    @DeleteMapping("/cart/remove")
     public ResponseEntity remove(@AuthenticationPrincipal String email, @RequestParam Long id) {
         cartService.removeCart(email, id);
         return new ResponseEntity(HttpStatus.ACCEPTED);
