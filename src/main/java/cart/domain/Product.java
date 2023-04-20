@@ -1,7 +1,6 @@
 package cart.domain;
 
 public class Product {
-
     private Integer id;
     private String name;
     private String imageUrl;
@@ -27,13 +26,14 @@ public class Product {
         return id;
     }
 
+    /*
     public void setName(String name) {
         this.name = name;
     }
+    */
     public String getName() {
         return name;
     }
-
 
     public String getImageUrl() {
         return imageUrl;

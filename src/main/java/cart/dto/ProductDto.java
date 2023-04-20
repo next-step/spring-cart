@@ -7,7 +7,6 @@ public class ProductDto {
     private String name;
     private String imageUrl;
     private Integer price;
-
     public ProductDto(){
     }
     public ProductDto(String name, String imageUrl, int price) {
@@ -22,7 +21,6 @@ public class ProductDto {
         this.imageUrl = imageUrl;
         this.price = price;
     }
-
 
     public Integer getId() {
         return id;
@@ -50,5 +48,4 @@ public class ProductDto {
         }
         return new Product(id, name, imageUrl, price);
     }
-
 }

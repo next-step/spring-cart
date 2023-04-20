@@ -1,6 +1,6 @@
 package cart.controller;
 
-import cart.api.ProductAdminService;
+import cart.ProductAdminService;
 import cart.dto.ProductDto;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -12,15 +12,12 @@ import java.net.URI;
 @Controller
 @RequestMapping("/admin")
 
-
 public class ProductAdminController {
     private final ProductAdminService productAdminService;
 
     public ProductAdminController(ProductAdminService adminService) {
         this.productAdminService = adminService;
     }
-
-
 
     @GetMapping("/products")
     public String selectProducts(Model model) {
@@ -49,5 +46,4 @@ public class ProductAdminController {
 
         return ResponseEntity.accepted().build();
     }
-
 }

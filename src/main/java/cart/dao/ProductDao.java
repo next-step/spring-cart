@@ -17,7 +17,6 @@ public class ProductDao {
 
     private final SimpleJdbcInsert insertProduct;
 
-
     public ProductDao(DataSource dataSource) {
         this.jdbcTemplate = new JdbcTemplate(dataSource);
 
@@ -28,7 +27,6 @@ public class ProductDao {
     }
 
     public Product insertProduct(Product product) {
-
         Map<String, Object> parameters = new HashMap<String, Object>(3);
 
         parameters.put("name", product.getName());
@@ -57,7 +55,6 @@ public class ProductDao {
 
     public Product selectOneProduct(int id) {
         String sql = "select id,name, image_url,price from product_items where id = ?";
-
         try {
             return jdbcTemplate.queryForObject(
                     sql,
@@ -70,11 +67,7 @@ public class ProductDao {
                         );
                         return product;
                     }, id);
-        } catch (EmptyResultDataAccessException e) {
-
-            return null;
-        }
-
+        } catch (EmptyResultDataAccessException e) {return null;}
     }
 
     public void updateProduct(Product insertProduct) {
