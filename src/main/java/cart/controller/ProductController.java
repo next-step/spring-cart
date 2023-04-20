@@ -14,7 +14,11 @@ import java.util.List;
 @Controller
 public class ProductController {
 
-    private final Products products = new Products();
+    private final Products products;
+
+    public ProductController(Products products) {
+        this.products = products;
+    }
 
     @ResponseBody
     @PostMapping("/product")
@@ -47,13 +51,15 @@ public class ProductController {
 
     @GetMapping("/")
     public String index(Model model) {
-        model.addAttribute("products", products.getAll());
+        final List<Product> products = this.products.getAll();
+        model.addAttribute("products", ProductResponse.listOf(products));
         return "index.html";
     }
 
     @GetMapping("/admin")
     public String admin(Model model) {
-        model.addAttribute("products", products.getAll());
+        final List<Product> products = this.products.getAll();
+        model.addAttribute("products", ProductResponse.listOf(products));
         return "admin.html";
     }
 }
