@@ -30,7 +30,7 @@ public class BasicAuthorizationExtractor implements AuthorizationExtractor<Membe
             return new Member(email, password);
         }
 
-        return null;
+        throw new AuthorizationException("인증에 실패하였습니다.");
     }
 
 
