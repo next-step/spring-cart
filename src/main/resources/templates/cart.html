@@ -33,16 +33,11 @@
             window.location.href = '/settings';
             return;
         }
-        let cart = {};
 
-        axios.request({
-            method: 'post',
-            url: '/cart/list',
-            data: cart,
-            headers: {
+        axios.get('/cartproduct' ,{headers: {
                 'Authorization': `Basic ${credentials}`
-            }
-        }).then((response) => {
+            }}
+        ).then((response) => {
             const cartItems = response.data;
 
             let productElement = '';

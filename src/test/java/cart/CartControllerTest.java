@@ -35,7 +35,7 @@ public class CartControllerTest {
         var result = given()
                 .header("Authorization", "Basic " + base64)
                 .when()
-                .post("/cart/list")
+                .get("/cartproduct")
                 .then()
                 .extract();
 
@@ -54,7 +54,7 @@ public class CartControllerTest {
                 .header("Authorization", "Basic " + base64)
                 .when()
                 .body(cart)
-                .post("/cart/add")
+                .post("/cartproduct")
                 .then()
                 .extract();
 
@@ -71,7 +71,7 @@ public class CartControllerTest {
                 .header("Authorization", "Basic " + base64)
                 .params("id",Long.valueOf("1"))
                 .when()
-                .delete("/cart/remove")
+                .delete("/cartproduct")
                 .then()
                 .extract();
 
