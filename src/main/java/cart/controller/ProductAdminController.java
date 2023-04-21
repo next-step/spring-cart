@@ -12,12 +12,15 @@ import java.net.URI;
 @Controller
 @RequestMapping("/admin")
 
+
 public class ProductAdminController {
     private final ProductAdminService productAdminService;
 
     public ProductAdminController(ProductAdminService adminService) {
         this.productAdminService = adminService;
     }
+
+
 
     @GetMapping("/products")
     public String selectProducts(Model model) {
@@ -46,4 +49,6 @@ public class ProductAdminController {
 
         return ResponseEntity.accepted().build();
     }
+
+
 }

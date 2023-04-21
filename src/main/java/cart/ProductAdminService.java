@@ -37,8 +37,6 @@ public class ProductAdminService {
         productDao.updateProduct(product);
     }
 
-
-
     public void itemDelete(Integer id) {
         productDao.deleteProdect(id);
     }
@@ -46,8 +44,6 @@ public class ProductAdminService {
     public Product selectOneProduct(int id) {
         return productDao.selectOneProduct(id);
     }
-
-
 
     @Override
     public String toString() {
