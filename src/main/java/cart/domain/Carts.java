@@ -40,4 +40,15 @@ public class Carts {
         }
         return Optional.of(cartContainer.get(id));
     }
+
+    public boolean existsByMemberAndProduct(Member member, Product product) {
+        return cartContainer.values().stream()
+            .anyMatch(cart -> cart.isOwner(member) && cart.isProduct(product));
+    }
+
+    public List<Cart> findAllByMember(Member member) {
+        return cartContainer.values().stream()
+            .filter(cart -> cart.isOwner(member))
+            .collect(Collectors.toList());
+    }
 }

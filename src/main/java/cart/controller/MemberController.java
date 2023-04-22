@@ -1,5 +1,6 @@
 package cart.controller;
 
+import cart.auth.MemberAuth;
 import cart.domain.*;
 import cart.dto.CartRequest;
 import cart.dto.CartResponse;
@@ -10,6 +11,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.NoSuchElementException;
 
 @Controller
 public class MemberController {
@@ -27,22 +29,26 @@ public class MemberController {
     @ResponseBody
     @DeleteMapping("/member/cart/{id}")
     public ResponseEntity<Void> removeCart(@PathVariable Long id) {
-        final Cart cart = carts.findById(id).orElseThrow();
+        final Cart cart = carts.findById(id).orElseThrow(NoSuchElementException::new);
         carts.remove(cart);
         return ResponseEntity.noContent().build();
     }
 
     @ResponseBody
     @GetMapping("/member/cart")
-    public ResponseEntity<List<CartResponse>> getCart() {
-        return ResponseEntity.ok(CartResponse.lisfOf(carts.getAll()));
+    public ResponseEntity<List<CartResponse>> getCart(@MemberAuth Member member) {
+        final List<Cart> allByMember = carts.findAllByMember(member);
+        return ResponseEntity.ok(CartResponse.lisfOf(allByMember));
     }
 
     @ResponseBody
     @PostMapping("/member/cart")
-    public ResponseEntity<List<CartResponse>> addCart(@RequestBody CartRequest cart) {
-        final Product product = products.findById(cart.getProductId()).orElseThrow();
-        carts.add(new Cart(new Member("a", "d"), product));
+    public ResponseEntity<List<CartResponse>> addCart(@MemberAuth Member member, @RequestBody CartRequest cart) {
+        final Product product = products.findById(cart.getProductId()).orElseThrow(NoSuchElementException::new);
+        if (carts.existsByMemberAndProduct(member, product)) {
+            throw new IllegalArgumentException("이미 장바구니에 존재하는 상품입니다.");
+        }
+        carts.add(new Cart(member, product));
         return ResponseEntity.ok(CartResponse.lisfOf(carts.getAll()));
     }
 

@@ -3,13 +3,18 @@ package cart;
 import cart.domain.*;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.stereotype.Component;
+
+import java.util.Arrays;
 
 @SpringBootApplication
 public class JwpCartApplication {
 
     public static void main(String[] args) {
-        SpringApplication.run(JwpCartApplication.class, args);
+        final ConfigurableApplicationContext run = SpringApplication.run(JwpCartApplication.class, args);
+        Arrays.stream(run.getBeanDefinitionNames())
+            .forEach(it -> System.out.println(it));
     }
 
 }

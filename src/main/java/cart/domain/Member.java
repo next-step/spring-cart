@@ -8,6 +8,9 @@ public class Member {
     private String email;
     private String password;
 
+    public Member() {
+    }
+
     public Member(Long id, String email, String password) {
         this.id = id;
         this.email = email;
@@ -16,6 +19,16 @@ public class Member {
 
     public Member(String email, String password) {
         this(null, email, password);
+    }
+
+    public void authorize(String email, String password) {
+        if (!this.email.equals(email) || !this.password.equals(password)) {
+            throw new IllegalArgumentException("인증 실패");
+        }
+    }
+
+    public boolean isEmail(String email) {
+        return this.email.equals(email);
     }
 
     public Long getId() {

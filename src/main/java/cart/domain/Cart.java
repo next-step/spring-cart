@@ -13,8 +13,7 @@ public class Cart {
     }
 
     public Cart(Member member, Product product) {
-        this.member = member;
-        this.product = product;
+        this(null, member, product);
     }
 
     public Long getId() {
@@ -31,5 +30,13 @@ public class Cart {
 
     public Product getProduct() {
         return product;
+    }
+
+    public boolean isOwner(Member member) {
+        return this.member.equals(member);
+    }
+
+    public boolean isProduct(Product product) {
+        return this.product.equals(product);
     }
 }

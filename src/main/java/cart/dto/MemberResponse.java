@@ -11,7 +11,6 @@ public class MemberResponse {
     private String email;
     private String password;
 
-
     public MemberResponse() {
     }
 

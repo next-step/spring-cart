@@ -17,6 +17,8 @@ public class Members {
             member.setId(incrementKey.addAndGet(1L));
         }
         memberContainer.put(member.getId(), member);
+        System.out.println("add");
+        System.out.println(member.getId());
         return member;
     }
 
@@ -27,17 +29,9 @@ public class Members {
             .collect(Collectors.toList());
     }
 
-    public void remove(Member member) {
-        if (!memberContainer.containsKey(member.getId())) {
-            throw new NoSuchElementException();
-        }
-        memberContainer.remove(member.getId());
-    }
-
-    public Optional<Member> findById(Long id) {
-        if (!memberContainer.containsKey(id)) {
-            return Optional.empty();
-        }
-        return Optional.of(memberContainer.get(id));
+    public Optional<Member> findByEmail(String email) {
+        return memberContainer.values().stream()
+            .filter(member -> member.isEmail(email))
+            .findAny();
     }
 }
