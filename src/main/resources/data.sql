@@ -34,3 +34,16 @@ INSERT INTO MEMBER (email, password)
 VALUES ('cyan@springcart.com', 'password1');
 INSERT INTO MEMBER (email, password)
 VALUES ('jade@springcart.com', 'password2');
+
+DROP TABLE IF EXISTS CART;
+CREATE TABLE CART
+(
+    id    INT               NOT NULL AUTO_INCREMENT,
+    email VARCHAR(50)       NOT NULL,
+    product_id INT          NOT NULL,
+    created_at DATETIME     NOT NULL default current_timestamp,
+    PRIMARY KEY (id)
+);
+
+INSERT INTO CART (email, product_id)
+VALUES ('cyan@springcart.com', '1');

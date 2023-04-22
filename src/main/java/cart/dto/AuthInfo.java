@@ -1,11 +1,11 @@
-package cart.domain;
+package cart.dto;
 
-public class Member {
+public class AuthInfo {
 
     private String email;
     private String password;
 
-    public Member(String email, String password) {
+    public AuthInfo(String email, String password) {
         this.email = email;
         this.password = password;
     }
@@ -17,5 +17,4 @@ public class Member {
     public String getPassword() {
         return password;
     }
-
 }
