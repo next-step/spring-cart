@@ -22,9 +22,20 @@ public class PageController {
         return "index";
     }
 
+    @GetMapping("/admin")
+    public String admin(Model model) {
+        model.addAttribute("products", productService.findAllProducts());
+        return "admin";
+    }
+
     @GetMapping("/settings")
     public String setting(Model model) {
         model.addAttribute("members", memberService.findAllMembers());
         return "settings";
+    }
+
+    @GetMapping("/cart")
+    public String cart() {
+        return "cart";
     }
 }

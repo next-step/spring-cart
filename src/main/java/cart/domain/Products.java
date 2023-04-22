@@ -1,13 +1,13 @@
 package cart.domain;
 
 import cart.exception.NoSuchProductException;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Repository;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-@Component
+@Repository
 public class Products {
     private Long tmpId = 1L;
     private final List<Product> values = new ArrayList<>();

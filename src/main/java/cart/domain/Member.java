@@ -1,5 +1,7 @@
 package cart.domain;
 
+import java.util.Objects;
+
 public class Member {
     private Long id;
     private String email;
@@ -15,8 +17,16 @@ public class Member {
         this(null, email, password);
     }
 
+    public boolean hasPassword(String password) {
+        return Objects.equals(this.password, password);
+    }
+
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public Long getId() {
+        return id;
     }
 
     public String getEmail() {
