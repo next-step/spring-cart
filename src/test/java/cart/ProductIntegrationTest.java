@@ -1,5 +1,6 @@
 package cart;
 
+import cart.value.ProductRequest;
 import io.restassured.RestAssured;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -12,7 +13,7 @@ import static io.restassured.RestAssured.given;
 import static org.assertj.core.api.Assertions.assertThat;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
-public class ProductIntegrationTest {
+class ProductIntegrationTest {
 
     @LocalServerPort
     private int port;
@@ -23,7 +24,20 @@ public class ProductIntegrationTest {
     }
 
     @Test
-    public void getProducts() {
+    void createProducts() {
+        var result = given()
+                .contentType(MediaType.APPLICATION_JSON_VALUE)
+                .when()
+                .body(new ProductRequest(3000, "아메리카노", "url"))
+                .post("/products")
+                .then()
+                .extract();
+
+        assertThat(result.statusCode()).isEqualTo(HttpStatus.OK.value());
+    }
+
+    @Test
+    void getProducts() {
         var result = given()
                 .contentType(MediaType.APPLICATION_JSON_VALUE)
                 .when()
@@ -33,5 +47,4 @@ public class ProductIntegrationTest {
 
         assertThat(result.statusCode()).isEqualTo(HttpStatus.OK.value());
     }
-
 }
