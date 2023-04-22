@@ -1,9 +1,11 @@
 package cart.domain;
 
+import cart.exception.NoSuchProductException;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 @Component
 public class Products {
@@ -18,5 +20,12 @@ public class Products {
 
     public List<Product> findAll() {
         return values;
+    }
+
+    public Product findById(Long productId) {
+        return values.stream()
+                .filter(it -> Objects.equals(it.getId(), productId))
+                .findAny()
+                .orElseThrow(NoSuchProductException::new);
     }
 }

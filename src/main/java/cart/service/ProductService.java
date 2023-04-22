@@ -23,4 +23,10 @@ public class ProductService {
     public ProductsResponse findAllProducts() {
         return ProductsResponse.from(products.findAll());
     }
+
+    public ProductResponse updateProduct(Long productId, ProductRequest productRequest) {
+        Product product = products.findById(productId);
+        product.update(productRequest);
+        return ProductResponse.from(product);
+    }
 }

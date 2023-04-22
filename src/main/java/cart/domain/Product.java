@@ -23,6 +23,12 @@ public class Product {
         return new Product(productRequest.getPrice(), productRequest.getName(), productRequest.getImageUrl());
     }
 
+    public void update(ProductRequest productRequest) {
+        this.price = productRequest.getPrice();
+        this.name = productRequest.getName();
+        this.imageUrl = productRequest.getImageUrl();
+    }
+
     public void setId(Long id) {
         this.id = id;
     }
