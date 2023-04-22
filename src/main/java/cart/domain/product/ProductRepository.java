@@ -2,23 +2,26 @@ package cart.domain.product;
 
 import cart.domain.product.model.ProductModel;
 import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Repository;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.atomic.AtomicLong;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
-@Component
+@Repository
 public class ProductRepository {
 
     private static final List<ProductModel> PRODUCTS = new ArrayList<>();
-    private static Long id = 0L;
+    private static final AtomicLong id = new AtomicLong(0);
 
     public Long save(ProductModel productModel) {
-        productModel.addId(++id);
+        long productId = id.incrementAndGet();
+        productModel.addId(productId);
         PRODUCTS.add(productModel);
-        return id;
+        return productId;
     }
 
     public List<ProductModel> findAll() {

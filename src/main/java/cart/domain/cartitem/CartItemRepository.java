@@ -1,24 +1,26 @@
 package cart.domain.cartitem;
 
 import cart.domain.cartitem.model.CartItemModel;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Repository;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.concurrent.atomic.AtomicLong;
 import java.util.stream.Collectors;
 
-@Component
+@Repository
 public class CartItemRepository {
 
     private static final List<CartItemModel> CART_ITEMS = new ArrayList<>();
-    private static Long id = 0L;
+    private static final AtomicLong id = new AtomicLong(0);
 
     public Long createNewCart(String memberEmail, Long productId) {
+        long carItemId = id.incrementAndGet();
         CartItemModel cartItemModel = new CartItemModel(memberEmail, productId);
-        cartItemModel.addId(++id);
+        cartItemModel.addId(carItemId);
         CART_ITEMS.add(cartItemModel);
-        return id;
+        return carItemId;
     }
 
     public List<CartItemModel> findByMemberEmail(String memberEmail) {

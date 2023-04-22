@@ -26,11 +26,11 @@ public class CartItemService {
         cartItemRepository.createNewCart(memberEmail, productId);
     }
 
-    public void removeCartItem(String email, Long cartItemId) {
+    public void removeCartItem(String memberEmail, Long cartItemId) {
         CartItemModel cartItemModel = cartItemRepository.findById(cartItemId)
             .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 cartItem 입니다."));
 
-        if (!cartItemModel.ownsBy(email)) {
+        if (!cartItemModel.ownsBy(memberEmail)) {
             throw new IllegalArgumentException("해당 유저의 cartItem 이 아닙니다.");
         }
 
