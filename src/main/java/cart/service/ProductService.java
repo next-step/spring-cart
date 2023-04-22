@@ -1,6 +1,9 @@
 package cart.service;
 
+import cart.domain.Product;
 import cart.domain.Products;
+import cart.value.ProductRequest;
+import cart.value.ProductResponse;
 import cart.value.ProductsResponse;
 import org.springframework.stereotype.Service;
 
@@ -10,6 +13,11 @@ public class ProductService {
 
     public ProductService(Products products) {
         this.products = products;
+    }
+
+    public ProductResponse createProduct(ProductRequest productRequest) {
+        Product product = products.save(Product.from(productRequest));
+        return ProductResponse.from(product);
     }
 
     public ProductsResponse findAllProducts() {
