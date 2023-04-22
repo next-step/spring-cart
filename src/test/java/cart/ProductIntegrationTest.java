@@ -6,7 +6,6 @@ import cart.value.ProductResponse;
 import io.restassured.RestAssured;
 import io.restassured.response.ExtractableResponse;
 import io.restassured.response.Response;
-import org.apache.http.HttpHeaders;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -84,18 +83,18 @@ class ProductIntegrationTest {
     @DisplayName("사용자 정보가 없으면 장바구니에 담을 수 없다")
     void addCart() {
         // given
-         var response = create().as(ProductResponse.class);
-         var productId = response.getId();
+        var response = create().as(ProductResponse.class);
+        var productId = response.getId();
 
-         // when
-         var result = given()
-                 .contentType(MediaType.APPLICATION_JSON_VALUE)
-                 .when()
-                 .put("/products/" + productId + "/carts")
-                 .then()
-                 .extract();
+        // when
+        var result = given()
+                .contentType(MediaType.APPLICATION_JSON_VALUE)
+                .when()
+                .put("/products/" + productId + "/carts")
+                .then()
+                .extract();
 
-         // then
+        // then
         assertThat(result.statusCode()).isEqualTo(HttpStatus.UNAUTHORIZED.value());
     }
 

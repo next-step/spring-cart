@@ -25,9 +25,13 @@ public class MemberService {
         String password = credentials.get(1);
 
         Member member = members.findByEmail(email);
+        checkPassword(member, password);
+        return member.getId();
+    }
+
+    private void checkPassword(Member member, String password) {
         if (!member.hasPassword(password)) {
             throw new AuthorizationException("비밀번호가 일치하지 않습니다.");
         }
-        return member.getId();
     }
 }
