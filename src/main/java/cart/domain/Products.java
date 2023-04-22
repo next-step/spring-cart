@@ -28,4 +28,8 @@ public class Products {
                 .findAny()
                 .orElseThrow(NoSuchProductException::new);
     }
+
+    public void deleteById(Long productId) {
+        values.removeIf(it -> Objects.equals(it.getId(), productId));
+    }
 }

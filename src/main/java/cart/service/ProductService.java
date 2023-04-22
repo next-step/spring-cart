@@ -29,4 +29,8 @@ public class ProductService {
         product.update(productRequest);
         return ProductResponse.from(product);
     }
+
+    public void deleteProduct(Long productId) {
+        products.deleteById(productId);
+    }
 }
