@@ -12,33 +12,27 @@ import java.util.Arrays;
 public class JwpCartApplication {
 
     public static void main(String[] args) {
-        final ConfigurableApplicationContext run = SpringApplication.run(JwpCartApplication.class, args);
-        Arrays.stream(run.getBeanDefinitionNames())
-            .forEach(it -> System.out.println(it));
+        SpringApplication.run(JwpCartApplication.class, args);
     }
 
 }
 
 @Component
-class TestDummy {
+class Dummy {
 
-    private final Members members;
-    private final Carts carts;
-    private final Products products;
+    public Dummy(Members members, Carts carts, Products products) {
+        var savedMember1 = members.add(new Member("jinhwan@gmail.com", "1234"));
+        var savedMember2 = members.add(new Member("ecsimsw@gmail.com", "1234"));
+        var savedMember3 = members.add(new Member("nick.kim@gmail.com", "1234"));
 
-    public TestDummy(Members members, Carts carts, Products products) {
-        this.members = members;
-        this.carts = carts;
-        this.products = products;
-
-        var savedMember1 = members.add(new Member("hi", "1234"));
-        var savedMember2 = members.add(new Member("bye", "1234"));
-
-        var savedProduct1 = products.add(new Product("A", "images/sample.jpeg", 123));
-        var savedProduct2 = products.add(new Product("B", "images/sample.jpeg", 123));
+        var savedProduct1 = products.add(new Product("A", "images/sample.jpeg", 10000));
+        var savedProduct2 = products.add(new Product("B", "images/sample.jpeg", 20000));
+        var savedProduct3 = products.add(new Product("C", "images/sample.jpeg", 30000));
 
         carts.add(new Cart(savedMember1, savedProduct1));
         carts.add(new Cart(savedMember1, savedProduct2));
         carts.add(new Cart(savedMember2, savedProduct1));
+        carts.add(new Cart(savedMember3, savedProduct1));
+        carts.add(new Cart(savedMember1, savedProduct3));
     }
 }

@@ -5,6 +5,8 @@ import cart.domain.*;
 import cart.dto.CartRequest;
 import cart.dto.CartResponse;
 import cart.dto.MemberResponse;
+import cart.exception.CartException;
+import cart.exception.ProductException;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -29,7 +31,7 @@ public class MemberController {
     @ResponseBody
     @DeleteMapping("/member/cart/{id}")
     public ResponseEntity<Void> removeCart(@PathVariable Long id) {
-        final Cart cart = carts.findById(id).orElseThrow(NoSuchElementException::new);
+        final Cart cart = carts.findById(id).orElseThrow(() -> new CartException("존재하지 않는 장바구니입니다."));
         carts.remove(cart);
         return ResponseEntity.noContent().build();
     }
@@ -37,25 +39,24 @@ public class MemberController {
     @ResponseBody
     @GetMapping("/member/cart")
     public ResponseEntity<List<CartResponse>> getCart(@MemberAuth Member member) {
-        final List<Cart> allByMember = carts.findAllByMember(member);
-        return ResponseEntity.ok(CartResponse.lisfOf(allByMember));
+        final List<Cart> memberCarts = carts.findAllByMember(member);
+        return ResponseEntity.ok(CartResponse.lisfOf(memberCarts));
     }
 
     @ResponseBody
     @PostMapping("/member/cart")
     public ResponseEntity<List<CartResponse>> addCart(@MemberAuth Member member, @RequestBody CartRequest cart) {
-        final Product product = products.findById(cart.getProductId()).orElseThrow(NoSuchElementException::new);
+        final Product product = products.findById(cart.getProductId()).orElseThrow(() -> new ProductException("존재하지 않는 상품입니다."));
         if (carts.existsByMemberAndProduct(member, product)) {
-            throw new IllegalArgumentException("이미 장바구니에 존재하는 상품입니다.");
+            throw new CartException("이미 장바구니에 존재하는 상품입니다.");
         }
         carts.add(new Cart(member, product));
         return ResponseEntity.ok(CartResponse.lisfOf(carts.getAll()));
     }
 
     @GetMapping("/settings")
-    public String index(Model model) {
-        final List<Member> members = this.members.getAll();
-        model.addAttribute("members", MemberResponse.listOf(members));
+    public String setting(Model model) {
+        model.addAttribute("members", MemberResponse.listOf(members.getAll()));
         return "settings.html";
     }
 

@@ -16,9 +16,7 @@ const addCartItem = (productId) => {
             'Authorization': `Basic ${credentials}`
         }
     }).then((response) => {
-        if(response.status == 200) {
-            alert('장바구니에 담았습니다.');
-        }
+        alert('장바구니에 담았습니다.');
     }).catch((error) => {
         alert('장바구니에 담을 수 없습니다.');
         console.error(error);

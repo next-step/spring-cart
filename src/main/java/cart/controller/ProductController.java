@@ -51,15 +51,13 @@ public class ProductController {
 
     @GetMapping("/")
     public String index(Model model) {
-        final List<Product> products = this.products.getAll();
-        model.addAttribute("products", ProductResponse.listOf(products));
+        model.addAttribute("products", ProductResponse.listOf(products.getAll()));
         return "index.html";
     }
 
     @GetMapping("/admin")
     public String admin(Model model) {
-        final List<Product> products = this.products.getAll();
-        model.addAttribute("products", ProductResponse.listOf(products));
+        model.addAttribute("products", ProductResponse.listOf(products.getAll()));
         return "admin.html";
     }
 }

@@ -17,8 +17,6 @@ public class Members {
             member.setId(incrementKey.addAndGet(1L));
         }
         memberContainer.put(member.getId(), member);
-        System.out.println("add");
-        System.out.println(member.getId());
         return member;
     }
 

@@ -1,5 +1,7 @@
 package cart.domain;
 
+import cart.exception.MemberException;
+
 import java.util.Objects;
 
 public class Member {
@@ -23,7 +25,7 @@ public class Member {
 
     public void authorize(String email, String password) {
         if (!this.email.equals(email) || !this.password.equals(password)) {
-            throw new IllegalArgumentException("인증 실패");
+            throw new MemberException("인증 실패");
         }
     }
 
@@ -55,7 +57,7 @@ public class Member {
         if (o == null || getClass() != o.getClass()) {
             return false;
         }
-        Member product = (Member) o;
+        final Member product = (Member) o;
         return Objects.equals(id, product.id) && Objects.equals(email, product.email)
             && Objects.equals(password, product.password);
     }
