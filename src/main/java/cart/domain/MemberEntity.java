@@ -30,4 +30,8 @@ public class MemberEntity {
     public void setId(Long id) {
         this.id = id;
     }
+
+    public boolean checkPassword(String password) {
+        return this.password.equals(password);
+    }
 }

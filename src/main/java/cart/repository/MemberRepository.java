@@ -21,6 +21,13 @@ public class MemberRepository {
         return id;
     }
 
+    public MemberEntity findByEmail(String email) {
+        return this.members.values().stream()
+                .filter(memberEntity -> memberEntity.getEmail().equals(email))
+                .findAny()
+                .orElseThrow(() -> new IllegalArgumentException("이메일로 가입된 회원이 존재하지 않습니다. email:" + email));
+    }
+
     public List<MemberEntity> findAll() {
         return new ArrayList<>(members.values());
     }

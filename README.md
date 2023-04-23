@@ -37,8 +37,8 @@
     * [x] 장바구니에 상품 추가
     * [x] 장바구니에 담긴 상품 제거
     * [x] 장바구니 목록 조회
-  * [ ] 사용자 정보는 요청 Header의 Authorization 필드를 사용해 인증 처리를 하여 얻습니다.
-    * [ ] 인증 방식은 Basic 인증을 사용
+  * [x] 사용자 정보는 요청 Header의 Authorization 필드를 사용해 인증 처리를 하여 얻습니다.
+    * [x] 인증 방식은 Basic 인증을 사용
       * type: Basic
       * credentials : email:password를 base64로 인코딩한 문자열
 * [ ] 장바구니 페이지 연동
