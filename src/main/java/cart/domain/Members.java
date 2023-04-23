@@ -2,37 +2,42 @@ package cart.domain;
 
 import org.springframework.stereotype.Repository;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
+import java.util.*;
 import java.util.concurrent.atomic.AtomicLong;
 import java.util.stream.Collectors;
 
 @Repository
 public class Members {
 
-    private final Map<Long, Member> memberContainer = new HashMap<>();
+    private final List<Member> memberContainer = new ArrayList<>();
     private final AtomicLong incrementKey = new AtomicLong(0L);
 
     public Member add(Member member) {
         if (member.getId() == null) {
             member.setId(incrementKey.addAndGet(1L));
+            memberContainer.add(member);
+            return member;
         }
-        memberContainer.put(member.getId(), member);
-        return member;
+        final Member saved = findById(member.getId()).orElseThrow();
+        saved.update(member);
+        return saved;
     }
 
     public List<Member> getAll() {
-        return memberContainer.values()
-            .stream()
+        return memberContainer.stream()
             .sorted((p1, p2) -> (int) (p1.getId() - p2.getId()))
             .collect(Collectors.toList());
     }
 
     public Optional<Member> findByEmail(String email) {
-        return memberContainer.values().stream()
+        return memberContainer.stream()
             .filter(member -> member.isEmail(email))
+            .findAny();
+    }
+
+    public Optional<Member> findById(Long id) {
+        return memberContainer.stream()
+            .filter(member -> member.getId().equals(id))
             .findAny();
     }
 }

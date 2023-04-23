@@ -19,10 +19,10 @@ public class GlobalExceptionHandler {
         return ResponseEntity.badRequest().body(iae.getMessage());
     }
 
-    @ExceptionHandler(IllegalArgumentException.class)
-    public ResponseEntity<String> handleUnknownServerException(IllegalArgumentException iae) {
-        iae.printStackTrace();
-        log.error(iae.getMessage());
+    @ExceptionHandler(RuntimeException.class)
+    public ResponseEntity<String> handleUnknownServerException(RuntimeException exception) {
+        exception.printStackTrace();
+        log.error(exception.getMessage());
         return ResponseEntity.internalServerError().build();
     }
 }

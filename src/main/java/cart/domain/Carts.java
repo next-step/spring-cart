@@ -2,52 +2,46 @@ package cart.domain;
 
 import org.springframework.stereotype.Repository;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
 import java.util.concurrent.atomic.AtomicLong;
 import java.util.stream.Collectors;
 
 @Repository
 public class Carts {
 
-    private final Map<Long, Cart> cartContainer = new HashMap<>();
+    private final List<Cart> cartContainer = new ArrayList<>();
     private final AtomicLong incrementKey = new AtomicLong(0L);
 
     public Cart add(Cart cart) {
         if (cart.getId() == null) {
             cart.setId(incrementKey.addAndGet(1L));
+            cartContainer.add(cart);
+            return cart;
         }
-        cartContainer.put(cart.getId(), cart);
-        return cart;
-    }
-
-    public List<Cart> getAll() {
-        return cartContainer.values()
-            .stream()
-            .sorted((p1, p2) -> (int) (p1.getId() - p2.getId()))
-            .collect(Collectors.toList());
+        final Cart saved = findById(cart.getId()).orElseThrow();
+        saved.update(cart);
+        return saved;
     }
 
     public void remove(Cart cart) {
-        if (!cartContainer.containsKey(cart.getId())) {
-            throw new NoSuchElementException();
-        }
-        cartContainer.remove(cart.getId());
+        cartContainer.remove(cart);
     }
 
     public Optional<Cart> findById(Long id) {
-        if (!cartContainer.containsKey(id)) {
-            return Optional.empty();
-        }
-        return Optional.of(cartContainer.get(id));
+        return cartContainer.stream()
+            .filter(cart -> cart.getId().equals(id))
+            .findAny();
     }
 
     public boolean existsByMemberAndProduct(Member member, Product product) {
-        return cartContainer.values().stream()
+        return cartContainer.stream()
             .anyMatch(cart -> cart.isOwner(member) && cart.isProduct(product));
     }
 
     public List<Cart> findAllByMember(Member member) {
-        return cartContainer.values().stream()
+        return cartContainer.stream()
             .filter(cart -> cart.isOwner(member))
             .collect(Collectors.toList());
     }

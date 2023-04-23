@@ -33,6 +33,14 @@ public class Member {
         return this.email.equals(email);
     }
 
+    public void update(Member member) {
+        if(!this.id.equals(member.id)) {
+            throw new MemberException();
+        }
+        this.email = member.email;
+        this.password = member.password;
+    }
+
     public Long getId() {
         return id;
     }
