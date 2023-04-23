@@ -11,7 +11,7 @@ import java.util.concurrent.atomic.AtomicLong;
 
 @Component
 public class MemberRepository {
-    Map<Long, MemberEntity> members = new HashMap<>();
+    private final Map<Long, MemberEntity> members = new HashMap<>();
     private final AtomicLong incrementId = new AtomicLong(1);
 
     public Long save(MemberEntity memberEntity) {

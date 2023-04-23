@@ -35,6 +35,10 @@ public class ProductRepository {
         return this.products.remove(id) != null;
     }
 
+    public ProductEntity findById(Long id) {
+        return this.products.get(id);
+    }
+
     public List<ProductEntity> findAll() {
         return new ArrayList<>(this.products.values());
     }
