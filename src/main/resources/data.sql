@@ -16,3 +16,12 @@ INSERT INTO PRODUCT (ID, NAME, IMAGE, PRICE)  VALUES (
                                'img/pizza.jpeg',
                                13000
                            );
+
+INSERT INTO MEMBER (email, password) VALUES (
+                               'senna@springcart.com',
+                               'senna@password'
+                           );
+INSERT INTO MEMBER (email, password) VALUES (
+                               'rusian@springcart.com',
+                               'rusian@password'
+                           );
