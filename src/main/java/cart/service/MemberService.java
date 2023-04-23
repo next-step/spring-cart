@@ -1,5 +1,6 @@
 package cart.service;
 
+import cart.domain.MemberEntity;
 import cart.presentation.dto.MemberDetailResponse;
 import cart.repository.MemberRepository;
 import org.springframework.stereotype.Service;
@@ -19,5 +20,9 @@ public class MemberService {
         return memberRepository.findAll().stream()
                 .map(MemberDetailResponse::from)
                 .collect(Collectors.toList());
+    }
+
+    public MemberEntity findByEmail(String email) {
+        return memberRepository.findByEmail(email);
     }
 }

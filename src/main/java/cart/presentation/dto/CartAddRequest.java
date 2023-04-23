@@ -3,7 +3,10 @@ package cart.presentation.dto;
 import cart.domain.CartEntity;
 
 public class CartAddRequest {
-    private final Long productId;
+    private Long productId;
+
+    public CartAddRequest() {
+    }
 
     public CartAddRequest(Long productId) {
         this.productId = productId;
