@@ -14,19 +14,21 @@ public class Product {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
-    @Column
     private String name;
 
-    @Column
     private String image;
 
-    @Column
     private int price;
 
     public Product(String name, String image, int price) {
         this.name = name;
         this.image = image;
         this.price = price;
+    }
+
+    public Product(long id, String name, String image, int price) {
+        this(name, image,price);
+        this.id = id;
     }
 
     public Product() {}
