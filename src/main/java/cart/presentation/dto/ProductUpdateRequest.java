@@ -5,9 +5,9 @@ import cart.repository.ProductEntity;
 public class ProductUpdateRequest {
     private final String name;
     private final String imageUrl;
-    private final long price;
+    private final Long price;
 
-    public ProductUpdateRequest(String name, String imageUrl, long price) {
+    public ProductUpdateRequest(String name, String imageUrl, Long price) {
         this.name = name;
         this.imageUrl = imageUrl;
         this.price = price;
