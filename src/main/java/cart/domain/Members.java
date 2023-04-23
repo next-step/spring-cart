@@ -2,7 +2,9 @@ package cart.domain;
 
 import org.springframework.stereotype.Repository;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
 import java.util.concurrent.atomic.AtomicLong;
 import java.util.stream.Collectors;
 
@@ -14,7 +16,7 @@ public class Members {
 
     public Member add(Member member) {
         if (member.getId() == null) {
-            member.setId(incrementKey.addAndGet(1L));
+            member.setId(incrementKey.incrementAndGet());
             memberContainer.add(member);
             return member;
         }

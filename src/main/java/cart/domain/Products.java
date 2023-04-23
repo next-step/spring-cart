@@ -3,7 +3,9 @@ package cart.domain;
 import cart.exception.ProductException;
 import org.springframework.stereotype.Repository;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
 import java.util.concurrent.atomic.AtomicLong;
 import java.util.stream.Collectors;
 
@@ -15,7 +17,7 @@ public class Products {
 
     public Product add(Product product) {
         if (product.getId() == null) {
-            product.setId(incrementKey.addAndGet(1L));
+            product.setId(incrementKey.incrementAndGet());
             productContainer.add(product);
             return product;
         }

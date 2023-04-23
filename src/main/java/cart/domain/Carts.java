@@ -16,7 +16,7 @@ public class Carts {
 
     public Cart add(Cart cart) {
         if (cart.getId() == null) {
-            cart.setId(incrementKey.addAndGet(1L));
+            cart.setId(incrementKey.incrementAndGet());
             cartContainer.add(cart);
             return cart;
         }
@@ -44,5 +44,15 @@ public class Carts {
         return cartContainer.stream()
             .filter(cart -> cart.isOwner(member))
             .collect(Collectors.toList());
+    }
+
+    public List<Cart> findAllByProduct(Product product) {
+        return cartContainer.stream()
+            .filter(cart -> cart.isProduct(product))
+            .collect(Collectors.toList());
+    }
+
+    public void removeAll(List<Cart> carts) {
+        cartContainer.removeAll(carts);
     }
 }

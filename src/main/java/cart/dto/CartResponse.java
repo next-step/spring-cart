@@ -1,9 +1,7 @@
 package cart.dto;
 
 import cart.domain.Cart;
-
-import java.util.List;
-import java.util.stream.Collectors;
+import cart.domain.Product;
 
 public class CartResponse {
 
@@ -20,14 +18,8 @@ public class CartResponse {
         this.product = product;
     }
 
-    public static CartResponse of(Cart cart) {
-        return new CartResponse(cart.getId(), cart.getMember().getId(), ProductResponse.of(cart.getProduct()));
-    }
-
-    public static List<CartResponse> lisfOf(List<Cart> carts) {
-        return carts.stream()
-            .map(CartResponse::of)
-            .collect(Collectors.toList());
+    public static CartResponse of(Cart cart, Product product) {
+        return new CartResponse(cart.getId(), cart.getMemberId(), ProductResponse.of(product));
     }
 
     public Long getId() {

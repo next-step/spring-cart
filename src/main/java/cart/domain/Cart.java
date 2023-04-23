@@ -1,37 +1,37 @@
 package cart.domain;
 
-import cart.exception.MemberException;
+import cart.exception.CartException;
 
 public class Cart {
 
     private Long id;
-    private Member member;
-    private Product product;
+    private Long memberId;
+    private Long productId;
 
-    public Cart(Long id, Member member, Product product) {
+    public Cart(Long id, Long memberId, Long productId) {
         this.id = id;
-        this.member = member;
-        this.product = product;
+        this.memberId = memberId;
+        this.productId = productId;
     }
 
-    public Cart(Member member, Product product) {
-        this(null, member, product);
+    public static Cart of(Member member, Product product) {
+        return new Cart(null, member.getId(), product.getId());
     }
 
     public void update(Cart cart) {
-        if(!this.id.equals(cart.id)) {
-            throw new MemberException();
+        if (!this.id.equals(cart.id)) {
+            throw new CartException();
         }
-        this.product = cart.product;
-        this.member = cart.member;
+        this.productId = cart.productId;
+        this.memberId = cart.memberId;
     }
 
     public boolean isOwner(Member member) {
-        return this.member.equals(member);
+        return this.memberId.equals(member.getId());
     }
 
     public boolean isProduct(Product product) {
-        return this.product.equals(product);
+        return this.productId.equals(product.getId());
     }
 
     public Long getId() {
@@ -42,11 +42,11 @@ public class Cart {
         this.id = id;
     }
 
-    public Member getMember() {
-        return member;
+    public Long getMemberId() {
+        return memberId;
     }
 
-    public Product getProduct() {
-        return product;
+    public Long getProductId() {
+        return productId;
     }
 }

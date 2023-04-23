@@ -26,10 +26,10 @@ class Dummy {
         var savedProduct2 = products.add(new Product("B", "images/sample.jpeg", 20000));
         var savedProduct3 = products.add(new Product("C", "images/sample.jpeg", 30000));
 
-        carts.add(new Cart(savedMember1, savedProduct1));
-        carts.add(new Cart(savedMember1, savedProduct2));
-        carts.add(new Cart(savedMember2, savedProduct1));
-        carts.add(new Cart(savedMember3, savedProduct1));
-        carts.add(new Cart(savedMember1, savedProduct3));
+        carts.add(Cart.of(savedMember1, savedProduct1));
+        carts.add(Cart.of(savedMember1, savedProduct2));
+        carts.add(Cart.of(savedMember2, savedProduct1));
+        carts.add(Cart.of(savedMember3, savedProduct1));
+        carts.add(Cart.of(savedMember1, savedProduct3));
     }
 }
