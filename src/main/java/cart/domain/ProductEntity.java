@@ -1,4 +1,4 @@
-package cart.repository;
+package cart.domain;
 
 public class ProductEntity {
     private Long id;

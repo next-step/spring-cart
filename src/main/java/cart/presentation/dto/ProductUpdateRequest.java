@@ -1,6 +1,6 @@
 package cart.presentation.dto;
 
-import cart.repository.ProductEntity;
+import cart.domain.ProductEntity;
 
 public class ProductUpdateRequest {
     private final String name;

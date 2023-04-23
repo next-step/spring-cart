@@ -1,5 +1,6 @@
 package cart.repository;
 
+import cart.domain.ProductEntity;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
@@ -11,7 +12,7 @@ import java.util.concurrent.atomic.AtomicLong;
 @Component
 public class ProductRepository {
     private final Map<Long, ProductEntity> products = new HashMap<>();
-    private final AtomicLong incrementId = new AtomicLong(0);
+    private final AtomicLong incrementId = new AtomicLong(1);
 
     public Long save(ProductEntity product) {
         long id = incrementId.getAndIncrement();
