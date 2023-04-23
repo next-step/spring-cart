@@ -18,6 +18,8 @@ import org.springframework.http.MediaType;
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 public class ProductIntegrationTest {
 
+    private final ProductRequest productRequest = new ProductRequest("bbq", "images/sample.jpeg", 20000);
+
     @LocalServerPort
     private int port;
 
@@ -62,7 +64,7 @@ public class ProductIntegrationTest {
     @DisplayName("상품을 수정한다.")
     @Test
     public void updateProducts() {
-        var oldProduct = requestCreate();
+        var oldProduct = createProduct(productRequest);
         var updateRequest = new ProductRequest("bhc", "images/sample.jpeg", 10000);
         var result = given()
                 .contentType(MediaType.APPLICATION_JSON_VALUE)
@@ -86,7 +88,7 @@ public class ProductIntegrationTest {
     @DisplayName("상품을 제거한다.")
     @Test
     public void deleteProducts() {
-        var savedProduct = requestCreate();
+        var savedProduct = createProduct(productRequest);
         var result = given()
                 .contentType(MediaType.APPLICATION_JSON_VALUE)
                 .when()
@@ -96,10 +98,10 @@ public class ProductIntegrationTest {
         assertThat(result.statusCode()).isEqualTo(HttpStatus.NO_CONTENT.value());
     }
 
-    private ProductResponse requestCreate() {
+    public static ProductResponse createProduct(ProductRequest productRequest) {
         return given()
                 .contentType(MediaType.APPLICATION_JSON_VALUE)
-                .body(new ProductRequest("bbq", "images/sample.jpeg", 20000))
+                .body(productRequest)
                 .when()
                 .post("/product")
                 .then()
