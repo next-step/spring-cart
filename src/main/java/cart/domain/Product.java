@@ -24,11 +24,11 @@ public class Product {
         this.image = image;
         this.price = price;
     }
-
+    
     public Product(Long id, String name, String image, int price) {
         this(name, image, price);
         this.id = id;
     }
-
+    
     public Product() {}
 }
