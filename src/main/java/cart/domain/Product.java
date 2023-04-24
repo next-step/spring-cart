@@ -14,11 +14,11 @@ public class Product {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
-    private String name;
+    private final String name;
 
-    private String image;
+    private final String image;
 
-    private int price;
+    private final int price;
 
     public Product(String name, String image, int price) {
         this.name = name;
@@ -30,6 +30,4 @@ public class Product {
         this(name, image,price);
         this.id = id;
     }
-
-    public Product() {}
 }

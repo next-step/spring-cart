@@ -28,4 +28,21 @@ public class MemberRepository {
                 }
         );
     }
+
+    public Member findMember(String email) {
+        String sql = "SELECT id, email, password FROM MEMBER" +
+                " WHERE email = ?";
+        return jdbcTemplate.queryForObject(
+                sql,
+                (resultSet, rowNum) -> {
+                    Member member = new Member(
+                            resultSet.getLong("id"),
+                            resultSet.getString("email"),
+                            resultSet.getString("password")
+                    );
+                    return member;
+                },
+                email
+        );
+    }
 }

@@ -13,9 +13,9 @@ import java.util.Objects;
 public class Member {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-    private String email;
-    private String password;
+    private final Long id;
+    private final String email;
+    private final String password;
     public Member(Long id, String email, String password) {
         this.id = id;
         this.email = email;
@@ -29,10 +29,6 @@ public class Member {
         return Objects.equals(this.password, password);
     }
 
-    public void setId(Long id) {
-        this.id = id;
-    }
-
     public Long getId() {
         return id;
     }
@@ -42,5 +38,9 @@ public class Member {
     }
     public String getPassword() {
         return password;
+    }
+
+    public boolean checkPassword(String credentials) {
+       return credentials.equals(this.password);
     }
 }
