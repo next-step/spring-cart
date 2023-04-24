@@ -8,6 +8,8 @@ import cart.service.AuthService;
 import cart.service.CartService;
 import cart.service.MemberService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
@@ -20,9 +22,10 @@ public class CartApiController {
     private final AuthService authService;
     private final CartService cartService;
     @PostMapping("/cart/add/{productId}")
-    public void addCart(HttpServletRequest request, @PathVariable String productId) {
+    public ResponseEntity addCart(HttpServletRequest request, @PathVariable String productId) {
         Member member = basicAuthorizationExtractor.extract(request);
         cartService.addCart(authService.toCart(member, Long.parseLong(productId)));
+        return new ResponseEntity(HttpStatus.OK);
     }
 
     @GetMapping("/cart/show")
@@ -32,8 +35,9 @@ public class CartApiController {
     }
 
     @DeleteMapping("/cart/delete/{productId}")
-    public void deleteCart(HttpServletRequest request, @PathVariable String productId) {
+    public ResponseEntity deleteCart(HttpServletRequest request, @PathVariable String productId) {
         Member member = basicAuthorizationExtractor.extract(request);
         cartService.deleteCart(authService.toCart(member, Long.parseLong(productId)));
+        return new ResponseEntity(HttpStatus.OK);
     }
 }
