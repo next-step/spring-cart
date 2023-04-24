@@ -43,4 +43,21 @@ public class CartRepository {
                 memberId
         );
     }
+
+    public void deleteCart(Cart cart) {
+        String sql = "DELETE FROM CART WHERE member_id = ? AND product_id = ?";
+        jdbcTemplate.update(
+                sql,
+                cart.getMemberId(),
+                cart.getProductId()
+        );
+    }
+
+    public void deleteAll(Long memberId) {
+        String sql = "DELETE FROM CART WHERE member_id = ?";
+        jdbcTemplate.update(
+                sql,
+                memberId
+        );
+    }
 }

@@ -1,7 +1,6 @@
 package cart.domain;
 
 import lombok.Getter;
-import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -14,13 +13,10 @@ public class Product {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
-    @Column
     private String name;
 
-    @Column
     private String image;
 
-    @Column
     private int price;
 
     public Product(String name, String image, int price) {

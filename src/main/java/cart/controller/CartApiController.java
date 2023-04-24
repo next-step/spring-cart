@@ -2,17 +2,13 @@ package cart.controller;
 
 import cart.domain.Member;
 import cart.domain.Product;
-import cart.exception.AuthorizationException;
 import cart.infrastructure.AuthorizationExtractor;
 import cart.infrastructure.BasicAuthorizationExtractor;
 import cart.service.AuthService;
 import cart.service.CartService;
-import lombok.Getter;
+import cart.service.MemberService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;
@@ -26,26 +22,18 @@ public class CartApiController {
     @PostMapping("/cart/add/{productId}")
     public void addCart(HttpServletRequest request, @PathVariable String productId) {
         Member member = basicAuthorizationExtractor.extract(request);
-        String email = member.getEmail();
-        String password = member.getPassword();
-
-        if (!authService.checkInvalidLogin(email, password)) {
-            throw new AuthorizationException();
-        }
-
-        cartService.addCart(authService.findMember(email).getId(), Long.parseLong(productId));
+        cartService.addCart(authService.toCart(member, Long.parseLong(productId)));
     }
 
     @GetMapping("/cart/show")
     public List<Product> getCart(HttpServletRequest request) {
         Member member = basicAuthorizationExtractor.extract(request);
-        String email = member.getEmail();
-        String password = member.getPassword();
+        return cartService.getCart(authService.toMember(member));
+    }
 
-        if (!authService.checkInvalidLogin(email, password)) {
-            throw new AuthorizationException();
-        }
-
-        return cartService.getCart(authService.findMember(email).getId());
+    @DeleteMapping("/cart/delete/{productId}")
+    public void deleteCart(HttpServletRequest request, @PathVariable String productId) {
+        Member member = basicAuthorizationExtractor.extract(request);
+        cartService.deleteCart(authService.toCart(member, Long.parseLong(productId)));
     }
 }

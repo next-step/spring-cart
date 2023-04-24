@@ -14,12 +14,15 @@ import java.util.List;
 public class CartService {
     private final CartRepository cartRepository;
 
-    public void addCart(Long memberId,Long productId) {
-        Cart cart = new Cart(memberId, productId);
+    public void addCart(Cart cart) {
         cartRepository.addCart(cart);
     }
 
-    public List<Product> getCart(Long memberId) {
-        return cartRepository.getCart(memberId);
+    public List<Product> getCart(Member member) {
+        return cartRepository.getCart(member.getId());
+    }
+
+    public void deleteCart(Cart cart) {
+        cartRepository.deleteCart(cart);
     }
 }

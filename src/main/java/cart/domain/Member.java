@@ -16,6 +16,7 @@ public class Member {
     private final Long id;
     private final String email;
     private final String password;
+
     public Member(Long id, String email, String password) {
         this.id = id;
         this.email = email;
@@ -25,10 +26,6 @@ public class Member {
         this(null, email, password);
     }
 
-    public boolean hasPassword(String password) {
-        return Objects.equals(this.password, password);
-    }
-
     public Long getId() {
         return id;
     }
@@ -36,11 +33,12 @@ public class Member {
     public String getEmail() {
         return email;
     }
-    public String getPassword() {
-        return password;
-    }
 
-    public boolean checkPassword(String credentials) {
-       return credentials.equals(this.password);
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Member that = (Member) o;
+        return (Objects.equals(email,that.email) && Objects.equals(password, that.password));
     }
 }
