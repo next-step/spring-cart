@@ -4,6 +4,7 @@ import cart.exception.ProductException;
 import org.springframework.stereotype.Repository;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
 import java.util.concurrent.atomic.AtomicLong;
@@ -28,7 +29,7 @@ public class Products {
 
     public List<Product> getAll() {
         return productContainer.stream()
-            .sorted((p1, p2) -> (int) (p1.getId() - p2.getId()))
+            .sorted(Comparator.comparing(Product::getId))
             .collect(Collectors.toList());
     }
 
