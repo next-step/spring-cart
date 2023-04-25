@@ -1,6 +1,6 @@
-package cart.product.adapter.web;
+package cart.product.web;
 
-import cart.product.adapter.web.response.HomePageProductResponse;
+import cart.product.web.response.HomePageProductResponse;
 import cart.product.application.usecase.GetProductInformationUseCase;
 import cart.product.application.dto.ProductInformation;
 import org.springframework.stereotype.Controller;

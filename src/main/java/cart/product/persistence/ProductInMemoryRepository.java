@@ -1,4 +1,4 @@
-package cart.product.adapter.persistence;
+package cart.product.persistence;
 
 import cart.product.domain.Product;
 import cart.product.domain.ProductEntity;

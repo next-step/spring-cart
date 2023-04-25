@@ -1,8 +1,8 @@
-package cart.product.adapter.web;
+package cart.product.web;
 
-import cart.product.adapter.web.response.AdminProductInformationResponse;
-import cart.product.adapter.web.request.AdminProductRegistrationRequest;
-import cart.product.adapter.web.request.AdminProductUpdateRequest;
+import cart.product.web.response.AdminProductInformationResponse;
+import cart.product.web.request.AdminProductRegistrationRequest;
+import cart.product.web.request.AdminProductUpdateRequest;
 import cart.product.application.usecase.ProductDeleteUseCase;
 import cart.product.application.usecase.ProductRegistrationUseCase;
 import cart.product.application.usecase.ProductUpdateUseCase;

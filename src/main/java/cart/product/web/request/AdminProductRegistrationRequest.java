@@ -1,4 +1,4 @@
-package cart.product.adapter.web.request;
+package cart.product.web.request;
 
 import cart.product.application.dto.ProductRegistrationData;
 

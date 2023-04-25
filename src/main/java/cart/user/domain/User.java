@@ -15,6 +15,25 @@ public class User {
         this.password = password;
     }
 
+    public UserEmail getEmail() {
+        return email;
+    }
+
+    public String getEmailValue() {
+        return email.getValue();
+    }
+
+    public String getPasswordValue() {
+        return password.getValue();
+    }
+
+    public void login(UserPassword password) {
+        if (this.password.equals(password)) {
+            return;
+        }
+        throw new IllegalArgumentException("비밀번호가 일치하지 않습니다.");
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

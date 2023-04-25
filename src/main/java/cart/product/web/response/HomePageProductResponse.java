@@ -1,4 +1,4 @@
-package cart.product.adapter.web.response;
+package cart.product.web.response;
 
 import cart.product.application.dto.ProductInformation;
 
