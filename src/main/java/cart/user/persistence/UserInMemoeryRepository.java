@@ -4,6 +4,7 @@ import cart.user.domain.*;
 import org.springframework.stereotype.Repository;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.concurrent.atomic.AtomicLong;
 
@@ -21,5 +22,13 @@ public class UserInMemoeryRepository implements UserRepository {
                 .map(entry -> new UserEntity(entry.getKey(), entry.getValue()))
                 .findFirst()
                 .orElseThrow(() -> new IllegalArgumentException("이메일에 해당하는 유저 정보가 없습니다."));
+    }
+
+    @Override
+    public List<UserEntity> findAll() {
+        return users.entrySet()
+                .stream()
+                .map(entry -> new UserEntity(entry.getKey(), entry.getValue()))
+                .collect(java.util.stream.Collectors.toList());
     }
 }

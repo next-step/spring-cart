@@ -23,6 +23,14 @@ public class UserEntity {
         return user;
     }
 
+    public String getEmailValue() {
+        return user.getEmailValue();
+    }
+
+    public String getPassworldValue() {
+        return user.getPasswordValue();
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

@@ -1,6 +1,7 @@
 package cart.user.application.dto;
 
 import cart.user.domain.User;
+import cart.user.domain.UserEntity;
 
 public class UserInformation {
     private final String email;
@@ -15,6 +16,13 @@ public class UserInformation {
         return new UserInformation(
                 user.getEmailValue(),
                 user.getPasswordValue()
+        );
+    }
+
+    public static UserInformation fromUserEntity(UserEntity userEntity) {
+        return new UserInformation(
+                userEntity.getEmailValue(),
+                userEntity.getPassworldValue()
         );
     }
 

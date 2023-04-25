@@ -11,11 +11,11 @@ import java.util.stream.Collectors;
 
 @Transactional(readOnly = true)
 @Service
-public class GetProductService implements GetProductInformationUseCase {
+public class GetProductInformationService implements GetProductInformationUseCase {
 
     private final ProductRepository productRepository;
 
-    public GetProductService(ProductRepository productRepository) {
+    public GetProductInformationService(ProductRepository productRepository) {
         this.productRepository = productRepository;
     }
 
