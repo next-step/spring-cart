@@ -21,8 +21,8 @@ public class ProductPrice {
         }
     }
 
-    public BigDecimal getValue() {
-        return value;
+    public Long getLongValue() {
+        return value.longValue();
     }
 
     @Override

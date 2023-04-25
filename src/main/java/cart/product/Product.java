@@ -19,20 +19,20 @@ public class Product {
         this.price = price;
     }
 
-    public ProductId getId() {
-        return id;
+    public Long getIdValue() {
+        return id.getValue();
     }
 
-    public ProductName getName() {
-        return name;
+    public String getNameValue() {
+        return name.getValue();
     }
 
-    public ProductImage getImage() {
-        return image;
+    public String getImageValue() {
+        return image.getValue();
     }
 
-    public ProductPrice getPrice() {
-        return price;
+    public Long getPriceLongValue() {
+        return price.getLongValue();
     }
 
     @Override
