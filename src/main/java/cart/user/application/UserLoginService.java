@@ -1,6 +1,6 @@
 package cart.user.application;
 
-import cart.user.application.dto.UserInformation;
+import cart.authenticate.AuthUserInformation;
 import cart.user.application.usecase.UserLoginUseCase;
 import cart.user.domain.*;
 import org.springframework.stereotype.Service;
@@ -17,12 +17,12 @@ public class UserLoginService implements UserLoginUseCase {
     }
 
     @Override
-    public UserInformation login(String email, String password) {
+    public AuthUserInformation login(String email, String password) {
         UserEmail userEmail = new UserEmail(email);
         UserPassword userPassword = new UserPassword(password);
         UserEntity userEntity = userRepository.findByEmail(userEmail);
         User user = userEntity.getUser();
         user.login(userPassword);
-        return UserInformation.fromUser(user);
+        return new AuthUserInformation(userEntity.getIdValue());
     }
 }

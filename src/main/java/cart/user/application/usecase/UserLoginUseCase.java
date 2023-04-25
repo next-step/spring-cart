@@ -1,7 +1,7 @@
 package cart.user.application.usecase;
 
-import cart.user.application.dto.UserInformation;
+import cart.authenticate.AuthUserInformation;
 
 public interface UserLoginUseCase {
-    UserInformation login(String email, String password);
+    AuthUserInformation login(String email, String password);
 }

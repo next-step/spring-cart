@@ -26,4 +26,9 @@ public class GetProductInformationService implements GetProductInformationUseCas
                 .map(ProductInformation::fromProductEntity)
                 .collect(Collectors.toList());
     }
+
+    @Override
+    public ProductInformation getProductInformationById(Long id) {
+        return ProductInformation.fromProductEntity(productRepository.findById(id));
+    }
 }

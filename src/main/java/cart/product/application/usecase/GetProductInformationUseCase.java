@@ -6,4 +6,5 @@ import java.util.List;
 
 public interface GetProductInformationUseCase {
     List<ProductInformation> getProductInformations();
+    ProductInformation getProductInformationById(Long id);
 }

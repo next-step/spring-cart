@@ -19,6 +19,10 @@ public class UserEntity {
         return id;
     }
 
+    public Long getIdValue() {
+        return id.getValue();
+    }
+
     public User getUser() {
         return user;
     }
