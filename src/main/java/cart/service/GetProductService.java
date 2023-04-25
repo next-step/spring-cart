@@ -1,7 +1,7 @@
 package cart.service;
 
-import cart.controller.HomePageProductsUseCase;
-import cart.dto.HomePageProduct;
+import cart.controller.usecase.GetProductDtoUseCase;
+import cart.dto.ProductDto;
 import cart.product.ProductRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -11,7 +11,7 @@ import java.util.stream.Collectors;
 
 @Transactional(readOnly = true)
 @Service
-public class GetProductService implements HomePageProductsUseCase {
+public class GetProductService implements GetProductDtoUseCase {
 
     private final ProductRepository productRepository;
 
@@ -20,10 +20,10 @@ public class GetProductService implements HomePageProductsUseCase {
     }
 
     @Override
-    public List<HomePageProduct> getHomePageProducts() {
+    public List<ProductDto> getProductDtos() {
         return productRepository.findAll()
                 .stream()
-                .map(HomePageProduct::fromProduct)
+                .map(ProductDto::fromProduct)
                 .collect(Collectors.toList());
     }
 }

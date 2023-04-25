@@ -1,6 +1,6 @@
 package cart.controller.response;
 
-import cart.dto.HomePageProduct;
+import cart.dto.ProductDto;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -18,19 +18,19 @@ public class HomePageProductResponse {
         this.price = price;
     }
 
-    public static List<HomePageProductResponse> ofHomePageProducts(List<HomePageProduct> homePageProducts) {
-        return homePageProducts
+    public static List<HomePageProductResponse> ofProductDtos(List<ProductDto> productDtos) {
+        return productDtos
                 .stream()
-                .map(HomePageProductResponse::fromHomePageProduct)
+                .map(HomePageProductResponse::fromProductDto)
                 .collect(Collectors.toList());
     }
 
-    private static HomePageProductResponse fromHomePageProduct(HomePageProduct homePageProduct) {
+    private static HomePageProductResponse fromProductDto(ProductDto productDto) {
         return new HomePageProductResponse(
-                homePageProduct.getId(),
-                homePageProduct.getName(),
-                homePageProduct.getImage(),
-                homePageProduct.getPrice()
+                productDto.getId(),
+                productDto.getName(),
+                productDto.getImage(),
+                productDto.getPrice()
         );
     }
 

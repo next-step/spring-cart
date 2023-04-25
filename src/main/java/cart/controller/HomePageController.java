@@ -1,7 +1,8 @@
 package cart.controller;
 
 import cart.controller.response.HomePageProductResponse;
-import cart.dto.HomePageProduct;
+import cart.controller.usecase.GetProductDtoUseCase;
+import cart.dto.ProductDto;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -13,16 +14,16 @@ import java.util.List;
 @Controller
 public class HomePageController {
 
-    private final HomePageProductsUseCase homePageProductsUseCase;
+    private final GetProductDtoUseCase getProductDtoUseCase;
 
-    public HomePageController(HomePageProductsUseCase homePageProductsUseCase) {
-        this.homePageProductsUseCase = homePageProductsUseCase;
+    public HomePageController(GetProductDtoUseCase getProductDtoUseCase) {
+        this.getProductDtoUseCase = getProductDtoUseCase;
     }
 
     @GetMapping
     public String home(Model model) {
-        List<HomePageProduct> homePageProducts = homePageProductsUseCase.getHomePageProducts();
-        List<HomePageProductResponse> homePageProductResponses = HomePageProductResponse.ofHomePageProducts(homePageProducts);
+        List<ProductDto> productDtos = getProductDtoUseCase.getProductDtos();
+        List<HomePageProductResponse> homePageProductResponses = HomePageProductResponse.ofProductDtos(productDtos);
         model.addAttribute("products", homePageProductResponses);
         return "index.html";
     }
