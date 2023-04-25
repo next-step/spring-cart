@@ -1,6 +1,6 @@
 package cart.controller;
 
-import cart.controller.response.HomePageProductResponse;
+import cart.controller.response.AdminPageProductResponse;
 import cart.controller.usecase.GetProductInformationUseCase;
 import cart.dto.ProductInformation;
 import org.springframework.stereotype.Controller;
@@ -10,21 +10,21 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import java.util.List;
 
-@RequestMapping("/")
+@RequestMapping("/admin")
 @Controller
-public class HomePageController {
+public class AdminPageController {
 
     private final GetProductInformationUseCase getProductInformationUseCase;
 
-    public HomePageController(GetProductInformationUseCase getProductInformationUseCase) {
+    public AdminPageController(GetProductInformationUseCase getProductInformationUseCase) {
         this.getProductInformationUseCase = getProductInformationUseCase;
     }
 
     @GetMapping
-    public String home(Model model) {
+    public String admin(Model model) {
         List<ProductInformation> productInformations = getProductInformationUseCase.getProductInformations();
-        List<HomePageProductResponse> homePageProductResponses = HomePageProductResponse.ofProductInformations(productInformations);
-        model.addAttribute("products", homePageProductResponses);
-        return "index.html";
+        List<AdminPageProductResponse> adminPageProductResponses = AdminPageProductResponse.ofProductInformations(productInformations);
+        model.addAttribute("products", adminPageProductResponses);
+        return "admin.html";
     }
 }
