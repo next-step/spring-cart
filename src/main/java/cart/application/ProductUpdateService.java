@@ -1,4 +1,4 @@
-package cart.service;
+package cart.application;
 
 import cart.controller.usecase.ProductUpdateUseCase;
 import cart.dto.ProductInformation;
