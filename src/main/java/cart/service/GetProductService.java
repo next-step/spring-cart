@@ -23,7 +23,7 @@ public class GetProductService implements GetProductInformationUseCase {
     public List<ProductInformation> getProductInformations() {
         return productRepository.findAll()
                 .stream()
-                .map(ProductInformation::fromProduct)
+                .map(ProductInformation::fromProductEntity)
                 .collect(Collectors.toList());
     }
 }

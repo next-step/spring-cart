@@ -1,6 +1,6 @@
 package cart.dto;
 
-import cart.product.Product;
+import cart.product.ProductEntity;
 
 public class ProductInformation {
     private final Long id;
@@ -15,12 +15,12 @@ public class ProductInformation {
         this.price = price;
     }
 
-    public static ProductInformation fromProduct(Product product) {
+    public static ProductInformation fromProductEntity(ProductEntity productEntity) {
         return new ProductInformation(
-                product.getIdValue(),
-                product.getNameValue(),
-                product.getImageValue(),
-                product.getPriceLongValue()
+                productEntity.getIdValue(),
+                productEntity.getNameValue(),
+                productEntity.getImageValue(),
+                productEntity.getPriceLongValue()
         );
     }
 
