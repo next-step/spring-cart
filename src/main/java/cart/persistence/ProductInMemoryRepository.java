@@ -27,9 +27,30 @@ public class ProductInMemoryRepository implements ProductRepository {
     }
 
     @Override
+    public ProductEntity findById(Long productId) {
+        ProductId id = new ProductId(productId);
+        Product product = products.get(id);
+        return new ProductEntity(id, product);
+    }
+
+    @Override
     public ProductEntity save(Product product) {
         ProductId productId = new ProductId(idGenerator.getAndIncrement());
         products.put(productId, product);
         return new ProductEntity(productId, product);
+    }
+
+    @Override
+    public void deleteById(Long id) {
+        ProductId productId = new ProductId(id);
+        products.remove(productId);
+    }
+
+    @Override
+    public ProductEntity update(ProductEntity productEntity) {
+        ProductId productId = productEntity.getId();
+        Product product = productEntity.getProduct();
+        products.put(productId, product);
+        return productEntity;
     }
 }

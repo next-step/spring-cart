@@ -34,9 +34,9 @@
             <tr th:each="product : ${products}">
                 <td th:text="${product.id}"></td>
                 <td th:text="${product.name}"></td> <!-- 상품 이름 -->
-                <td th:number="${product.price}"></td> <!-- 상품 가격 -->
+                <td th:text="${product.price}"></td> <!-- 상품 가격 -->
                 <td>
-                    <img style="max-width: 100px;"> <!-- 상품 이미지 -->
+                    <img th:src="${product.image}" style="max-width: 100px;"> <!-- 상품 이미지 -->
                 </td>
                 <td>
                     <button th:onclick="showEditModal([[${product}]])">Edit</button>
@@ -57,7 +57,7 @@
                 <input type="number" id="price" name="price" required><br>
 
                 <label for="image-url">이미지 URL:</label><br>
-                <input type="text" id="image-url" name="imageUrl" required><br>
+                <input type="text" id="image-url" name="image" required><br>
 
                 <button type="submit">Submit</button>
             </form>

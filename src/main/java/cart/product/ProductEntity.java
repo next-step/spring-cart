@@ -11,6 +11,18 @@ public class ProductEntity {
         this.product = product;
     }
 
+    public ProductEntity update(Product product) {
+        return new ProductEntity(id, product);
+    }
+
+    public ProductId getId() {
+        return id;
+    }
+
+    public Product getProduct() {
+        return product;
+    }
+
     public Long getIdValue() {
         return id.getValue();
     }
