@@ -5,9 +5,7 @@ import cart.cartitem.application.dto.CartItemInformation;
 import cart.cartitem.application.usecase.CartItemAddUseCase;
 import cart.cartitem.domain.CartItemRepository;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
-@Transactional
 @Service
 public class CartItemAddService implements CartItemAddUseCase {
 

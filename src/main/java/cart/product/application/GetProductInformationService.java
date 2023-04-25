@@ -1,15 +1,13 @@
 package cart.product.application;
 
-import cart.product.application.usecase.GetProductInformationUseCase;
 import cart.product.application.dto.ProductInformation;
+import cart.product.application.usecase.GetProductInformationUseCase;
 import cart.product.domain.ProductRepository;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.stream.Collectors;
 
-@Transactional(readOnly = true)
 @Service
 public class GetProductInformationService implements GetProductInformationUseCase {
 

@@ -5,12 +5,10 @@ import cart.cartitem.application.usecase.GetCartItemInformationUseCase;
 import cart.cartitem.domain.CartItemRepository;
 import cart.cartitem.domain.CartItemUserId;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.stream.Collectors;
 
-@Transactional(readOnly = true)
 @Service
 public class GetCartItemInformationService implements GetCartItemInformationUseCase {
 

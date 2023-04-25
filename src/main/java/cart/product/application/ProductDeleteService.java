@@ -3,9 +3,7 @@ package cart.product.application;
 import cart.product.application.usecase.ProductDeleteUseCase;
 import cart.product.domain.ProductRepository;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
-@Transactional
 @Service
 public class ProductDeleteService implements ProductDeleteUseCase {
 

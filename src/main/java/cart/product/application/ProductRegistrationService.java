@@ -1,15 +1,13 @@
 package cart.product.application;
 
-import cart.product.application.usecase.ProductRegistrationUseCase;
 import cart.product.application.dto.ProductInformation;
 import cart.product.application.dto.ProductRegistrationData;
+import cart.product.application.usecase.ProductRegistrationUseCase;
 import cart.product.domain.Product;
 import cart.product.domain.ProductEntity;
 import cart.product.domain.ProductRepository;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
-@Transactional
 @Service
 public class ProductRegistrationService implements ProductRegistrationUseCase {
 

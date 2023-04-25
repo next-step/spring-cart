@@ -1,15 +1,13 @@
 package cart.product.application;
 
-import cart.product.application.usecase.ProductUpdateUseCase;
 import cart.product.application.dto.ProductInformation;
 import cart.product.application.dto.ProductUpdateData;
+import cart.product.application.usecase.ProductUpdateUseCase;
 import cart.product.domain.Product;
 import cart.product.domain.ProductEntity;
 import cart.product.domain.ProductRepository;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
-@Transactional
 @Service
 public class ProductUpdateService implements ProductUpdateUseCase {
 
