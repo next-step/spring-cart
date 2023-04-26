@@ -14,7 +14,7 @@ class UserEmailTest {
         assertThrows(IllegalArgumentException.class, () -> new UserEmail("test"));
     }
 
-    @DisplayName("사요자 이메일은 동등성 비교가 가능하다.")
+    @DisplayName("사용자 이메일은 동등성 비교가 가능하다.")
     @Test
     void userEmailIsEquatable() {
         UserEmail userEmail = new UserEmail("hyeon9mak@choi.go");
