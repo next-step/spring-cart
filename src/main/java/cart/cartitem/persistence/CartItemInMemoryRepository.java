@@ -22,4 +22,11 @@ public class CartItemInMemoryRepository implements CartItemRepository {
                 .map(entry -> new CartItemEntity(entry.getKey(), entry.getValue()))
                 .collect(Collectors.toList());
     }
+
+    @Override
+    public CartItemEntity save(CartItem cartItem) {
+        CartItemId cartItemId = new CartItemId(idGenerator.getAndIncrement());
+        cartItems.put(cartItemId, cartItem);
+        return new CartItemEntity(cartItemId, cartItem);
+    }
 }
