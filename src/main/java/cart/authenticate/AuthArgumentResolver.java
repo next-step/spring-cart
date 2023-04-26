@@ -17,7 +17,7 @@ public class AuthArgumentResolver implements HandlerMethodArgumentResolver {
 
     private static final int EMAIL_INDEX = 0;
     private static final int PASSWORD_INDEX = 1;
-    private static final String BEARER_TOKEN_REGEX = " ";
+    private static final String BASIC_TOKEN_REGEX = " ";
     private static final int TOKEN_INDEX = 1;
     private static final String EMAIL_PASSWORD_REGEX = ":";
 
@@ -46,7 +46,7 @@ public class AuthArgumentResolver implements HandlerMethodArgumentResolver {
     }
 
     private List<String> parseToken(String authorizationValue) {
-        String token = authorizationValue.split(BEARER_TOKEN_REGEX)[TOKEN_INDEX];
+        String token = authorizationValue.split(BASIC_TOKEN_REGEX)[TOKEN_INDEX];
         String decodedValue = new String(Base64.decodeBase64(token));
         return Arrays.asList(decodedValue.split(EMAIL_PASSWORD_REGEX));
     }
