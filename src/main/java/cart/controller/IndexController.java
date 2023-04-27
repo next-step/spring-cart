@@ -19,4 +19,9 @@ public class IndexController {
                 );
         return "/index";
     }
+
+    @GetMapping("/cart")
+    public String cart(Model model) {
+        return "/cart";
+    }
 }

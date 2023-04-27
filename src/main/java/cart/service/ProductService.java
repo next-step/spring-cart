@@ -18,7 +18,12 @@ public class ProductService {
     public void addProduct(Product product) {
         productRepository.insert(product);
     }
+    
     public void deleteProduct(Long id) {
         productRepository.delete(id);
+    }
+    
+    public void updateProduct(Product product) {
+        productRepository.update(product);
     }
 }

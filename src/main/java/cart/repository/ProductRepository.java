@@ -15,14 +15,15 @@ public class ProductRepository {
     }
 
     public List<Product> findAll() {
-        String sql = "select name, image, price from product";
+        String sql = "select id, name, image, price from product";
         return jdbcTemplate.query(
                 sql,
                 (resultSet, rowNumber) -> {
                     Product product = new Product(
-                        resultSet.getString("name"),
-                        resultSet.getString("image"),
-                        resultSet.getInt("price")
+                            resultSet.getLong("id"),
+                            resultSet.getString("name"),
+                            resultSet.getString("image"),
+                            resultSet.getInt("price")
                     );
                     return product;
                 }
@@ -42,5 +43,16 @@ public class ProductRepository {
     public void delete(Long id) {
         String sql = "DELETE FROM PRODUCT WHERE id=?";
         jdbcTemplate.update(sql, id);
+    }
+
+    public void update(Product product) {
+        String sql = "UPDATE product SET name = ?, image = ?, price = ?" +
+                "WHERE id = ?";
+        jdbcTemplate.update(sql,
+                product.getName(),
+                product.getImage(),
+                product.getPrice(),
+                product.getId()
+        );
     }
 }
