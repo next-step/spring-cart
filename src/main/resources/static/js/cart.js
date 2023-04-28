@@ -1,3 +1,4 @@
+const host = "http://localhost:8080/cart";
 const addCartItem = (productId) => {
     const credentials = localStorage.getItem('credentials');
     if (!credentials) {
@@ -6,11 +7,14 @@ const addCartItem = (productId) => {
         return;
     }
 
-    // TODO: [2단계] 장바구니 CRUD API에 맞게 변경
     axios.request({
-        url: '',
+        method: 'post',
+        url: host + '/items',
         headers: {
             'Authorization': `Basic ${credentials}`
+        },
+        data: {
+            productId: productId
         }
     }).then((response) => {
         alert('장바구니에 담았습니다.');
@@ -27,9 +31,9 @@ const removeCartItem = (id) => {
         return;
     }
 
-    // TODO: [2단계] 장바구니 CRUD API에 맞게 변경
     axios.request({
-        url: '',
+        mehtod: 'delete',
+        url: host + '/items/' + id,
         headers: {
             'Authorization': `Basic ${credentials}`
         }
