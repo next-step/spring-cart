@@ -20,9 +20,9 @@ public class ProductService {
     }
 
     public ProductsResponse getAllProducts() {
-        productRepository.findAll();
+        Products products = productRepository.findAll();
 
-        return null;
+        return ProductsResponse.of(products);
     }
 
 }
