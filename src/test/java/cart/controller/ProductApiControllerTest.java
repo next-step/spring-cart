@@ -11,6 +11,7 @@ import static cart.controller.ProductStep.상품_삭제_API_요청;
 import static cart.controller.ProductStep.상품_삭제_응답_검증;
 import static cart.controller.ProductStep.상품_생성_API_요청;
 import static cart.controller.ProductStep.상품_생성_API_요청_응답변환;
+import static cart.controller.ProductStep.상품_생성_실패_응답_검증;
 import static cart.controller.ProductStep.상품_생성_응답_검증;
 import static cart.controller.ProductStep.상품_수정_API_요청;
 import static cart.controller.ProductStep.상품_수정_응답_검증;
@@ -26,13 +27,24 @@ class ProductApiControllerTest extends AssuredTest {
     @DisplayName("상품 생성 요청, 응답 테스트")
     @Test
     void createProduct() {
-        // given
-
         // when
         ExtractableResponse<Response> extractableResponse = 상품_생성_API_요청(NAME, IMAGE, PRICE);
 
         // then
         상품_생성_응답_검증(extractableResponse, NAME, IMAGE, PRICE);
+    }
+
+    @DisplayName("상품 생성 실패 테스트")
+    @Test
+    void createProduct_fail() {
+        // given
+        long price = -1000L;
+
+        // when
+        ExtractableResponse<Response> extractableResponse = 상품_생성_API_요청(NAME, IMAGE, price);
+
+        // then
+        상품_생성_실패_응답_검증(extractableResponse);
     }
 
     @DisplayName("상품 수정 요청, 응답 테스트")

@@ -2,8 +2,11 @@ package cart.controller.handler.dto;
 
 public class ErrorResponse {
 
-    private final String errorCode;
-    private final String message;
+    private String errorCode;
+    private String message;
+
+    private ErrorResponse() {
+    }
 
     public ErrorResponse(String errorCode, String message) {
 
@@ -11,4 +14,11 @@ public class ErrorResponse {
         this.message = message;
     }
 
+    public String getErrorCode() {
+        return errorCode;
+    }
+
+    public String getMessage() {
+        return message;
+    }
 }

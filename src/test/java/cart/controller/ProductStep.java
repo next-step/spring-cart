@@ -2,6 +2,8 @@ package cart.controller;
 
 import cart.controller.dto.ProductResponse;
 import cart.controller.dto.ProductsResponse;
+import cart.controller.handler.dto.ErrorResponse;
+import cart.exception.ErrorType;
 import io.restassured.RestAssured;
 import io.restassured.response.ExtractableResponse;
 import io.restassured.response.Response;
@@ -45,6 +47,14 @@ public final class ProductStep {
         assertThat(response.getName()).isEqualTo(name);
         assertThat(response.getImage()).isEqualTo(image);
         assertThat(response.getPrice().longValue()).isEqualTo(price);
+    }
+
+    public static void 상품_생성_실패_응답_검증(ExtractableResponse<Response> extractableResponse) {
+        assertThat(extractableResponse.statusCode()).isEqualTo(HttpStatus.BAD_REQUEST.value());
+
+        ErrorResponse response = extractableResponse.jsonPath().getObject(".", ErrorResponse.class);
+        assertThat(response.getErrorCode()).isEqualTo(ErrorType.INVALID_MONEY.name());
+        assertThat(response.getMessage()).isEqualTo(ErrorType.INVALID_MONEY.getMessage());
     }
 
     public static ExtractableResponse<Response> 상품_수정_API_요청(long id, String name, String image, long price) {
