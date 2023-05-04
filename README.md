@@ -4,7 +4,7 @@
 
 ## 미션1 PR 링크
 
-*
+* https://github.com/next-step/spring-cart/pull/25
 
 ## 미션 소개
 
