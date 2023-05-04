@@ -10,6 +10,9 @@ public class ProductsResponse {
 
     private List<ProductResponse> products;
 
+    private ProductsResponse() {
+    }
+
     private ProductsResponse(List<ProductResponse> products) {
         this.products = products;
     }

@@ -1,6 +1,7 @@
 package cart.controller;
 
 import cart.controller.dto.ProductResponse;
+import cart.controller.dto.ProductsResponse;
 import io.restassured.RestAssured;
 import io.restassured.response.ExtractableResponse;
 import io.restassured.response.Response;
@@ -85,6 +86,23 @@ public final class ProductStep {
 
     public static void 상품_삭제_응답_검증(ExtractableResponse<Response> extractableResponse) {
         assertThat(extractableResponse.statusCode()).isEqualTo(HttpStatus.NO_CONTENT.value());
+    }
+
+    public static ExtractableResponse<Response> 상품_전체_조회_API_요청() {
+        return RestAssured
+                .given().log().all()
+                .contentType(MediaType.APPLICATION_JSON_VALUE)
+                .accept(MediaType.APPLICATION_JSON_VALUE)
+                .when().get("/products")
+                .then().log().all()
+                .extract();
+    }
+
+    public static void 상품_전체_조회_응답_검증(ExtractableResponse<Response> extractableResponse) {
+        assertThat(extractableResponse.statusCode()).isEqualTo(HttpStatus.OK.value());
+
+        ProductsResponse response = extractableResponse.jsonPath().getObject(".", ProductsResponse.class);
+        assertThat(response.getProducts()).isNotNull();
     }
 
 }

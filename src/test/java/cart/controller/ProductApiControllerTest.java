@@ -14,6 +14,8 @@ import static cart.controller.ProductStep.상품_생성_API_요청_응답변환;
 import static cart.controller.ProductStep.상품_생성_응답_검증;
 import static cart.controller.ProductStep.상품_수정_API_요청;
 import static cart.controller.ProductStep.상품_수정_응답_검증;
+import static cart.controller.ProductStep.상품_전체_조회_API_요청;
+import static cart.controller.ProductStep.상품_전체_조회_응답_검증;
 
 class ProductApiControllerTest extends AssuredTest {
 
@@ -65,6 +67,20 @@ class ProductApiControllerTest extends AssuredTest {
 
         // then
         상품_삭제_응답_검증(extractableResponse);
+    }
+
+    @DisplayName("전체 상품 조회 요청, 응답 테스트")
+    @Test
+    void findProduct() {
+        // given
+        ProductResponse productResponse = 상품_생성_API_요청_응답변환(NAME, IMAGE, PRICE);
+        long productId = productResponse.getId();
+
+        // when
+        ExtractableResponse<Response> extractableResponse = 상품_전체_조회_API_요청();
+
+        // then
+        상품_전체_조회_응답_검증(extractableResponse);
     }
 
 }

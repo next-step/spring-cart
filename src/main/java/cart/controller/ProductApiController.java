@@ -3,8 +3,10 @@ package cart.controller;
 import cart.application.ProductService;
 import cart.controller.dto.ProductRequest;
 import cart.controller.dto.ProductResponse;
+import cart.controller.dto.ProductsResponse;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -42,6 +44,13 @@ public class ProductApiController {
         productService.deleteProduct(id);
 
         return ResponseEntity.noContent().build();
+    }
+
+    @GetMapping
+    public ResponseEntity<ProductsResponse> findProduct() {
+        ProductsResponse response = productService.getAllProducts();
+
+        return ResponseEntity.ok(response);
     }
 
 }
