@@ -4,6 +4,7 @@ import cart.domain.Product;
 import cart.domain.ProductRepository;
 import cart.domain.Products;
 import cart.infra.rowmapper.ProductRowMapper;
+import org.springframework.jdbc.core.namedparam.BeanPropertySqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcDaoSupport;
 import org.springframework.jdbc.core.simple.SimpleJdbcInsert;
 import org.springframework.stereotype.Repository;
@@ -35,6 +36,13 @@ public class ProductDao extends NamedParameterJdbcDaoSupport implements ProductR
                 .query(query, ROW_MAPPER);
 
         return new Products(products);
+    }
+
+    @Override
+    public void save(Product product) {
+        BeanPropertySqlParameterSource parameterSource = new BeanPropertySqlParameterSource(product);
+        Number key = simpleJdbcInsert.executeAndReturnKey(parameterSource);
+        product.updateId(key.longValue());
     }
 
 }

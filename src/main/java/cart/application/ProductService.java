@@ -6,8 +6,6 @@ import cart.controller.dto.ProductsResponse;
 import cart.domain.Product;
 import cart.domain.ProductRepository;
 import cart.domain.Products;
-import cart.exception.ErrorType;
-import cart.exception.ServiceException;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -23,6 +21,13 @@ public class ProductService {
         Products products = productRepository.findAll();
 
         return ProductsResponse.of(products);
+    }
+
+    public ProductResponse createProduct(ProductRequest request) {
+        Product product = request.toProduct();
+        productRepository.save(product);
+
+        return ProductResponse.of(product);
     }
 
 }
