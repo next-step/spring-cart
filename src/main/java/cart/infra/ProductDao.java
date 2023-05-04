@@ -5,12 +5,15 @@ import cart.domain.ProductRepository;
 import cart.domain.Products;
 import cart.infra.rowmapper.ProductRowMapper;
 import org.springframework.jdbc.core.namedparam.BeanPropertySqlParameterSource;
+import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcDaoSupport;
+import org.springframework.jdbc.core.namedparam.SqlParameterSource;
 import org.springframework.jdbc.core.simple.SimpleJdbcInsert;
 import org.springframework.stereotype.Repository;
 
 import javax.sql.DataSource;
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 public class ProductDao extends NamedParameterJdbcDaoSupport implements ProductRepository {
@@ -43,6 +46,26 @@ public class ProductDao extends NamedParameterJdbcDaoSupport implements ProductR
         BeanPropertySqlParameterSource parameterSource = new BeanPropertySqlParameterSource(product);
         Number key = simpleJdbcInsert.executeAndReturnKey(parameterSource);
         product.updateId(key.longValue());
+    }
+
+    @Override
+    public void update(Product product) {
+        final String query = String.format("UPDATE %s SET name = :name, image = :image, price = :price " +
+                "WHERE id = :id", TABLE_NAME);
+        SqlParameterSource namedParameters = new BeanPropertySqlParameterSource(product);
+
+        getNamedParameterJdbcTemplate().update(query, namedParameters);
+    }
+
+    @Override
+    public Optional<Product> findById(long id) {
+        final String query = String.format("SELECT * FROM %s WHERE id = :id", TABLE_NAME);
+        SqlParameterSource namedParameters = new MapSqlParameterSource().addValue("id", id);
+
+        Product product = getNamedParameterJdbcTemplate()
+                .queryForObject(query, namedParameters, ROW_MAPPER);
+
+        return Optional.ofNullable(product);
     }
 
 }

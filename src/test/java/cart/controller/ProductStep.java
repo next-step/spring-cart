@@ -30,7 +30,39 @@ public final class ProductStep {
                 .extract();
     }
 
+    public static ProductResponse 상품_생성_API_요청_응답변환(String name, String image, long price) {
+        ExtractableResponse<Response> response = 상품_생성_API_요청(name, image, price);
+        return response.jsonPath().getObject(".", ProductResponse.class);
+    }
+
     public static void 상품_생성_응답_검증(ExtractableResponse<Response> extractableResponse,
+                                   String name, String image, long price) {
+        assertThat(extractableResponse.statusCode()).isEqualTo(HttpStatus.OK.value());
+
+        ProductResponse response = extractableResponse.jsonPath().getObject(".", ProductResponse.class);
+        assertThat(response.getId()).isNotNull();
+        assertThat(response.getName()).isEqualTo(name);
+        assertThat(response.getImage()).isEqualTo(image);
+        assertThat(response.getPrice().longValue()).isEqualTo(price);
+    }
+
+    public static ExtractableResponse<Response> 상품_수정_API_요청(long id, String name, String image, long price) {
+        Map<String, String> params = new HashMap<>();
+        params.put("name", name);
+        params.put("image", image);
+        params.put("price", String.valueOf(price));
+
+        return RestAssured
+                .given().log().all()
+                .contentType(MediaType.APPLICATION_JSON_VALUE)
+                .accept(MediaType.APPLICATION_JSON_VALUE)
+                .body(params)
+                .when().put("/products/{id}", id)
+                .then().log().all()
+                .extract();
+    }
+
+    public static void 상품_수정_응답_검증(ExtractableResponse<Response> extractableResponse,
                                    String name, String image, long price) {
         assertThat(extractableResponse.statusCode()).isEqualTo(HttpStatus.OK.value());
 

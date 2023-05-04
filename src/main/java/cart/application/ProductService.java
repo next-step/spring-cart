@@ -6,6 +6,8 @@ import cart.controller.dto.ProductsResponse;
 import cart.domain.Product;
 import cart.domain.ProductRepository;
 import cart.domain.Products;
+import cart.exception.ErrorType;
+import cart.exception.ServiceException;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -28,6 +30,19 @@ public class ProductService {
         productRepository.save(product);
 
         return ProductResponse.of(product);
+    }
+
+    public ProductResponse updateProduct(long id, ProductRequest request) {
+        Product product = findProduct(id);
+        product.update(request.getName(), request.getImage(), request.getPrice());
+        productRepository.update(product);
+
+        return ProductResponse.of(product);
+    }
+
+    private Product findProduct(long id) {
+        return productRepository.findById(id)
+                .orElseThrow(() -> new ServiceException(ErrorType.PRODUCT_NOT_FOUND));
     }
 
 }
