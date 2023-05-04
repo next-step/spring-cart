@@ -17,11 +17,32 @@ public class PageController {
 
     @GetMapping("/")
     public String home(Model model) {
-
         ProductsResponse products = productService.getAllProducts();
         model.addAttribute("products", products.getProducts());
 
         return "index";
+    }
+
+    @GetMapping("/admin")
+    public String admin(Model model) {
+        ProductsResponse products = productService.getAllProducts();
+        model.addAttribute("products", products.getProducts());
+
+        return "admin";
+    }
+
+    @GetMapping("/settings")
+    public String settings(Model model) {
+        // TODO step2에서 진행
+
+        return "settings";
+    }
+
+    @GetMapping("/cart")
+    public String cart(Model model) {
+        // TODO step2에서 진행
+
+        return "cart";
     }
 
 }
