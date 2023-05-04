@@ -68,4 +68,12 @@ public class ProductDao extends NamedParameterJdbcDaoSupport implements ProductR
         return Optional.ofNullable(product);
     }
 
+    @Override
+    public void delete(Product product) {
+        final String query = String.format("DELETE FROM %s WHERE id = :id", TABLE_NAME);
+        SqlParameterSource namedParameters = new MapSqlParameterSource().addValue("id", product.getId());
+
+        getNamedParameterJdbcTemplate().update(query, namedParameters);
+    }
+
 }

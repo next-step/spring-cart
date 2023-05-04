@@ -73,4 +73,18 @@ public final class ProductStep {
         assertThat(response.getPrice().longValue()).isEqualTo(price);
     }
 
+    public static ExtractableResponse<Response> 상품_삭제_API_요청(long id) {
+        return RestAssured
+                .given().log().all()
+                .contentType(MediaType.APPLICATION_JSON_VALUE)
+                .accept(MediaType.APPLICATION_JSON_VALUE)
+                .when().delete("/products/{id}", id)
+                .then().log().all()
+                .extract();
+    }
+
+    public static void 상품_삭제_응답_검증(ExtractableResponse<Response> extractableResponse) {
+        assertThat(extractableResponse.statusCode()).isEqualTo(HttpStatus.NO_CONTENT.value());
+    }
+
 }

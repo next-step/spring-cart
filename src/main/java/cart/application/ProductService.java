@@ -45,4 +45,9 @@ public class ProductService {
                 .orElseThrow(() -> new ServiceException(ErrorType.PRODUCT_NOT_FOUND));
     }
 
+    public void deleteProduct(long id) {
+        Product product = findProduct(id);
+        productRepository.delete(product);
+    }
+
 }
