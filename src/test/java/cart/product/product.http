@@ -1,3 +1,13 @@
 ### GET readProducts
 GET http://localhost:8080/product/list
 Accept: application/json
+
+### Send POST request with json body
+POST http://localhost:8080/product
+Content-Type: application/json
+
+{
+  "productName" : "생수",
+  "price" : 1000,
+  "imagePath" : "/images/water"
+}

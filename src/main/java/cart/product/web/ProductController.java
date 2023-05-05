@@ -1,9 +1,11 @@
 package cart.product.web;
 
+import cart.product.domain.service.ProductService;
 import cart.product.web.dto.CreateProduct;
 import cart.product.web.dto.DeleteProduct;
 import cart.product.web.dto.ProductInfo;
 import cart.product.web.dto.UpdateProduct;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
@@ -12,8 +14,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 @RestController
+@RequiredArgsConstructor
 @Slf4j
 public class ProductController {
+
+    private final ProductService productService;
 
     @GetMapping("/")
     public ModelAndView showIndexView() {
@@ -26,6 +31,11 @@ public class ProductController {
     @PostMapping("/product")
     public CreateProduct.Response createProduct(
             @RequestBody CreateProduct.Request request) {
+
+        productService.createProduct(
+                request.getProductName(),
+                request.getPrice(),
+                request.getImagePath());
 
         return null;
     }
