@@ -1,0 +1,3 @@
+### GET readProducts
+GET http://localhost:8080/product/list
+Accept: application/json
