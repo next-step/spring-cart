@@ -1,4 +1,4 @@
-package cart.domain.entity;
+package cart.product.domain.entity;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
