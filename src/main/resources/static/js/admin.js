@@ -1,4 +1,8 @@
 const modal = document.getElementById('modal');
+const host = '127.0.0.1:8080';
+const post_method = 'POST';
+const put_method = 'PUT';
+const delete_method = 'DELETE';
 
 const showAddModal = () => {
     modal.dataset.formType = 'add';
@@ -47,7 +51,14 @@ form.addEventListener('submit', (event) => {
 // TODO: [1단계] 상품 관리 CRUD API에 맞게 변경
 const createProduct = (product) => {
     axios.request({
-        url: '',
+        headers: {'Content-Type': 'application/json'},
+        url: '/products',
+        method: post_method,
+        data: {
+            name: product.name,
+            image: product.image,
+            price: product.price
+        }
     }).then((response) => {
         window.location.reload();
     }).catch((error) => {
@@ -57,10 +68,16 @@ const createProduct = (product) => {
 
 // TODO: [1단계] 상품 관리 CRUD API에 맞게 변경
 const updateProduct = (product) => {
-    const { id } = product;
+    const {id} = product;
 
     axios.request({
-        url: '',
+        url: `/products/${id}`,
+        method: put_method,
+        data: {
+            name: product.name,
+            image: product.image,
+            price: product.price
+        }
     }).then((response) => {
         window.location.reload();
     }).catch((error) => {
@@ -71,7 +88,8 @@ const updateProduct = (product) => {
 // TODO: [1단계] 상품 관리 CRUD API에 맞게 변경
 const deleteProduct = (id) => {
     axios.request({
-        url: '',
+        url: `/products/${id}`,
+        method: delete_method,
     }).then((response) => {
         window.location.reload();
     }).catch((error) => {
