@@ -2,9 +2,6 @@ package cart.product.persistence;
 
 import cart.product.domain.entity.Product;
 import cart.product.domain.repository.ProductRepository;
-import org.springframework.jdbc.core.namedparam.BeanPropertySqlParameterSource;
-import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
-import org.springframework.jdbc.core.namedparam.SqlParameterSource;
 import org.springframework.jdbc.core.simple.SimpleJdbcInsert;
 import org.springframework.stereotype.Repository;
 
@@ -12,7 +9,6 @@ import javax.sql.DataSource;
 import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Objects;
 
 @Repository
 public class ProductDao implements ProductRepository {
