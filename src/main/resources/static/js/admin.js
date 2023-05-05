@@ -1,3 +1,5 @@
+const host = "http://localhost:8080"
+
 const modal = document.getElementById('modal');
 
 const showAddModal = () => {
@@ -46,8 +48,15 @@ form.addEventListener('submit', (event) => {
 
 // TODO: [1단계] 상품 관리 CRUD API에 맞게 변경
 const createProduct = (product) => {
+    const { name, imageUrl, price } = product
     axios.request({
-        url: '',
+        url: host + '/products',
+        method: 'post',
+        data: {
+            name: name,
+            imageUrl: imageUrl,
+            price: price
+        }
     }).then((response) => {
         window.location.reload();
     }).catch((error) => {
@@ -57,10 +66,16 @@ const createProduct = (product) => {
 
 // TODO: [1단계] 상품 관리 CRUD API에 맞게 변경
 const updateProduct = (product) => {
-    const { id } = product;
+    const { id, name, imageUrl, price } = product;
 
     axios.request({
-        url: '',
+        url: host + '/products/' + id,
+        method: 'put',
+        data: {
+            name: name,
+            imageUrl: imageUrl,
+            price: price
+        }
     }).then((response) => {
         window.location.reload();
     }).catch((error) => {
@@ -71,7 +86,8 @@ const updateProduct = (product) => {
 // TODO: [1단계] 상품 관리 CRUD API에 맞게 변경
 const deleteProduct = (id) => {
     axios.request({
-        url: '',
+        url: host + '/products/' + id,
+        method: 'delete'
     }).then((response) => {
         window.location.reload();
     }).catch((error) => {
