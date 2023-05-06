@@ -1,5 +1,6 @@
 package cart.product.web.dto;
 
+import cart.product.domain.dto.ProductDto;
 import cart.product.domain.entity.Product;
 import lombok.*;
 
@@ -14,12 +15,12 @@ public class ProductInfo {
     private String image;
     private int price;
 
-    public static ProductInfo fromEntity(Product product) {
+    public static ProductInfo from(ProductDto productDto) {
         return ProductInfo.builder()
-                .id(product.getId())
-                .name(product.getName())
-                .image(product.getImage())
-                .price(product.getPrice())
+                .id(productDto.getId())
+                .name(productDto.getName())
+                .image(productDto.getImage())
+                .price(productDto.getPrice())
                 .build();
     }
 }

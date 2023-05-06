@@ -3,7 +3,6 @@ package cart.product.domain.service;
 import cart.product.domain.dto.ProductDto;
 import cart.product.domain.entity.Product;
 import cart.product.domain.repository.ProductRepository;
-import cart.product.web.dto.ProductInfo;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -23,13 +22,14 @@ public class ProductService {
                 .build());
     }
 
-    public ProductInfo getProduct(Long id) {
-        return ProductInfo.fromEntity(productRepository.findById(id));
+    public ProductDto getProduct(Long id) {
+        return ProductDto.fromEntity(productRepository.findById(id));
     }
 
-    public List<ProductInfo> getAllProduct() {
+    public List<ProductDto> getAllProduct() {
         return productRepository.findAll().stream()
-                .map(ProductInfo::fromEntity)
+                .map(ProductDto::fromEntity)
                 .collect(Collectors.toList());
     }
+
 }

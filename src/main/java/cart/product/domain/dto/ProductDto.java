@@ -18,6 +18,7 @@ public class ProductDto {
         return ProductDto.builder()
                 .id(product.getId())
                 .name(product.getName())
+                .image(product.getImage())
                 .price(product.getPrice())
                 .build();
     }

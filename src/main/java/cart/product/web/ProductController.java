@@ -12,6 +12,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @RestController
 @RequiredArgsConstructor
@@ -42,12 +43,14 @@ public class ProductController {
 
     @GetMapping("/product/{id}")
     public ProductInfo readProduct(@PathVariable Long id) {
-        return productService.getProduct(id);
+        return ProductInfo.from(productService.getProduct(id));
     }
 
     @GetMapping("/product")
     public List<ProductInfo> readProducts() {
-        return productService.getAllProduct();
+        return productService.getAllProduct()
+                .stream().map(ProductInfo::from)
+                .collect(Collectors.toList());
     }
 
     @PostMapping("/product/update")
