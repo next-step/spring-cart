@@ -2,6 +2,9 @@ package cart.product.persistence;
 
 import cart.product.domain.entity.Product;
 import cart.product.domain.repository.ProductRepository;
+import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
+import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
+import org.springframework.jdbc.core.namedparam.SqlParameterSource;
 import org.springframework.jdbc.core.simple.SimpleJdbcInsert;
 import org.springframework.stereotype.Repository;
 
@@ -12,12 +15,15 @@ import java.util.Map;
 
 @Repository
 public class ProductDao implements ProductRepository {
-    public SimpleJdbcInsert insertActor;
+    private final SimpleJdbcInsert insertActor;
+    private final NamedParameterJdbcTemplate namedParameterJdbcTemplate;
+
 
     public ProductDao(DataSource dataSource) {
         insertActor = new SimpleJdbcInsert(dataSource)
                 .withTableName("PRODUCT")
                 .usingGeneratedKeyColumns("id");
+        namedParameterJdbcTemplate = new NamedParameterJdbcTemplate(dataSource);
     }
 
     @Override
@@ -31,5 +37,15 @@ public class ProductDao implements ProductRepository {
         Number number = insertActor.executeAndReturnKey(parameters);
         product.setId(number.longValue());
         return product;
+    }
+
+    @Override
+    public Product findById(Long id) {
+        SqlParameterSource parameters = new MapSqlParameterSource("id", id);
+        return namedParameterJdbcTemplate.queryForObject(
+                "select * from product where id = :id",
+                parameters,
+                new ProductRowMapper()
+        );
     }
 }

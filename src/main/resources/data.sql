@@ -1,0 +1,1 @@
+insert into product(id, name, price, image, created_at) values (1L, '밥', 1000, '/test', PARSEDATETIME('2023-01-01 12:00:00', 'yyyy-MM-dd hh:mm:ss'))
