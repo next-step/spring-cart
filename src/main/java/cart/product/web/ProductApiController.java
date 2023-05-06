@@ -9,8 +9,6 @@ import cart.product.web.dto.UpdateProduct;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.ModelAndView;
-
 import javax.validation.Valid;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -25,7 +23,6 @@ public class ProductApiController {
     @PostMapping("/product")
     public CreateProduct.Response createProduct(
             @RequestBody CreateProduct.Request request) {
-
         productService.createProduct(
                 request.getProductName(),
                 request.getPrice(),
@@ -54,7 +51,7 @@ public class ProductApiController {
         productService.updateProduct(
                 id,
                 ProductDto.builder()
-                        .name(request.getProductName())
+                        .name(request.getName())
                         .image(request.getImage())
                         .price(request.getPrice())
                         .build());

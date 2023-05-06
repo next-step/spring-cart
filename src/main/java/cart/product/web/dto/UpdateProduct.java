@@ -15,7 +15,7 @@ public class UpdateProduct {
     @Builder
     public static class Request {
         @NotEmpty
-        private String productName;
+        private String name;
         @NotEmpty
         private String image;
         @NotNull

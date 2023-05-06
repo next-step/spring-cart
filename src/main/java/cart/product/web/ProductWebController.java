@@ -17,4 +17,11 @@ public class ProductWebController {
                 productApiController.readProducts());
         return "index";
     }
+
+    @GetMapping("/admin")
+    public String showAdmin(Model model) {
+        model.addAttribute("products",
+                productApiController.readProducts());
+        return "admin";
+    }
 }
