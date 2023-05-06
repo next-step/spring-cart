@@ -12,24 +12,15 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.validation.Valid;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
 @RestController
 @RequiredArgsConstructor
 @Slf4j
-public class ProductController {
+public class ProductApiController {
 
     private final ProductService productService;
-
-    @GetMapping("/")
-    public ModelAndView showIndexView() {
-        ModelAndView modelAndView = new ModelAndView();
-        modelAndView.setViewName("index");
-        modelAndView.addObject("products", readProducts());
-        return modelAndView;
-    }
 
     @PostMapping("/product")
     public CreateProduct.Response createProduct(
