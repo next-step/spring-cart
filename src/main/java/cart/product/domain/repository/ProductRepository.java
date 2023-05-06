@@ -9,6 +9,6 @@ public interface ProductRepository {
     Product insert(Product product);
     Product findById(Long id);
     List<Product> findAll();
-    void updateProduct(Long id, Product build);
+    Product updateProduct(Long id, Product build);
     void delete(Long id);
 }

@@ -9,6 +9,7 @@ import cart.product.web.dto.UpdateProduct;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
+
 import javax.validation.Valid;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -46,14 +47,15 @@ public class ProductApiController {
             @PathVariable Long id,
             @Valid @RequestBody UpdateProduct.Request request
     ) {
-        productService.updateProduct(
-                id,
-                ProductDto.builder()
-                        .name(request.getName())
-                        .image(request.getImage())
-                        .price(request.getPrice())
-                        .build());
-        return null;
+        return UpdateProduct.Response.from(
+                productService.updateProduct(
+                        id,
+                        ProductDto.builder()
+                                .name(request.getName())
+                                .image(request.getImage())
+                                .price(request.getPrice())
+                                .build()));
+
     }
 
     @PostMapping("/product/delete")

@@ -7,6 +7,7 @@ import cart.product.web.dto.DeleteProduct;
 import cart.product.web.dto.UpdateProduct;
 import io.restassured.RestAssured;
 import io.restassured.http.ContentType;
+import io.restassured.path.json.JsonPath;
 import io.restassured.response.ExtractableResponse;
 import io.restassured.response.Response;
 import org.assertj.core.api.Assertions;
@@ -112,7 +113,7 @@ public class ProductIntegrationTest {
                 .price(12000)
                 .build();
 
-        RestAssured
+        ExtractableResponse<Response> updatedProduct = RestAssured
                 .given().log().all()
                 .pathParam("id", id)
                 .body(request)
@@ -120,10 +121,19 @@ public class ProductIntegrationTest {
                 .when()
                 .post("/product/{id}")
                 .then()
-                .statusCode(200);
+                .statusCode(200).extract();
 
-        Product actualProduct = productRepository.findById(id);
-        assertThat(actualProduct.getPrice()).isEqualTo(request.getPrice());
+        Product findProduct = productRepository.findById(id);
+        assertAll(
+                () -> assertThat(getJsonPath(updatedProduct).getLong("id")).isEqualTo(findProduct.getId()),
+                () -> assertThat(getJsonPath(updatedProduct).getString("name")).isEqualTo(findProduct.getName()),
+                () -> assertThat(getJsonPath(updatedProduct).getString("image")).isEqualTo(findProduct.getImage()),
+                () -> assertThat(getJsonPath(updatedProduct).getInt("price")).isEqualTo(findProduct.getPrice())
+        );
+    }
+
+    private static JsonPath getJsonPath(ExtractableResponse<Response> updatedProduct) {
+        return updatedProduct.body().jsonPath();
     }
 
     @Test

@@ -63,7 +63,7 @@ public class ProductDao implements ProductRepository {
     }
 
     @Override
-    public void updateProduct(Long id, Product product) {
+    public Product updateProduct(Long id, Product product) {
         Map<String, Object> parameters = new HashMap<>();
         parameters.put("name", product.getName());
         parameters.put("image", product.getImage());
@@ -77,6 +77,8 @@ public class ProductDao implements ProductRepository {
                         " where id = :id",
                 parameters
         );
+        product.setId(id);
+        return product;
     }
 
     @Override

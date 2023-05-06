@@ -42,6 +42,5 @@ public class CreateProduct {
                     .price(productDto.getPrice())
                     .build();
         }
-
     }
 }
