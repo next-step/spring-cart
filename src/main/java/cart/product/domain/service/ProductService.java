@@ -14,12 +14,12 @@ import java.util.stream.Collectors;
 public class ProductService {
     private final ProductRepository productRepository;
 
-    public void createProduct(String productName, int price, String imagePath) {
-        productRepository.insert(Product.builder()
+    public ProductDto createProduct(String productName, int price, String imagePath) {
+        return ProductDto.fromEntity(productRepository.insert(Product.builder()
                 .name(productName)
                 .price(price)
                 .image(imagePath)
-                .build());
+                .build()));
     }
 
     public ProductDto getProduct(Long id) {

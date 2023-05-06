@@ -33,6 +33,7 @@ public class ProductDao implements ProductRepository {
         parameters.put("id", product.getId());
         parameters.put("name", product.getName());
         parameters.put("price", product.getPrice());
+        parameters.put("image", product.getImage());
         parameters.put("created_at", LocalDateTime.now());
 
         Number number = insertActor.executeAndReturnKey(parameters);

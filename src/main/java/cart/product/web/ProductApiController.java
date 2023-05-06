@@ -23,12 +23,10 @@ public class ProductApiController {
     @PostMapping("/product")
     public CreateProduct.Response createProduct(
             @RequestBody CreateProduct.Request request) {
-        productService.createProduct(
-                request.getProductName(),
+        return CreateProduct.Response.from(productService.createProduct(
+                request.getName(),
                 request.getPrice(),
-                request.getImagePath());
-
-        return null;
+                request.getImage()));
     }
 
     @GetMapping("/product/{id}")
