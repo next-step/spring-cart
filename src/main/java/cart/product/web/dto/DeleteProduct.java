@@ -7,9 +7,10 @@ public class DeleteProduct {
     @Getter
     @Setter
     @NoArgsConstructor
+    @AllArgsConstructor
     @Builder
     public static class Request {
-
+        private Long id;
     }
 
     @Getter

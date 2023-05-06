@@ -74,7 +74,7 @@ public class ProductController {
     public DeleteProduct.Response deleteProduct(
             @RequestBody DeleteProduct.Request request
     ) {
-
+        productService.deleteProduct(request.getId());
         return null;
     }
 }

@@ -40,4 +40,8 @@ public class ProductService {
                         .image(productDto.getImage())
                         .build());
     }
+
+    public void deleteProduct(Long id) {
+        productRepository.delete(id);
+    }
 }

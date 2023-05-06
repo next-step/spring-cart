@@ -77,4 +77,14 @@ public class ProductDao implements ProductRepository {
                 parameters
         );
     }
+
+    @Override
+    public void delete(Long id) {
+        SqlParameterSource parameters
+                = new MapSqlParameterSource("id", id);
+
+        namedParameterJdbcTemplate.update(
+                "delete from product where id = :id",
+                parameters);
+    }
 }

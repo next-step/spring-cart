@@ -1,6 +1,7 @@
 package cart.product;
 
 import cart.product.web.dto.CreateProduct;
+import cart.product.web.dto.DeleteProduct;
 import cart.product.web.dto.ProductInfo;
 import cart.product.web.dto.UpdateProduct;
 import io.restassured.RestAssured;
@@ -103,5 +104,20 @@ public class ProductIntegrationTest {
                 .post("/product/{id}")
                 .then()
                 .statusCode(200);
+    }
+
+    @Test
+    void id_1번_상품을_삭제한다() {
+        DeleteProduct.Request request = new DeleteProduct.Request(1L);
+
+        RestAssured
+                .given().log().all()
+                .body(request)
+                .contentType(ContentType.JSON)
+                .when()
+                .post("/product/delete")
+                .then().log().all()
+                .statusCode(200);
+
     }
 }
