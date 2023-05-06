@@ -67,12 +67,12 @@ public class ProductDao implements ProductRepository {
         parameters.put("name", product.getName());
         parameters.put("image", product.getImage());
         parameters.put("price", product.getPrice());
-        parameters.put("id", product.getId());
+        parameters.put("id", id);
         namedParameterJdbcTemplate.update(
                 "update product " +
                         " set name = :name" +
-                        " and image = :image" +
-                        " and price = :price" +
+                        " ,image = :image" +
+                        " ,price = :price" +
                         " where id = :id",
                 parameters
         );

@@ -1,17 +1,16 @@
 package cart.product;
 
+import cart.product.domain.entity.Product;
+import cart.product.domain.repository.ProductRepository;
 import cart.product.web.dto.CreateProduct;
 import cart.product.web.dto.DeleteProduct;
-import cart.product.web.dto.ProductInfo;
 import cart.product.web.dto.UpdateProduct;
 import io.restassured.RestAssured;
 import io.restassured.http.ContentType;
-import io.restassured.response.ExtractableResponse;
-import io.restassured.response.Response;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.server.LocalServerPort;
 import org.springframework.transaction.annotation.Transactional;
@@ -26,6 +25,9 @@ import static org.junit.jupiter.api.Assertions.assertAll;
 public class ProductIntegrationTest {
     @LocalServerPort
     int port;
+
+    @Autowired
+    ProductRepository productRepository;
 
     @BeforeEach
     void setUp() {
@@ -90,7 +92,7 @@ public class ProductIntegrationTest {
         // given
         Long id = 1L;
         UpdateProduct.Request request = UpdateProduct.Request.builder()
-                .productName("치킨")
+                .name("치킨")
                 .image("/images/chicken.jpeg")
                 .price(12000)
                 .build();
@@ -104,6 +106,9 @@ public class ProductIntegrationTest {
                 .post("/product/{id}")
                 .then()
                 .statusCode(200);
+
+        Product actualProduct = productRepository.findById(id);
+        assertThat(actualProduct.getPrice()).isEqualTo(request.getPrice());
     }
 
     @Test
