@@ -32,4 +32,12 @@ public class ProductService {
                 .collect(Collectors.toList());
     }
 
+    public void updateProduct(Long id, ProductDto productDto) {
+        productRepository.updateProduct(id,
+                Product.builder()
+                        .name(productDto.getName())
+                        .price(productDto.getPrice())
+                        .image(productDto.getImage())
+                        .build());
+    }
 }

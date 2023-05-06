@@ -1,5 +1,6 @@
 package cart.product.web;
 
+import cart.product.domain.dto.ProductDto;
 import cart.product.domain.service.ProductService;
 import cart.product.web.dto.CreateProduct;
 import cart.product.web.dto.DeleteProduct;
@@ -10,6 +11,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
+import javax.validation.Valid;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -53,11 +55,18 @@ public class ProductController {
                 .collect(Collectors.toList());
     }
 
-    @PostMapping("/product/update")
+    @PostMapping("/product/{id}")
     public UpdateProduct.Response updateProduct(
-            @RequestBody UpdateProduct.Request request
+            @PathVariable Long id,
+            @Valid @RequestBody UpdateProduct.Request request
     ) {
-
+        productService.updateProduct(
+                id,
+                ProductDto.builder()
+                        .name(request.getProductName())
+                        .image(request.getImage())
+                        .price(request.getPrice())
+                        .build());
         return null;
     }
 

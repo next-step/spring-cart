@@ -60,4 +60,21 @@ public class ProductDao implements ProductRepository {
                 new ProductRowMapper()
         );
     }
+
+    @Override
+    public void updateProduct(Long id, Product product) {
+        Map<String, Object> parameters = new HashMap<>();
+        parameters.put("name", product.getName());
+        parameters.put("image", product.getImage());
+        parameters.put("price", product.getPrice());
+        parameters.put("id", product.getId());
+        namedParameterJdbcTemplate.update(
+                "update product " +
+                        " set name = :name" +
+                        " and image = :image" +
+                        " and price = :price" +
+                        " where id = :id",
+                parameters
+        );
+    }
 }

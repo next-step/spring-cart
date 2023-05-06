@@ -1,6 +1,8 @@
 package cart.product;
 
 import cart.product.web.dto.CreateProduct;
+import cart.product.web.dto.ProductInfo;
+import cart.product.web.dto.UpdateProduct;
 import io.restassured.RestAssured;
 import io.restassured.http.ContentType;
 import io.restassured.response.ExtractableResponse;
@@ -80,5 +82,26 @@ public class ProductIntegrationTest {
                 .body("[1].name", is("샐러드"))
                 .body("[2].id", is(3))
                 .body("[2].name", is("피자"));
+    }
+    
+    @Test
+    void id_1번_상품의_가격을_수정한다(){
+        // given
+        Long id = 1L;
+        UpdateProduct.Request request = UpdateProduct.Request.builder()
+                .productName("치킨")
+                .image("/images/chicken.jpeg")
+                .price(12000)
+                .build();
+
+        RestAssured
+                .given().log().all()
+                .pathParam("id", id)
+                .body(request)
+                .contentType(ContentType.JSON)
+                .when()
+                .post("/product/{id}")
+                .then()
+                .statusCode(200);
     }
 }

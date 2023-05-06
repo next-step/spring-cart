@@ -9,4 +9,5 @@ public interface ProductRepository {
     Product insert(Product product);
     Product findById(Long id);
     List<Product> findAll();
+    void updateProduct(Long id, Product build);
 }
