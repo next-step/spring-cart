@@ -47,16 +47,19 @@ public class ProductIntegrationTest {
 
     @Test
     void 상품_id로_상품_하나_조회에_성공한다() {
+        Long id = 1L;
+
         RestAssured
                 .given().log().all()
-                .pathParam("id", 1)
+                .pathParam("id", id)
                 .when()
                 .get("/product/{id}")
                 .then().log().all()
                 .statusCode(200)
                 .body("id", response -> equalTo(1)) // equalTo
                 .body("id", is(1))                    // is
-                .body("name", is("밥"))
-                .body("image", is("/test"));
+                .body("name", is("치킨"))
+                .body("price", is(10000))
+                .body("image", is("/images/chicken.jpeg"));
     }
 }
