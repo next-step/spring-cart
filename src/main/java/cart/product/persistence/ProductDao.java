@@ -11,6 +11,7 @@ import org.springframework.stereotype.Repository;
 import javax.sql.DataSource;
 import java.time.LocalDateTime;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 @Repository
@@ -44,6 +45,17 @@ public class ProductDao implements ProductRepository {
         SqlParameterSource parameters = new MapSqlParameterSource("id", id);
         return namedParameterJdbcTemplate.queryForObject(
                 "select * from product where id = :id",
+                parameters,
+                new ProductRowMapper()
+        );
+    }
+
+    @Override
+    public List<Product> findAll() {
+        SqlParameterSource parameters = new MapSqlParameterSource();
+
+        return namedParameterJdbcTemplate.query(
+                "select * from product",
                 parameters,
                 new ProductRowMapper()
         );

@@ -7,6 +7,9 @@ import cart.product.web.dto.ProductInfo;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 @Service
 @RequiredArgsConstructor
 public class ProductService {
@@ -22,5 +25,11 @@ public class ProductService {
 
     public ProductInfo getProduct(Long id) {
         return ProductInfo.fromEntity(productRepository.findById(id));
+    }
+
+    public List<ProductInfo> getAllProduct() {
+        return productRepository.findAll().stream()
+                .map(ProductInfo::fromEntity)
+                .collect(Collectors.toList());
     }
 }

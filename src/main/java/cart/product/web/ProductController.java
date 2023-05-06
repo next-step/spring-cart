@@ -45,32 +45,9 @@ public class ProductController {
         return productService.getProduct(id);
     }
 
-    @GetMapping("/product/list")
+    @GetMapping("/product")
     public List<ProductInfo> readProducts() {
-
-        List<ProductInfo> products = new ArrayList<>();
-        products.add(ProductInfo.builder()
-                .id(1L)
-                .name("치킨")
-                .image("/images/chicken.jpeg")
-                .price(10000)
-                .build());
-
-        products.add(ProductInfo.builder()
-                .id(2L)
-                .name("샐러드")
-                .image("/images/salad.jpeg")
-                .price(2000)
-                .build());
-
-        products.add(ProductInfo.builder()
-                .id(3L)
-                .name("피자")
-                .image("/images/pizza.jpeg")
-                .price(20000)
-                .build());
-
-        return products;
+        return productService.getAllProduct();
     }
 
     @PostMapping("/product/update")

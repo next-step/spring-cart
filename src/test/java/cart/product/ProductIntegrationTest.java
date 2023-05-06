@@ -62,4 +62,21 @@ public class ProductIntegrationTest {
                 .body("price", is(10000))
                 .body("image", is("/images/chicken.jpeg"));
     }
+    
+    @Test
+    void 모든_상품_리스트_조회에_성공한다(){
+        RestAssured
+                .given().log().all()
+                .when()
+                .get("/product")
+                .then()
+                .statusCode(200)
+                .body("size()", is(3))
+                .body("[0].id", is(1))
+                .body("[0].name", is("치킨"))
+                .body("[1].id", is(2))
+                .body("[1].name", is("샐러드"))
+                .body("[2].id", is(3))
+                .body("[2].name", is("피자"));
+    }
 }
