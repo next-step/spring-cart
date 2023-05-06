@@ -71,10 +71,11 @@ const updateProduct = (product) => {
     });
 };
 
-// TODO: [1단계] 상품 관리 CRUD API에 맞게 변경
 const deleteProduct = (id) => {
     axios.request({
-        url: '',
+        url: '/product/delete',
+        method: 'POST',
+        data: {'id': id }
     }).then((response) => {
         window.location.reload();
     }).catch((error) => {
