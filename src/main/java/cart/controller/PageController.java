@@ -24,10 +24,17 @@ public class PageController {
 
     @GetMapping("/")
     public String main(Model model){
-        List<ProductResponse> productResponses =  productService.getAllProductList();
 
-        model.addAttribute("products", productResponses);
-        
+        model.addAttribute("products", productService.getAllProductList());
+
         return "index";
+    }
+
+    @GetMapping("/admin")
+    public String adminMain(Model model){
+
+        model.addAttribute("products", productService.getAllProductList());
+
+        return "admin";
     }
 }
