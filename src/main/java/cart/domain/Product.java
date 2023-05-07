@@ -1,5 +1,6 @@
 package cart.domain;
 
+import cart.controller.dto.ProductRequest;
 import lombok.Builder;
 import lombok.Getter;
 
@@ -27,4 +28,13 @@ public class Product {
         this.price = price;
         this.createdDt = createdDt;
     }
+
+    public static Product of(String name, String image, int price){
+        return Product.builder()
+                .name(name)
+                .image(image)
+                .price(price)
+                .build();
+    }
+
 }
