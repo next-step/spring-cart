@@ -18,19 +18,33 @@ import java.util.List;
 public class ProductService {
     private final ProductDao productDao;
 
-    public ProductService(ProductDao productDao) {this.productDao = productDao;}
+    public ProductService(ProductDao productDao) {
+        this.productDao = productDao;
+    }
 
-    public ProductResponse createProduct(ProductRequest productRequest){
+    public ProductResponse createProduct(ProductRequest productRequest) {
 
         Product product = productRequest.productOf();
-        int key = productDao.create(product);
-        System.out.println("key : "  + key);
+        productDao.create(product);
         return ProductResponse.of(product);
     }
 
-    public List<ProductResponse> getAllProductList(){
+    public ProductResponse updateProduct(ProductRequest productRequest, int id) {
+        Product product = getProductById(id);
+
+        System.out.println(product.getName());
+        product.updateProduct(productRequest.getName(), productRequest.getImage(), productRequest.getPrice());
+
+        return ProductResponse.of(product);
+    }
+
+    public List<ProductResponse> getAllProductList() {
         Products products = productDao.findAllProducts();
 
         return products.CreateProductResponseList();
+    }
+
+    public Product getProductById(int id) {
+        return productDao.findById(id);
     }
 }

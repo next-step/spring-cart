@@ -14,31 +14,35 @@ import java.util.Map;
  */
 public class ProductTestStep {
 
-    public static ExtractableResponse<Response> 상품_전체목록_조회(){
-        return getGiven("/");
-    }
-
-    public static ExtractableResponse<Response> 상품_생성요청(Map<String, String> params){
-        return postGiven("/products/create", params);
-    }
-
-    public static ExtractableResponse<Response> getGiven(String url){
-        return RestAssured.given()
+    public static ExtractableResponse<Response> 상품_전체목록_조회() {
+        return RestAssured.given().log().all()
                 .contentType(MediaType.APPLICATION_JSON_VALUE)
                 .when()
-                .get(url)
+                .get("/")
                 .then().log().all()
                 .extract();
     }
 
-    public static ExtractableResponse<Response> postGiven(String utl, Map<String, String> params){
+    public static ExtractableResponse<Response> 상품_생성요청(Map<String, String> params) {
         return RestAssured
-                .given()
+                .given().log().all()
                 .contentType(MediaType.APPLICATION_JSON_VALUE)
                 .accept(MediaType.APPLICATION_JSON_VALUE)
                 .body(params)
-                .when().post(utl)
+                .when().post("/products/create")
                 .then().log().all()
                 .extract();
     }
+
+    public static ExtractableResponse<Response> 상품_수정_요청(Map<String, String> params, int id) {
+        return RestAssured
+                .given().log().all()
+                .contentType(MediaType.APPLICATION_JSON_VALUE)
+                .accept(MediaType.APPLICATION_JSON_VALUE)
+                .body(params)
+                .when().put("/products/update/{id}", id)
+                .then().log().all()
+                .extract();
+    }
+
 }

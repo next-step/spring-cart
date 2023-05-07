@@ -1,8 +1,8 @@
 package cart.domain;
 
-import cart.controller.dto.ProductRequest;
 import lombok.Builder;
 import lombok.Getter;
+import org.springframework.util.ObjectUtils;
 
 import java.time.LocalDateTime;
 
@@ -29,7 +29,7 @@ public class Product {
         this.createdDt = createdDt;
     }
 
-    public static Product of(String name, String image, int price){
+    public static Product of(String name, String image, int price) {
         return Product.builder()
                 .name(name)
                 .image(image)
@@ -37,4 +37,18 @@ public class Product {
                 .build();
     }
 
+    public void updateProduct(String name, String image, int price) {
+        if (!ObjectUtils.isEmpty(name))
+            this.name = name;
+
+        if (!ObjectUtils.isEmpty(image))
+            this.image = image;
+
+        if (price > 0)
+            this.price = price;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
 }
