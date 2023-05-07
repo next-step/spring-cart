@@ -9,7 +9,7 @@ CREATE TABLE PRODUCT
 );
 
 INSERT INTO PRODUCT (name, image, price)
-VALUES ( '히로', '/Users/minsukim/Documents/image/hero.JPG', '1000000' );
+VALUES ( '히로', '/image/hero.JPG', '1000000' );
 
 INSERT INTO PRODUCT (name, image, price)
-VALUES ( '봉구', '/Users/minsukim/Documents/image/bonggu.JPG', '1100000' );
+VALUES ( '봉구', '/image/bonggu.JPG', '1100000' );
