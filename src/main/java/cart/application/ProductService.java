@@ -22,8 +22,6 @@ public class ProductService {
     public List<ProductResponse> getAllProductList(){
         Products products = productDao.findAllProducts();
 
-        return products.getProducts().stream()
-                .map(ProductResponse::of)
-                .collect(Collectors.toList());
+        return products.CreateProductResponseList();
     }
 }
