@@ -1,25 +1,31 @@
 package cart;
 
+import io.restassured.response.ExtractableResponse;
+import io.restassured.response.Response;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
 
-import static io.restassured.RestAssured.given;
+import java.util.HashMap;
+import java.util.Map;
+
+import static cart.ProductTestStep.*;
 import static org.assertj.core.api.Assertions.assertThat;
 
-public class ProductIntegrationTest extends AcceptanceTest{
-
+public class ProductIntegrationTest extends AcceptanceTest {
 
     @Test
-    public void getProducts() {
-        var result = given()
-                .contentType(MediaType.APPLICATION_JSON_VALUE)
-                .when()
-                .get("/products")
-                .then()
-                .extract();
+    @DisplayName("상품 생성 테스트.")
+    public void 상품생성_테스트() {
+        Map<String, String> params = new HashMap<>();
+        params.put("name", "hero");
+        params.put("image", "/users/test");
+        params.put("price", "1000");
 
-        assertThat(result.statusCode()).isEqualTo(HttpStatus.OK.value());
+        ExtractableResponse<Response> response = 상품_생성요청(params);
+
+
+        assertThat(response.statusCode()).isEqualTo(HttpStatus.OK.value());
     }
 
 }
