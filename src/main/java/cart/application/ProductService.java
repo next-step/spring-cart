@@ -32,7 +32,6 @@ public class ProductService {
     public ProductResponse updateProduct(ProductRequest productRequest, int id) {
         Product product = getProductById(id);
 
-        System.out.println(product.getName());
         product.updateProduct(productRequest.getName(), productRequest.getImage(), productRequest.getPrice());
 
         return ProductResponse.of(product);
