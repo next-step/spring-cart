@@ -145,6 +145,6 @@ public class ProductIntegrationTest {
                 .when()
                 .post("/product/delete")
                 .then().log().all()
-                .statusCode(200);
+                .statusCode(204);
     }
 }

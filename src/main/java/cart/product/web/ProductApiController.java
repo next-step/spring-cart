@@ -7,6 +7,7 @@ import cart.product.web.dto.DeleteProduct;
 import cart.product.web.dto.ProductInfo;
 import cart.product.web.dto.UpdateProduct;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -53,14 +54,13 @@ public class ProductApiController {
                                 .image(request.getImage())
                                 .price(request.getPrice())
                                 .build()));
-
     }
 
     @PostMapping("/product/delete")
-    public DeleteProduct.Response deleteProduct(
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void deleteProduct(
             @Valid @RequestBody DeleteProduct.Request request
     ) {
         productService.deleteProduct(request.getId());
-        return null;
     }
 }
