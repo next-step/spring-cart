@@ -11,8 +11,6 @@ public class UpdateProduct {
 
     @Getter
     @Setter
-    @NoArgsConstructor
-    @AllArgsConstructor
     @Builder
     public static class Request {
         @NotEmpty
@@ -26,8 +24,6 @@ public class UpdateProduct {
 
     @Getter
     @Setter
-    @NoArgsConstructor
-    @AllArgsConstructor
     @Builder
     public static class Response {
         private Long id;

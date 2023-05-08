@@ -2,20 +2,21 @@ package cart.product.web.dto;
 
 import lombok.*;
 
+import javax.validation.constraints.NotNull;
+
 public class DeleteProduct {
 
     @Getter
     @Setter
-    @NoArgsConstructor
     @AllArgsConstructor
+    @NoArgsConstructor
     @Builder
     public static class Request {
+        @NotNull
         private Long id;
     }
 
     @Getter
-    @Setter
-    @NoArgsConstructor
     @Builder
     public static class Response {
 

@@ -10,8 +10,6 @@ import javax.validation.constraints.NotNull;
 public class CreateProduct {
 
     @Getter
-    @Setter
-    @NoArgsConstructor
     @AllArgsConstructor
     @Builder
     public static class Request {
@@ -24,8 +22,6 @@ public class CreateProduct {
     }
 
     @Getter
-    @Setter
-    @NoArgsConstructor
     @AllArgsConstructor
     @Builder
     public static class Response {
