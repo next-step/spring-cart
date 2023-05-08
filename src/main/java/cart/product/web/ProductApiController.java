@@ -7,7 +7,6 @@ import cart.product.web.dto.DeleteProduct;
 import cart.product.web.dto.ProductInfo;
 import cart.product.web.dto.UpdateProduct;
 import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -16,7 +15,6 @@ import java.util.stream.Collectors;
 
 @RestController
 @RequiredArgsConstructor
-@Slf4j
 public class ProductApiController {
 
     private final ProductService productService;
