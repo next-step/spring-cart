@@ -21,7 +21,7 @@ public class ProductApiController {
 
     @PostMapping("/product")
     public CreateProduct.Response createProduct(
-            @RequestBody CreateProduct.Request request) {
+            @Valid @RequestBody CreateProduct.Request request) {
         return CreateProduct.Response.from(productService.createProduct(
                 request.getName(),
                 request.getPrice(),
@@ -58,7 +58,7 @@ public class ProductApiController {
 
     @PostMapping("/product/delete")
     public DeleteProduct.Response deleteProduct(
-            @RequestBody DeleteProduct.Request request
+            @Valid @RequestBody DeleteProduct.Request request
     ) {
         productService.deleteProduct(request.getId());
         return null;
