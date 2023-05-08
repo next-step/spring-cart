@@ -1,11 +1,13 @@
 package cart.product.application;
 
-import cart.product.application.dto.ProductCreate;
+import cart.product.application.dto.ProductCreateData;
 import cart.product.application.dto.ProductInformation;
-import cart.product.application.dto.ProductUpdate;
+import cart.product.application.dto.ProductUpdateData;
 import cart.product.domain.ProductRepository;
+import cart.product.exception.ProductNotFoundException;
 import java.util.List;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 public class ProductService {
@@ -16,19 +18,31 @@ public class ProductService {
         this.productRepository = productRepository;
     }
 
+    @Transactional(readOnly = true)
     public List<ProductInformation> findAll() {
         return ProductInformation.from(productRepository.findAll());
     }
 
-    public ProductInformation create(ProductCreate productCreate) {
-        return ProductInformation.from(productRepository.save(productCreate.toProduct()));
+    @Transactional
+    public ProductInformation create(ProductCreateData productCreateData) {
+        return ProductInformation.from(productRepository.save(productCreateData.toProduct()));
     }
 
-    public ProductInformation update(ProductUpdate productUpdate) {
-        return ProductInformation.from(productRepository.update(productUpdate.toProduct()));
+    @Transactional
+    public ProductInformation update(ProductUpdateData productUpdateData) {
+        if (!productRepository.existById(productUpdateData.getId())) {
+            throw new ProductNotFoundException();
+        }
+
+        return ProductInformation.from(productRepository.update(productUpdateData.toProduct()));
     }
 
+    @Transactional
     public void delete(Long id) {
+        if (!productRepository.existById(id)) {
+            throw new ProductNotFoundException();
+        }
+
         productRepository.delete(id);
     }
 }

@@ -18,8 +18,8 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 
-@WebMvcTest(HomePageController.class)
-class HomePageControllerTest {
+@WebMvcTest(ProductViewController.class)
+class ProductViewControllerTest {
 
     @Autowired
     private MockMvc mockMvc;

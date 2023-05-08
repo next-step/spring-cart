@@ -2,14 +2,14 @@ package cart.product.application.dto;
 
 import cart.product.domain.Product;
 
-public class ProductUpdate {
+public class ProductUpdateData {
 
     private final Long id;
     private final String name;
     private final String image;
-    private final int price;
+    private final Integer price;
 
-    public ProductUpdate(Long id, String name, String image, int price) {
+    public ProductUpdateData(Long id, String name, String image, Integer price) {
         this.id = id;
         this.name = name;
         this.image = image;

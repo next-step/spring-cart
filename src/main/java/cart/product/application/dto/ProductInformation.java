@@ -9,9 +9,9 @@ public class ProductInformation {
     private final Long id;
     private final String name;
     private final String image;
-    private final int price;
+    private final Integer price;
 
-    public ProductInformation(Long id, String name, String image, int price) {
+    public ProductInformation(Long id, String name, String image, Integer price) {
         this.id = id;
         this.name = name;
         this.image = image;

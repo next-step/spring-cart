@@ -2,13 +2,13 @@ package cart.product.application.dto;
 
 import cart.product.domain.Product;
 
-public class ProductCreate {
+public class ProductCreateData {
 
     private final String name;
     private final String image;
-    private final int price;
+    private final Integer price;
 
-    public ProductCreate(String name, String image, int price) {
+    public ProductCreateData(String name, String image, Integer price) {
         this.name = name;
         this.image = image;
         this.price = price;

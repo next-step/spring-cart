@@ -4,31 +4,31 @@ import cart.product.application.dto.ProductInformation;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class HomePageResponse {
+public class ProductHomeViewResponse {
 
     private final Long id;
     private final String name;
     private final String image;
-    private final int price;
+    private final Integer price;
 
-    public HomePageResponse(Long id, String name, String image, int price) {
+    public ProductHomeViewResponse(Long id, String name, String image, Integer price) {
         this.id = id;
         this.name = name;
         this.image = image;
         this.price = price;
     }
 
-    public static HomePageResponse from(ProductInformation productInformation) {
-        return new HomePageResponse(
+    public static ProductHomeViewResponse from(ProductInformation productInformation) {
+        return new ProductHomeViewResponse(
             productInformation.getId(),
             productInformation.getName(),
             productInformation.getImage(),
             productInformation.getPrice());
     }
 
-    public static List<HomePageResponse> from(List<ProductInformation> productInformations) {
+    public static List<ProductHomeViewResponse> from(List<ProductInformation> productInformations) {
         return productInformations.stream()
-            .map(HomePageResponse::from)
+            .map(ProductHomeViewResponse::from)
             .collect(Collectors.toUnmodifiableList());
     }
 

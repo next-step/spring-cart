@@ -4,31 +4,31 @@ import cart.product.application.dto.ProductInformation;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class ProductResponse {
+public class ProductAdminViewResponse {
 
     private final Long id;
     private final String name;
     private final String image;
     private final Integer price;
 
-    public ProductResponse(Long id, String name, String image, Integer price) {
+    public ProductAdminViewResponse(Long id, String name, String image, Integer price) {
         this.id = id;
         this.name = name;
         this.image = image;
         this.price = price;
     }
 
-    public static ProductResponse from(ProductInformation productInformation) {
-        return new ProductResponse(
+    public static ProductAdminViewResponse from(ProductInformation productInformation) {
+        return new ProductAdminViewResponse(
             productInformation.getId(),
             productInformation.getName(),
             productInformation.getImage(),
             productInformation.getPrice());
     }
 
-    public static List<ProductResponse> from(List<ProductInformation> productInformations) {
+    public static List<ProductAdminViewResponse> from(List<ProductInformation> productInformations) {
         return productInformations.stream()
-            .map(ProductResponse::from)
+            .map(ProductAdminViewResponse::from)
             .collect(Collectors.toUnmodifiableList());
     }
 
@@ -47,5 +47,4 @@ public class ProductResponse {
     public int getPrice() {
         return price;
     }
-
 }

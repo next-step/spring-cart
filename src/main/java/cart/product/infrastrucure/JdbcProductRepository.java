@@ -53,6 +53,12 @@ public class JdbcProductRepository implements ProductRepository {
         jdbcTemplate.update(sql, Map.of("id", id));
     }
 
+    @Override
+    public Boolean existById(Long id) {
+        String sql = "SELECT EXISTS(SELECT 1 FROM product WHERE id = :id)";
+        return jdbcTemplate.queryForObject(sql, Map.of("id", id), Boolean.class);
+    }
+
 
     private final RowMapper<Product> productRowMapper = (rs, rowNum) ->
         new Product(rs.getLong("id"),

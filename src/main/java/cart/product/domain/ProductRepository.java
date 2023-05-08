@@ -11,4 +11,6 @@ public interface ProductRepository {
     Product update(Product product);
 
     void delete(Long id);
+
+    Boolean existById(Long id);
 }
