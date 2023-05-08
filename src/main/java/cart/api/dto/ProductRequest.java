@@ -3,14 +3,14 @@ package cart.api.dto;
 import cart.domain.entity.Product;
 
 import javax.validation.constraints.Min;
-import javax.validation.constraints.NotNull;
+import javax.validation.constraints.NotBlank;
 
 public class ProductRequest {
-    @NotNull
+    @NotBlank
     private String name;
     @Min(0)
     private int price;
-    @NotNull
+    @NotBlank
     private String imageUrl;
 
     public ProductRequest() {

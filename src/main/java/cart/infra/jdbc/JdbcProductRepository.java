@@ -5,7 +5,7 @@ import cart.domain.repository.ProductRepository;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
-import java.util.List;
+import java.util.Collection;
 
 @Repository
 public class JdbcProductRepository implements ProductRepository {
@@ -17,7 +17,7 @@ public class JdbcProductRepository implements ProductRepository {
     }
 
     @Override
-    public Product findById(int id) {
+    public Product findById(Long id) {
         return null;
     }
 
@@ -28,7 +28,7 @@ public class JdbcProductRepository implements ProductRepository {
     }
 
     @Override
-    public List<Product> findAll() {
+    public Collection<Product> findAll() {
         String sql = "SELECT * FROM products";
         return jdbcTemplate.query(sql, (rs, rowNum) -> {
             return new Product(

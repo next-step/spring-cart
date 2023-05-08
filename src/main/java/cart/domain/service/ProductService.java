@@ -4,7 +4,7 @@ import cart.domain.entity.Product;
 import cart.domain.repository.ProductRepository;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
+import java.util.Collection;
 
 @Service
 public class ProductService {
@@ -15,7 +15,7 @@ public class ProductService {
         this.productRepository = productRepository;
     }
 
-    public List<Product> getAll() {
+    public Collection<Product> getAll() {
         return productRepository.findAll();
     }
 

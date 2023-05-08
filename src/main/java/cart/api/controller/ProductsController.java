@@ -6,15 +6,15 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
 @Controller
-public class HomeController {
+public class ProductsController {
 
     private final ProductService productService;
 
-    public HomeController(ProductService productService) {
+    public ProductsController(ProductService productService) {
         this.productService = productService;
     }
 
-    @GetMapping
+    @GetMapping({"/", "/products"})
     public String home(Model model) {
         model.addAttribute("products", productService.getAll());
         return "index";

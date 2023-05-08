@@ -1,4 +1,4 @@
-package cart;
+package cart.api.controller;
 
 import io.restassured.RestAssured;
 import org.junit.jupiter.api.BeforeEach;
@@ -33,5 +33,4 @@ public class ProductIntegrationTest {
 
         assertThat(result.statusCode()).isEqualTo(HttpStatus.OK.value());
     }
-
 }

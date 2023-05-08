@@ -32,7 +32,7 @@ public class AdminController {
     }
 
     @PutMapping("{id}")
-    public String update(Model model, @PathVariable Long id, @RequestBody ProductRequest data) {
+    public String update(Model model, @PathVariable Long id, @RequestBody @Valid ProductRequest data) {
         productService.update(id, data.toModel());
         model.addAttribute("products", productService.getAll());
         return "admin";
