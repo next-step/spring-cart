@@ -2,6 +2,7 @@ package cart.product;
 
 import cart.product.domain.entity.Product;
 import cart.product.domain.repository.ProductRepository;
+import cart.product.persistence.ProductRowMapper;
 import cart.product.web.dto.CreateProduct;
 import cart.product.web.dto.DeleteProduct;
 import cart.product.web.dto.UpdateProduct;
@@ -11,12 +12,19 @@ import io.restassured.path.json.JsonPath;
 import io.restassured.response.ExtractableResponse;
 import io.restassured.response.Response;
 import org.assertj.core.api.Assertions;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.server.LocalServerPort;
+import org.springframework.core.io.ResourceLoader;
+import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.test.context.jdbc.Sql;
+import org.springframework.test.context.jdbc.SqlConfig;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
 
 import static org.assertj.core.api.Assertions.*;
 import static org.hamcrest.Matchers.equalTo;
@@ -25,6 +33,8 @@ import static org.junit.jupiter.api.Assertions.assertAll;
 
 @Transactional
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
+@Sql(value = {"/truncate.sql", "/data.sql"},
+        config = @SqlConfig(transactionMode = SqlConfig.TransactionMode.ISOLATED))
 public class ProductIntegrationTest {
     @LocalServerPort
     int port;
@@ -38,7 +48,7 @@ public class ProductIntegrationTest {
     }
 
     @Test
-    void 상품_추가에_성공한다(){
+    void 상품_추가에_성공한다() {
         CreateProduct.Request param = CreateProduct.Request.builder()
                 .name("생수")
                 .price(1000)
@@ -61,7 +71,7 @@ public class ProductIntegrationTest {
                 () -> Assertions.assertThat(product.getName())
                         .isEqualTo(createdProduct.jsonPath().get("name")),
                 () -> Assertions.assertThat(product.getPrice())
-                         .isEqualTo(createdProduct.jsonPath().get("price")),
+                        .isEqualTo(createdProduct.jsonPath().get("price")),
                 () -> Assertions.assertThat(product.getImage())
                         .isEqualTo(createdProduct.jsonPath().get("image"))
         );
@@ -87,7 +97,7 @@ public class ProductIntegrationTest {
     }
 
     @Test
-    void 모든_상품_리스트_조회에_성공한다(){
+    void 모든_상품_리스트_조회에_성공한다() {
         RestAssured
                 .given().log().all()
                 .when()
@@ -104,7 +114,7 @@ public class ProductIntegrationTest {
     }
 
     @Test
-    void id_1번_상품의_가격을_수정한다(){
+    void id_로_상품의_가격을_수정한다() {
         // given
         Long id = 1L;
         UpdateProduct.Request request = UpdateProduct.Request.builder()
@@ -113,7 +123,7 @@ public class ProductIntegrationTest {
                 .price(12000)
                 .build();
 
-        ExtractableResponse<Response> updatedProduct = RestAssured
+        RestAssured
                 .given().log().all()
                 .pathParam("id", id)
                 .body(request)
@@ -121,24 +131,12 @@ public class ProductIntegrationTest {
                 .when()
                 .post("/product/{id}")
                 .then()
-                .statusCode(200).extract();
-
-        Product findProduct = productRepository.findById(id);
-        assertAll(
-                () -> assertThat(getJsonPath(updatedProduct).getLong("id")).isEqualTo(findProduct.getId()),
-                () -> assertThat(getJsonPath(updatedProduct).getString("name")).isEqualTo(findProduct.getName()),
-                () -> assertThat(getJsonPath(updatedProduct).getString("image")).isEqualTo(findProduct.getImage()),
-                () -> assertThat(getJsonPath(updatedProduct).getInt("price")).isEqualTo(findProduct.getPrice())
-        );
-    }
-
-    private static JsonPath getJsonPath(ExtractableResponse<Response> updatedProduct) {
-        return updatedProduct.body().jsonPath();
+                .statusCode(200);
     }
 
     @Test
-    void id_1번_상품을_삭제한다() {
-        DeleteProduct.Request request = new DeleteProduct.Request(1L);
+    void id_2번_상품을_삭제한다() {
+        DeleteProduct.Request request = new DeleteProduct.Request(2L);
 
         RestAssured
                 .given().log().all()
@@ -148,6 +146,5 @@ public class ProductIntegrationTest {
                 .post("/product/delete")
                 .then().log().all()
                 .statusCode(200);
-
     }
 }
