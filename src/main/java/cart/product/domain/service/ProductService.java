@@ -5,6 +5,7 @@ import cart.product.domain.entity.Product;
 import cart.product.domain.repository.ProductRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -14,6 +15,7 @@ import java.util.stream.Collectors;
 public class ProductService {
     private final ProductRepository productRepository;
 
+    @Transactional
     public ProductDto createProduct(String productName, int price, String imagePath) {
         return ProductDto.fromEntity(productRepository.insert(Product.builder()
                 .name(productName)
@@ -32,6 +34,7 @@ public class ProductService {
                 .collect(Collectors.toList());
     }
 
+    @Transactional
     public ProductDto updateProduct(Long id, ProductDto productDto) {
         return ProductDto.fromEntity(
                 productRepository.updateProduct(id,
@@ -42,6 +45,7 @@ public class ProductService {
                                 .build()));
     }
 
+    @Transactional
     public void deleteProduct(Long id) {
         productRepository.delete(id);
     }
