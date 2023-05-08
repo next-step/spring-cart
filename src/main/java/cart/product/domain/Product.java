@@ -1,8 +1,10 @@
 package cart.product.domain;
 
+import java.util.Objects;
+
 public class Product {
 
-    private final Long id;
+    private Long id;
     private final String name;
     private final String image;
     private final int price;
@@ -12,6 +14,10 @@ public class Product {
         this.name = name;
         this.image = image;
         this.price = price;
+    }
+
+    public void injectAutoId(long autoId) {
+        this.id = autoId;
     }
 
     public Long getId() {
@@ -28,5 +34,22 @@ public class Product {
 
     public int getPrice() {
         return price;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (!(o instanceof Product)) {
+            return false;
+        }
+        Product product = (Product) o;
+        return Objects.equals(getId(), product.getId());
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(getId());
     }
 }
