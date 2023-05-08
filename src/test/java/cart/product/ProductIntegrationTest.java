@@ -14,6 +14,7 @@ import io.restassured.response.Response;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -48,6 +49,7 @@ public class ProductIntegrationTest {
     }
 
     @Test
+    @DisplayName("상품 추가에 성공한다")
     void 상품_추가에_성공한다() {
         CreateProduct.Request param = CreateProduct.Request.builder()
                 .name("생수")
@@ -79,6 +81,7 @@ public class ProductIntegrationTest {
     }
 
     @Test
+    @DisplayName("상품 id로 상품 하나 조회에 성공한다")
     void 상품_id로_상품_하나_조회에_성공한다() {
         Long id = 1L;
 
@@ -97,6 +100,7 @@ public class ProductIntegrationTest {
     }
 
     @Test
+    @DisplayName("모든 상품 리스트 조회에 성공한다")
     void 모든_상품_리스트_조회에_성공한다() {
         RestAssured
                 .given().log().all()
@@ -114,6 +118,7 @@ public class ProductIntegrationTest {
     }
 
     @Test
+    @DisplayName("id로 상품의 가격을 수정한다")
     void id_로_상품의_가격을_수정한다() {
         // given
         Long id = 1L;
@@ -135,6 +140,7 @@ public class ProductIntegrationTest {
     }
 
     @Test
+    @DisplayName("id 2번 상품을 삭제한다")
     void id_2번_상품을_삭제한다() {
         DeleteProduct.Request request = new DeleteProduct.Request(2L);
 
