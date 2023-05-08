@@ -1,6 +1,6 @@
 package cart.api.controller;
 
-import cart.api.dto.ProductCreateRequest;
+import cart.api.dto.ProductRequest;
 import cart.domain.service.ProductService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -25,20 +25,22 @@ public class AdminController {
     }
 
     @PostMapping
-    public String create(Model model, @RequestBody @Valid ProductCreateRequest data) {
+    public String create(Model model, @RequestBody @Valid ProductRequest data) {
         productService.save(data.toModel());
         model.addAttribute("products", productService.getAll());
         return "admin";
     }
 
-    @PutMapping
-    public String update(Model model) {
+    @PutMapping("{id}")
+    public String update(Model model, @PathVariable Long id, @RequestBody ProductRequest data) {
+        productService.update(id, data.toModel());
         model.addAttribute("products", productService.getAll());
         return "admin";
     }
 
-    @DeleteMapping
-    public String delete(Model model) {
+    @DeleteMapping("{id}")
+    public String delete(Model model, @PathVariable Long id) {
+        productService.delete(id);
         model.addAttribute("products", productService.getAll());
         return "admin";
     }

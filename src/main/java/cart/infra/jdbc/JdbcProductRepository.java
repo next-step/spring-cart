@@ -39,4 +39,16 @@ public class JdbcProductRepository implements ProductRepository {
             );
         });
     }
+
+    @Override
+    public void update(Long id, Product product) {
+        String sql = "UPDATE products SET name = ?, price = ?, image_url = ? WHERE id = ?";
+        jdbcTemplate.update(sql, product.getName(), product.getPrice(), product.getImageUrl(), id);
+    }
+
+    @Override
+    public void delete(Long id) {
+        String sql = "DELETE FROM products WHERE id = ?";
+        jdbcTemplate.update(sql, id);
+    }
 }

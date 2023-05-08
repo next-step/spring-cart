@@ -5,7 +5,7 @@ import cart.domain.entity.Product;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 
-public class ProductCreateRequest {
+public class ProductRequest {
     @NotNull
     private String name;
     @Min(0)
@@ -13,10 +13,10 @@ public class ProductCreateRequest {
     @NotNull
     private String imageUrl;
 
-    public ProductCreateRequest() {
+    public ProductRequest() {
     }
 
-    public ProductCreateRequest(String name, int price, String imageUrl) {
+    public ProductRequest(String name, int price, String imageUrl) {
         this.name = name;
         this.price = price;
         this.imageUrl = imageUrl;

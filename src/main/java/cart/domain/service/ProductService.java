@@ -22,4 +22,12 @@ public class ProductService {
     public void save(Product product) {
         productRepository.insert(product);
     }
+
+    public void update(Long id, Product product) {
+        productRepository.update(id, product);
+    }
+
+    public void delete(Long id) {
+        productRepository.delete(id);
+    }
 }
