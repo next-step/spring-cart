@@ -1,19 +1,19 @@
 package cart.domain.entity;
 
 public class Product {
-    private int id;
+    private Long id;
     private String name;
-    private Long price;
+    private int price;
     private String imageUrl;
 
-    public Product(int id, String name, Long price, String imageUrl) {
+    public Product(Long id, String name, int price, String imageUrl) {
         this.id = id;
         this.name = name;
         this.price = price;
         this.imageUrl = imageUrl;
     }
 
-    public int getId() {
+    public Long getId() {
         return id;
     }
 
@@ -21,7 +21,7 @@ public class Product {
         return name;
     }
 
-    public Long getPrice() {
+    public int getPrice() {
         return price;
     }
 
