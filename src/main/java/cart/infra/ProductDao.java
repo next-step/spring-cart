@@ -49,7 +49,7 @@ public class ProductDao extends NamedParameterJdbcDaoSupport {
 
     public void update(Product product, int id) {
         final String query = String.format("UPDATE %s " +
-                "SET name = :name, image = :image, price = :price" +
+                "SET name = :name, image = :image, price = :price " +
                 "WHERE id = :id", TABLE_NAME);
         SqlParameterSource params = new BeanPropertySqlParameterSource(product);
         getNamedParameterJdbcTemplate().update(query, params);

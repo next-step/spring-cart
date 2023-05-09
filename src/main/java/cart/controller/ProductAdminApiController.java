@@ -36,7 +36,6 @@ public class ProductAdminApiController {
 
     @PutMapping("/update/{id}")
     public ResponseEntity<ProductResponse> updateProduct(@RequestBody ProductRequest request, @PathVariable int id) {
-
         ProductResponse response = productService.updateProduct(request, id);
 
         return ResponseEntity.ok(response);
