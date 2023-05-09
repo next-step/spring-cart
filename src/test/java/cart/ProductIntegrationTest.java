@@ -69,9 +69,7 @@ public class ProductIntegrationTest extends AcceptanceTest {
         int id = 1;
         ExtractableResponse<Response> response = 상품_삭제_요청(id);
 
-        assertAll(
-                () -> assertThat(response.statusCode()).isEqualTo(HttpStatus.OK.value())
-        );
+        assertThat(response.statusCode()).isEqualTo(HttpStatus.NO_CONTENT.value());
     }
 
 }

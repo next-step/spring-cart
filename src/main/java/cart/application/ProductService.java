@@ -36,8 +36,14 @@ public class ProductService {
         Product product = getProductById(id);
 
         product.updateProduct(productRequest.getName(), productRequest.getImage(), productRequest.getPrice());
-        productDao.update(product, id);
+        productDao.update(product);
         return ProductResponse.of(product);
+    }
+
+    @Transactional
+    public void deleteProduct(int id) {
+        Product product = getProductById(id);
+        productDao.delete(product);
     }
 
     public List<ProductResponse> getAllProductList() {

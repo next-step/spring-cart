@@ -47,11 +47,18 @@ public class ProductDao extends NamedParameterJdbcDaoSupport {
         return new Products(products);
     }
 
-    public void update(Product product, int id) {
+    public void update(Product product) {
         final String query = String.format("UPDATE %s " +
                 "SET name = :name, image = :image, price = :price " +
                 "WHERE id = :id", TABLE_NAME);
         SqlParameterSource params = new BeanPropertySqlParameterSource(product);
+        getNamedParameterJdbcTemplate().update(query, params);
+
+    }
+
+    public void delete(Product product) {
+        final String query = String.format("DELETE FROM %s WHERE id = :id", TABLE_NAME);
+        SqlParameterSource params = new MapSqlParameterSource().addValue("id", product.getId());
         getNamedParameterJdbcTemplate().update(query, params);
 
     }
