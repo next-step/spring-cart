@@ -32,12 +32,12 @@ public class ProductController {
     }
 
     @PostMapping
-    public ResponseEntity<ProductResponse> create(@Valid @RequestBody ProductCreateRequest productCreateRequest) {
+    public ResponseEntity<ProductResponse> create(@RequestBody @Valid ProductCreateRequest productCreateRequest) {
         return ResponseEntity.ok(ProductResponse.from(productService.create(productCreateRequest.toProductCreateData())));
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<ProductResponse> update(@PathVariable Long id, @Valid @RequestBody ProductUpdateRequest productUpdateRequest) {
+    public ResponseEntity<ProductResponse> update(@PathVariable Long id, @RequestBody @Valid ProductUpdateRequest productUpdateRequest) {
         productUpdateRequest.injectId(id);
         return ResponseEntity.ok(ProductResponse.from(productService.update(productUpdateRequest.toProductUpdateData())));
     }

@@ -27,13 +27,26 @@ class ProductViewControllerTest {
     @MockBean
     private ProductService productService;
 
-    @DisplayName("root 경로로 접근하면 상품 목록을 조회하여 보여준다.")
+    @DisplayName("/ 경로로 접근하면 상품 목록을 조회하여 보여준다.")
     @Test
     void showHomePage() throws Exception {
         given(productService.findAll()).willReturn(Collections.emptyList());
 
         mockMvc.perform(get("/"))
             .andExpect(view().name("index"))
+            .andExpect(status().isOk())
+            .andExpect(content().contentTypeCompatibleWith(MediaType.TEXT_HTML))
+            .andExpect(model().attributeExists("products"))
+            .andDo(print());
+    }
+
+    @DisplayName("/admin 경로로 접근하면 상품 목록을 조회하여 보여준다.")
+    @Test
+    void showAdminView() throws Exception {
+        given(productService.findAll()).willReturn(Collections.emptyList());
+
+        mockMvc.perform(get("/admin"))
+            .andExpect(view().name("admin"))
             .andExpect(status().isOk())
             .andExpect(content().contentTypeCompatibleWith(MediaType.TEXT_HTML))
             .andExpect(model().attributeExists("products"))

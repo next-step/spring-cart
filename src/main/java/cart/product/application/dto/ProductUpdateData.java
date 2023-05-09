@@ -7,9 +7,9 @@ public class ProductUpdateData {
     private final Long id;
     private final String name;
     private final String image;
-    private final Integer price;
+    private final Long price;
 
-    public ProductUpdateData(Long id, String name, String image, Integer price) {
+    public ProductUpdateData(Long id, String name, String image, Long price) {
         this.id = id;
         this.name = name;
         this.image = image;
@@ -28,7 +28,7 @@ public class ProductUpdateData {
         return image;
     }
 
-    public int getPrice() {
+    public Long getPrice() {
         return price;
     }
 

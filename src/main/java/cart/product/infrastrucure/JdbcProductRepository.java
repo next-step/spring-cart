@@ -64,5 +64,5 @@ public class JdbcProductRepository implements ProductRepository {
         new Product(rs.getLong("id"),
             rs.getString("name"),
             rs.getString("image"),
-            rs.getInt("price"));
+            rs.getLong("price"));
 }

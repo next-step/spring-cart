@@ -1,5 +1,7 @@
 package cart.global.exception;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.MethodArgumentNotValidException;
@@ -8,6 +10,8 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 @RestControllerAdvice
 public class GlobalExceptionHandler {
+
+    private final Logger logger = LoggerFactory.getLogger(GlobalExceptionHandler.class);
 
     @ExceptionHandler(MethodArgumentNotValidException.class)
     public ResponseEntity<ErrorResponse> handleMethodArgumentNotValidException(
@@ -23,7 +27,9 @@ public class GlobalExceptionHandler {
     }
 
     @ExceptionHandler(Exception.class)
-    public ResponseEntity<ErrorResponse> handleRuntimeException() {
+    public ResponseEntity<ErrorResponse> handleRuntimeException(Exception e) {
+        e.printStackTrace();
+        logger.error(e.getMessage());
         return ResponseEntity.internalServerError()
             .body(new ErrorResponse(HttpStatus.INTERNAL_SERVER_ERROR,
                 "예상치 못한 에러가 발생했습니다. 잠시후 요청 바랍니다."));

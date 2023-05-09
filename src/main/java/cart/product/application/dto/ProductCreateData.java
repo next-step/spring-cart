@@ -6,9 +6,9 @@ public class ProductCreateData {
 
     private final String name;
     private final String image;
-    private final Integer price;
+    private final Long price;
 
-    public ProductCreateData(String name, String image, Integer price) {
+    public ProductCreateData(String name, String image, Long price) {
         this.name = name;
         this.image = image;
         this.price = price;
@@ -22,7 +22,7 @@ public class ProductCreateData {
         return image;
     }
 
-    public int getPrice() {
+    public Long getPrice() {
         return price;
     }
 
