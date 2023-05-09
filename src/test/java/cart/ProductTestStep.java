@@ -45,4 +45,14 @@ public class ProductTestStep {
                 .extract();
     }
 
+    public static ExtractableResponse<Response> 상품_삭제_요청(int id) {
+        return RestAssured
+                .given().log().all()
+                .contentType(MediaType.APPLICATION_JSON_VALUE)
+                .accept(MediaType.APPLICATION_JSON_VALUE)
+                .when().delete("/products/delete/{id}", id)
+                .then().log().all()
+                .extract();
+    }
+
 }

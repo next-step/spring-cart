@@ -9,8 +9,7 @@ import org.springframework.http.HttpStatus;
 import java.util.HashMap;
 import java.util.Map;
 
-import static cart.ProductTestStep.상품_생성요청;
-import static cart.ProductTestStep.상품_수정_요청;
+import static cart.ProductTestStep.*;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertAll;
 
@@ -61,6 +60,17 @@ public class ProductIntegrationTest extends AcceptanceTest {
 
         assertAll(
                 () -> assertThat(response.statusCode()).isEqualTo(HttpStatus.INTERNAL_SERVER_ERROR.value())
+        );
+    }
+
+    @Test
+    @DisplayName("상품 삭제 요청")
+    public void 상품_삭제_테스트(){
+        int id = 1;
+        ExtractableResponse<Response> response = 상품_삭제_요청(id);
+
+        assertAll(
+                () -> assertThat(response.statusCode()).isEqualTo(HttpStatus.OK.value())
         );
     }
 
