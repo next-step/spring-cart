@@ -8,15 +8,22 @@ import org.springframework.web.bind.annotation.GetMapping;
 
 @RequiredArgsConstructor
 @Controller
-public class IndexController {
+public class ViewController {
 
     private final ProductService productService;
 
     @GetMapping("/")
     public String index(Model model) {
-        model.addAttribute("products", productService.findAllProducts());
+        model.addAttribute("products", productService.findAll());
 
         return "index";
+    }
+
+    @GetMapping("/admin")
+    public String admin(Model model) {
+        model.addAttribute("products", productService.findAll());
+
+        return "admin";
     }
 
 }

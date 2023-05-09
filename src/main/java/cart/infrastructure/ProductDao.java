@@ -2,6 +2,7 @@ package cart.infrastructure;
 
 import cart.domain.product.Product;
 import lombok.RequiredArgsConstructor;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.PreparedStatementCreator;
 import org.springframework.jdbc.core.RowMapper;
@@ -34,13 +35,33 @@ public class ProductDao {
     public Optional<Product> findById(Long id) {
         String sql = "SELECT * FROM product WHERE ID = ?";
 
-        return Optional.ofNullable(jdbcTemplate.queryForObject(sql, productRowMapper(), id));
+        Optional<Product> product;
+        try {
+            product = Optional.ofNullable(jdbcTemplate.queryForObject(sql, productRowMapper(), id));
+        } catch (EmptyResultDataAccessException exception) {
+            product = Optional.empty();
+        }
+        return product;
     }
 
     public List<Product> findAll() {
         String sql = "SELECT * FROM product";
 
         return jdbcTemplate.query(sql, productRowMapper());
+    }
+
+    public Long update(Product product) {
+        String sql = "UPDATE product SET name = ?, image_url = ?, price = ? WHERE id = ?";
+
+        jdbcTemplate.update(sql, product.getName(), product.getImageUrl(), product.getPrice(), product.getId());
+        return product.getId();
+    }
+
+    public Long delete(Product product) {
+        String sql = "DELETE FROM product WHERE id = ?";
+
+        jdbcTemplate.update(sql, product.getId());
+        return product.getId();
     }
 
     private PreparedStatementCreator productPreparedStatementCreator(Product product) {

@@ -21,4 +21,10 @@ public class Product {
         this.price = price;
     }
 
+    public void update(String name, String imageUrl, int price) {
+        this.name = name;
+        this.imageUrl = imageUrl;
+        this.price = price;
+    }
+
 }
