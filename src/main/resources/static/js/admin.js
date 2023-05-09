@@ -53,7 +53,7 @@ const createProduct = (product) => {
     }).then((response) => {
         window.location.reload();
     }).catch((error) => {
-        console.error(error);
+        window.alert(error.response.data.message);
     });
 };
 
@@ -68,7 +68,7 @@ const updateProduct = (product) => {
     }).then((response) => {
         window.location.reload();
     }).catch((error) => {
-        console.error(error);
+        window.alert(error.response.data.message);
     });
 };
 
@@ -80,6 +80,6 @@ const deleteProduct = (id) => {
     }).then((response) => {
         window.location.reload();
     }).catch((error) => {
-        console.error(error);
+        window.alert(error.response.data.message);
     });
 };

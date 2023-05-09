@@ -1,5 +1,8 @@
 package cart.product.service;
 
+import cart.enums.exceptions.ErrorCode;
+import cart.exceptions.ProductNotFoundException;
+import cart.product.domain.Product;
 import cart.product.dto.request.ProductRequest;
 import cart.product.dto.response.ProductResponse;
 import cart.product.repository.ProductDao;
@@ -26,10 +29,12 @@ public class ProductService {
     }
 
     public void update(Long id, ProductRequest productRequest) {
-        productDao.update(id, productRequest);
+        Product product = productDao.findById(id).orElseThrow(() -> new ProductNotFoundException(ErrorCode.NOT_FOUND_PRODUCT));
+        productDao.update(product);
     }
 
     public void delete(Long id) {
-        productDao.delete(id);
+        Product product = productDao.findById(id).orElseThrow(() -> new ProductNotFoundException(ErrorCode.NOT_FOUND_PRODUCT));
+        productDao.delete(product.getId());
     }
 }

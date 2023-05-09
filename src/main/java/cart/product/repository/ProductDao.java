@@ -7,6 +7,7 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Optional;
 
 @RequiredArgsConstructor
 @Repository
@@ -23,13 +24,18 @@ public class ProductDao {
         return jdbcTemplate.query(SQL, (resultSet, rowNum) -> new Product(resultSet.getLong("id"), resultSet.getString("name"), resultSet.getString("img"), resultSet.getLong("price"), resultSet.getTimestamp("created_at").toLocalDateTime()));
     }
 
-    public void update(Long id, ProductRequest productRequest) {
+    public void update(Product product) {
         String SQL = "UPDATE PRODUCTS SET name = ?, img = ?, price = ? WHERE id = ?";
-        jdbcTemplate.update(SQL, productRequest.getName(), productRequest.getImg(), productRequest.getPrice(), id);
+        jdbcTemplate.update(SQL, product.getName(), product.getImg(), product.getPrice(), product.getId());
     }
 
     public void delete(Long id) {
         String SQL = "DELETE FROM PRODUCTS WHERE id = ?";
         jdbcTemplate.update(SQL, id);
+    }
+
+    public Optional<Product> findById(Long id) {
+        String SQL = "SELECT * FROM PRODUCT WHERE id = ?";
+        return Optional.ofNullable(jdbcTemplate.queryForObject(SQL, (resultSet, rowNum) -> new Product(resultSet.getLong("id"), resultSet.getString("name"), resultSet.getString("img"), resultSet.getLong("price"), resultSet.getTimestamp("created_at").toLocalDateTime())));
     }
 }

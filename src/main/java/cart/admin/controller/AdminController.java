@@ -6,6 +6,8 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
+import javax.validation.Valid;
+
 
 @RequestMapping("/admin")
 @RestController
@@ -25,7 +27,7 @@ public class AdminController {
     }
 
     @PostMapping("/create-product")
-    public void insertProduct(Model model, @RequestBody ProductRequest productRequest) {
+    public void insertProduct(Model model, @RequestBody @Valid ProductRequest productRequest) {
         productService.insert(productRequest);
         model.addAttribute("products", productService.findAll()); // 최신화 시켜주기
     }
