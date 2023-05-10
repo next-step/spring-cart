@@ -1,4 +1,4 @@
-package cart.controller.handler.dto;
+package cart.exception.handler.dto;
 
 public class ErrorResponse {
 
