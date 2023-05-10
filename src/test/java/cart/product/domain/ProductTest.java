@@ -1,7 +1,9 @@
-package cart.domain;
+package cart.product.domain;
 
 import cart.exception.ErrorType;
 import cart.exception.ServiceException;
+import cart.product.domain.Money;
+import cart.product.domain.Product;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
