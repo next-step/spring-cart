@@ -46,8 +46,6 @@ public class PageController {
 
     @GetMapping("/cart")
     public String cart(Model model) {
-        // TODO step2에서 진행
-
         return "cart";
     }
 
