@@ -25,15 +25,15 @@ public class AdminController {
     }
 
     @PostMapping
-    public String create(Model model, @RequestBody @Valid ProductRequest data) {
-        productService.save(data.toModel());
+    public String create(Model model, @RequestBody @Valid ProductRequest request) {
+        productService.save(request.toModel());
         model.addAttribute("products", productService.getAll());
         return "admin";
     }
 
     @PutMapping("{id}")
-    public String update(Model model, @PathVariable Long id, @RequestBody @Valid ProductRequest data) {
-        productService.update(id, data.toModel());
+    public String update(Model model, @PathVariable Long id, @RequestBody @Valid ProductRequest request) {
+        productService.update(id, request.toModel());
         model.addAttribute("products", productService.getAll());
         return "admin";
     }

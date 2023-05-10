@@ -10,7 +10,7 @@ import java.util.Collection;
 @Repository
 public class JdbcProductRepository implements ProductRepository {
 
-    private JdbcTemplate jdbcTemplate;
+    private final JdbcTemplate jdbcTemplate;
 
     public JdbcProductRepository(JdbcTemplate jdbcTemplate) {
         this.jdbcTemplate = jdbcTemplate;
