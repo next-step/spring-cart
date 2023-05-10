@@ -9,6 +9,7 @@ import cart.product.web.dto.UpdateProduct;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.ModelAndView;
 
 import javax.validation.Valid;
 import java.util.List;
@@ -16,7 +17,7 @@ import java.util.stream.Collectors;
 
 @RestController
 @RequiredArgsConstructor
-public class ProductApiController {
+public class ProductController {
 
     private final ProductService productService;
 
@@ -62,5 +63,19 @@ public class ProductApiController {
             @Valid @RequestBody DeleteProduct.Request request
     ) {
         productService.deleteProduct(request.getId());
+    }
+
+    @GetMapping("/")
+    public ModelAndView showIndex() {
+        ModelAndView modelAndView = new ModelAndView();
+        modelAndView.addObject("product", readProducts());
+        modelAndView.setViewName("index");
+        return modelAndView;
+    }
+
+    @GetMapping("/admin")
+    public ModelAndView showAdmin() {
+        return new ModelAndView("admin",
+                "products", readProducts());
     }
 }
