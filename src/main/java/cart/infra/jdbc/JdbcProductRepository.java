@@ -2,10 +2,13 @@ package cart.infra.jdbc;
 
 import cart.domain.entity.Product;
 import cart.domain.repository.ProductRepository;
+import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
 
 import java.util.Collection;
+import java.util.NoSuchElementException;
 
 @Repository
 public class JdbcProductRepository implements ProductRepository {
@@ -18,7 +21,9 @@ public class JdbcProductRepository implements ProductRepository {
 
     @Override
     public Product findById(Long id) {
-        return null;
+        String sql = "SELECT * FROM products WHERE id = ?";
+        RowMapper<Product> rowMapper = new BeanPropertyRowMapper<>(Product.class);
+        return jdbcTemplate.queryForObject(sql, rowMapper, id);
     }
 
     @Override
@@ -42,12 +47,18 @@ public class JdbcProductRepository implements ProductRepository {
 
     @Override
     public void update(Long id, Product product) {
+        if (findById(id) == null) {
+            throw new NoSuchElementException("해당 상품이 존재하지 않습니다.");
+        }
         String sql = "UPDATE products SET name = ?, price = ?, image_url = ? WHERE id = ?";
         jdbcTemplate.update(sql, product.getName(), product.getPrice(), product.getImageUrl(), id);
     }
 
     @Override
     public void delete(Long id) {
+        if (findById(id) == null) {
+            throw new NoSuchElementException("해당 상품이 존재하지 않습니다.");
+        }
         String sql = "DELETE FROM products WHERE id = ?";
         jdbcTemplate.update(sql, id);
     }

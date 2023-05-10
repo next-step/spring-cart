@@ -78,7 +78,7 @@ public class AdminIntegrationTest {
                 .contentType(MediaType.APPLICATION_JSON_VALUE)
                 .body(request)
                 .when()
-                .put("/admin/{id}", 1)
+                .put("/admin/{id}", 2)
                 .then()
                 .extract();
 
