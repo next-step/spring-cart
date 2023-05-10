@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.ModelAndView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -21,44 +22,39 @@ import java.util.List;
 @RequestMapping("/admin")
 public class AdminController {
 
+    private final AdminService adminService;
     private final List<Product> products;
 
-    @Autowired
-    public AdminController(List<Product> products){
+    public AdminController(AdminService adminService, List<Product> products){
+        this.adminService = adminService;
         this.products = products;
     }
 
     @GetMapping("")
-    public String get(Model model){
-        model.addAttribute("products", products);
-        return "admin";
+    public ModelAndView get(){
+        ModelAndView modelAndView = new ModelAndView();
+        modelAndView.addObject("products", products);
+        modelAndView.setViewName("admin");
+        return modelAndView;
     }
 
     @PostMapping("/product")
     public String post(
             @RequestBody Product product
     ){
-        products.add(new Product(product.getName(), product.getImage(), product.getPrice()));
+        adminService.create(product);
         return "admin";
     }
 
     @PutMapping("/product/{id}")
     public String put(@RequestBody Product product){
-        products
-                .stream()
-                .filter(pro -> pro.getId() == product.getId())
-                .findFirst()
-                .ifPresent(pro -> {
-                    pro.setName(product.getName());
-                    pro.setImage(product.getImage());
-                    pro.setPrice(product.getPrice());
-                });
+        adminService.update(product);
         return "admin";
     }
 
     @DeleteMapping("/product/{id}")
     public String delete(@PathVariable Integer id){
-        products.removeIf(pro -> pro.getId() == id);
+        adminService.delete(id);
         return "admin";
     }
 }
