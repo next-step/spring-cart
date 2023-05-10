@@ -45,7 +45,7 @@
 
 ## 미션 PR 링크
 
-*
+* https://github.com/next-step/spring-cart/pull/33
 
 ## 미션 소개
 
