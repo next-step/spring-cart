@@ -1,9 +1,9 @@
-package cart.controller;
+package cart.product.controller;
 
-import cart.application.ProductService;
-import cart.controller.dto.ProductRequest;
-import cart.controller.dto.ProductResponse;
-import cart.controller.dto.ProductsResponse;
+import cart.product.application.ProductService;
+import cart.product.controller.dto.ProductRequest;
+import cart.product.controller.dto.ProductResponse;
+import cart.product.controller.dto.ProductsResponse;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -31,10 +31,10 @@ public class ProductApiController {
         return ResponseEntity.ok(response);
     }
 
-    @PutMapping("/{id}")
-    public ResponseEntity<ProductResponse> updateProduct(@PathVariable long id,
+    @PutMapping("/{productId}")
+    public ResponseEntity<ProductResponse> updateProduct(@PathVariable long productId,
                                                          @RequestBody ProductRequest request) {
-        ProductResponse response = productService.updateProduct(id, request);
+        ProductResponse response = productService.updateProduct(productId, request);
 
         return ResponseEntity.ok(response);
     }

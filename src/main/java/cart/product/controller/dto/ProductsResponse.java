@@ -1,7 +1,7 @@
-package cart.controller.dto;
+package cart.product.controller.dto;
 
-import cart.domain.Product;
-import cart.domain.Products;
+import cart.product.domain.Product;
+import cart.product.domain.Products;
 
 import java.util.List;
 import java.util.stream.Collectors;
