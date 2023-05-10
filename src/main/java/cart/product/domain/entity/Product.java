@@ -9,7 +9,6 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 @Getter
-@NoArgsConstructor
 @AllArgsConstructor
 @Builder
 public class Product {
@@ -17,7 +16,7 @@ public class Product {
     private String name;
     private String image;
     private int price;
-    private LocalDateTime createdAt = LocalDateTime.now();
+    private LocalDateTime createdAt;
 
     public void setId(Long id) {
         this.id = id;

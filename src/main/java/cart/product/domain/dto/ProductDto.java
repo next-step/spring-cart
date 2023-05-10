@@ -4,8 +4,6 @@ import cart.product.domain.entity.Product;
 import lombok.*;
 
 @Getter
-@Setter
-@NoArgsConstructor
 @AllArgsConstructor
 @Builder
 public class ProductDto {
