@@ -1,7 +1,9 @@
-package cart.controller;
+package cart;
 
-import cart.application.ProductService;
-import cart.controller.dto.ProductsResponse;
+import cart.member.application.MemberService;
+import cart.product.application.ProductService;
+import cart.member.controller.dto.MembersResponse;
+import cart.product.controller.dto.ProductsResponse;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -10,9 +12,12 @@ import org.springframework.web.bind.annotation.GetMapping;
 public class PageController {
 
     private final ProductService productService;
+    private final MemberService memberService;
 
-    public PageController(ProductService productService) {
+    public PageController(ProductService productService,
+                          MemberService memberService) {
         this.productService = productService;
+        this.memberService = memberService;
     }
 
     @GetMapping("/")
@@ -33,7 +38,8 @@ public class PageController {
 
     @GetMapping("/settings")
     public String settings(Model model) {
-        // TODO step2에서 진행
+        MembersResponse members = memberService.findAllMembers();
+        model.addAttribute("members", members.getMembers());
 
         return "settings";
     }
