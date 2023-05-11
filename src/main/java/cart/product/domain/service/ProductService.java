@@ -4,6 +4,7 @@ import cart.product.domain.dto.ProductDto;
 import cart.product.domain.entity.Product;
 import cart.product.domain.repository.ProductRepository;
 import cart.product.domain.vo.ImagePath;
+import cart.product.domain.vo.Price;
 import cart.product.domain.vo.ProductName;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -21,7 +22,7 @@ public class ProductService {
     public ProductDto createProduct(String productName, int price, String imagePath) {
         return ProductDto.fromEntity(productRepository.insert(Product.builder()
                 .name(new ProductName(productName))
-                .price(price)
+                .price(new Price(price))
                 .image(new ImagePath(imagePath))
                 .build()));
     }
@@ -42,7 +43,7 @@ public class ProductService {
                 productRepository.updateProduct(id,
                         Product.builder()
                                 .name(new ProductName(productDto.getName()))
-                                .price(productDto.getPrice())
+                                .price(new Price(productDto.getPrice()))
                                 .image(new ImagePath(productDto.getImage()))
                                 .build()));
     }
