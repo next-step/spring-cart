@@ -3,6 +3,7 @@ package cart.product.domain.service;
 import cart.product.domain.dto.ProductDto;
 import cart.product.domain.entity.Product;
 import cart.product.domain.repository.ProductRepository;
+import cart.product.domain.vo.ImagePath;
 import cart.product.domain.vo.ProductName;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -21,7 +22,7 @@ public class ProductService {
         return ProductDto.fromEntity(productRepository.insert(Product.builder()
                 .name(new ProductName(productName))
                 .price(price)
-                .image(imagePath)
+                .image(new ImagePath(imagePath))
                 .build()));
     }
 
@@ -42,7 +43,7 @@ public class ProductService {
                         Product.builder()
                                 .name(new ProductName(productDto.getName()))
                                 .price(productDto.getPrice())
-                                .image(productDto.getImage())
+                                .image(new ImagePath(productDto.getImage()))
                                 .build()));
     }
 

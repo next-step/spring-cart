@@ -1,5 +1,6 @@
 package cart.product.domain.entity;
 
+import cart.product.domain.vo.ImagePath;
 import cart.product.domain.vo.ProductName;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -13,7 +14,7 @@ import java.time.LocalDateTime;
 public class Product {
     private Long id;
     private ProductName name;
-    private String image;
+    private ImagePath image;
     private int price;
     private LocalDateTime createdAt;
 
@@ -23,5 +24,8 @@ public class Product {
 
     public String getName() {
         return name.getName();
+    }
+    public String getImage() {
+        return image.getPath();
     }
 }
