@@ -2,6 +2,7 @@ package cart.auth.authentication;
 
 import cart.exception.ErrorType;
 import cart.exception.ServiceException;
+import org.springframework.util.StringUtils;
 
 public class Auth {
 
@@ -13,7 +14,7 @@ public class Auth {
     private String email;
     private String password;
 
-    private Auth(String email, String password) {
+    public Auth(String email, String password) {
         validate(email, password);
         this.email = email;
         this.password = password;
@@ -25,7 +26,18 @@ public class Auth {
     }
 
     private void validate(String email, String password) {
-        if (email == null || password == null) {
+        validateEmail(email);
+        validatePassword(password);
+    }
+
+    private void validateEmail(String email) {
+        if (!StringUtils.hasText(email)) {
+            throw new ServiceException(ErrorType.AUTHENTICATION_FAILED);
+        }
+    }
+
+    private void validatePassword(String password) {
+        if (!StringUtils.hasText(password)) {
             throw new ServiceException(ErrorType.AUTHENTICATION_FAILED);
         }
     }
