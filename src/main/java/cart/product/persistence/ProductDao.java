@@ -30,7 +30,6 @@ public class ProductDao implements ProductRepository {
     @Override
     public Product insert(Product product) {
         Map<String, Object> parameters = new HashMap<>();
-        parameters.put("id", product.getId());
         parameters.put("name", product.getName());
         parameters.put("price", product.getPrice());
         parameters.put("image", product.getImage());
