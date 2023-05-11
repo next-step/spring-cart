@@ -1,37 +1,75 @@
 package cart;
 
-import io.restassured.RestAssured;
-import org.junit.jupiter.api.BeforeEach;
+import io.restassured.response.ExtractableResponse;
+import io.restassured.response.Response;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.boot.test.web.server.LocalServerPort;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
 
-import static io.restassured.RestAssured.given;
+import java.util.HashMap;
+import java.util.Map;
+
+import static cart.ProductTestStep.*;
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertAll;
 
-@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
-public class ProductIntegrationTest {
+public class ProductIntegrationTest extends AcceptanceTest {
 
-    @LocalServerPort
-    private int port;
+    @Test
+    @DisplayName("상품 생성 테스트.")
+    public void 상품생성_테스트() {
+        String name = "tori";
+        Map<String, String> params = new HashMap<>();
+        params.put("name", name);
+        params.put("image", "/users/test");
+        params.put("price", "1000");
 
-    @BeforeEach
-    void setUp() {
-        RestAssured.port = port;
+        ExtractableResponse<Response> response = 상품_생성요청(params);
+
+        assertAll(
+                () -> assertThat(response.statusCode()).isEqualTo(HttpStatus.OK.value()),
+                () -> assertThat(response.jsonPath().getString("name")).isEqualTo(name)
+        );
     }
 
     @Test
-    public void getProducts() {
-        var result = given()
-                .contentType(MediaType.APPLICATION_JSON_VALUE)
-                .when()
-                .get("/products")
-                .then()
-                .extract();
+    @DisplayName("상품 수정 테스트.")
+    public void 상품수정_테스트() {
+        String name = "update";
+        Map<String, String> params = new HashMap<>();
+        params.put("name", name);
 
-        assertThat(result.statusCode()).isEqualTo(HttpStatus.OK.value());
+
+        ExtractableResponse<Response> response = 상품_수정_요청(params, 2);
+
+        assertAll(
+                () -> assertThat(response.statusCode()).isEqualTo(HttpStatus.OK.value()),
+                () -> assertThat(response.jsonPath().getString("name")).isEqualTo(name)
+        );
+    }
+
+    @Test
+    @DisplayName("상품 수정 실패 테스트 - 해당 id에 해당하는 상품이 없습니다.")
+    public void 상품수정_실패_테스트() {
+        String name = "update";
+        Map<String, String> params = new HashMap<>();
+        params.put("name", name);
+
+
+        ExtractableResponse<Response> response = 상품_수정_요청(params, 3);
+
+        assertAll(
+                () -> assertThat(response.statusCode()).isEqualTo(HttpStatus.INTERNAL_SERVER_ERROR.value())
+        );
+    }
+
+    @Test
+    @DisplayName("상품 삭제 요청")
+    public void 상품_삭제_테스트(){
+        int id = 1;
+        ExtractableResponse<Response> response = 상품_삭제_요청(id);
+
+        assertThat(response.statusCode()).isEqualTo(HttpStatus.NO_CONTENT.value());
     }
 
 }
