@@ -6,4 +6,6 @@ import java.util.List;
 
 public interface MemberRepository {
     List<Member> findAll();
+
+    Member findById(Long id);
 }
