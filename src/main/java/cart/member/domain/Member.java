@@ -14,6 +14,10 @@ public class Member {
         this.password = password;
     }
 
+    public boolean verifyPassword(String password) {
+        return this.password.equals(password);
+    }
+
     public Long getId() {
         return id;
     }

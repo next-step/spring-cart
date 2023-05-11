@@ -12,3 +12,10 @@ CREATE TABLE MEMBER(
     password    VARCHAR(256)    NOT NULL,
     PRIMARY KEY (id)
 );
+
+CREATE TABLE CART_ITEM(
+    id          BIGINT  NOT NULL AUTO_INCREMENT,
+    product_id  BIGINT  NOT NULL,
+    owner_id    BIGINT  NOT NULL,
+    PRIMARY KEY (id)
+);
