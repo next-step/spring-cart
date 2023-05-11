@@ -5,6 +5,7 @@ import cart.exception.ErrorType;
 import cart.exception.ServiceException;
 import cart.member.domain.Member;
 import org.apache.tomcat.util.codec.binary.Base64;
+import org.springframework.http.HttpHeaders;
 import org.springframework.util.StringUtils;
 import org.springframework.web.servlet.HandlerInterceptor;
 
@@ -17,7 +18,7 @@ public class AuthInterceptor implements HandlerInterceptor {
     private static final int CREDENTIAL_INDEX = 1;
     private static final String DELIMITER = " ";
     private static final String BASIC_AUTH = "Basic";
-    private static final String AUTHORIZATION = "Authorization";
+    private static final String AUTHORIZATION = HttpHeaders.AUTHORIZATION;
 
     private final AuthService authService;
 
