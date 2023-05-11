@@ -1,11 +1,10 @@
 package cart.product.domain.entity;
 
+import cart.product.domain.vo.ProductName;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 @Getter
@@ -13,12 +12,16 @@ import java.time.LocalDateTime;
 @Builder
 public class Product {
     private Long id;
-    private String name;
+    private ProductName name;
     private String image;
     private int price;
     private LocalDateTime createdAt;
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public String getName() {
+        return name.getName();
     }
 }
