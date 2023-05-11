@@ -13,3 +13,11 @@ CREATE TABLE MEMBER (
                         password VARCHAR(200)   NOT NULL,
                         PRIMARY KEY (id)
 );
+
+CREATE TABLE CART (
+                        id           INT            NOT NULL AUTO_INCREMENT,
+                        member_id    INT            NOT NULL,
+                        product_id   INT            NOT NULL,
+                        count        INT            NOT NULL default 1,
+                        PRIMARY KEY (id)
+);

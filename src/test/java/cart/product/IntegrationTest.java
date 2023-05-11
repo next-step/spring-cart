@@ -163,4 +163,18 @@ public class IntegrationTest {
                 .body("[1].email", is("b@b.com"))
                 .body("[1].password", is("password2"));
     }
+
+    @Test
+    @DisplayName("회원에 해당하는 장바구니를 조회한다")
+    void getCartsByMember() {
+        Long memberId = 1L;
+
+        RestAssured
+                .given().log().all()
+                .queryParam("memberId", memberId)
+                .when()
+                .get("/carts")
+                .then().log().all()
+                .statusCode(200);
+    }
 }
