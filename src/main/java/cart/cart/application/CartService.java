@@ -27,6 +27,10 @@ public class CartService {
     public List<CartProductResponse> findCartProduct(long id) {
         Carts carts = cartRepository.findByMemberId(id);
         List<Long> productIds = carts.getProductIds();
+        if (productIds.isEmpty()) {
+            return List.of();
+        }
+
         Products products = productRepository.findByIds(productIds);
 
         return products.getValue()

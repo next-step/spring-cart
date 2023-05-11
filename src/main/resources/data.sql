@@ -31,3 +31,6 @@ VALUES ('떡볶이', '/images/tteokbokki.jpg', 5000);
 
 INSERT INTO member (email, password)
 VALUES ('user', '1111');
+
+INSERT INTO member (email, password)
+VALUES ('user2', '1111');
