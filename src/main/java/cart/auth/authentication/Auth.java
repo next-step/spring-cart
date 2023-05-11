@@ -6,7 +6,7 @@ import cart.exception.ServiceException;
 public class Auth {
 
     private static final int EMAIL_INDEX = 0;
-    private static final int password_INDEX = 1;
+    private static final int PASSWORD_INDEX = 1;
     private static final String DELIMITER = ":";
 
     private long id;
@@ -21,7 +21,7 @@ public class Auth {
 
     public static Auth of(String decoded) {
         String[] decodedSplit = decoded.split(DELIMITER);
-        return new Auth(decodedSplit[EMAIL_INDEX], decodedSplit[password_INDEX]);
+        return new Auth(decodedSplit[EMAIL_INDEX], decodedSplit[PASSWORD_INDEX]);
     }
 
     private void validate(String email, String password) {
