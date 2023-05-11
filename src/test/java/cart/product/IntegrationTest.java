@@ -2,32 +2,24 @@ package cart.product;
 
 import cart.product.domain.entity.Product;
 import cart.product.domain.repository.ProductRepository;
-import cart.product.persistence.ProductRowMapper;
 import cart.product.web.dto.CreateProduct;
 import cart.product.web.dto.DeleteProduct;
 import cart.product.web.dto.UpdateProduct;
 import io.restassured.RestAssured;
 import io.restassured.http.ContentType;
-import io.restassured.path.json.JsonPath;
 import io.restassured.response.ExtractableResponse;
 import io.restassured.response.Response;
 import org.assertj.core.api.Assertions;
-import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.server.LocalServerPort;
-import org.springframework.core.io.ResourceLoader;
-import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.test.context.jdbc.Sql;
 import org.springframework.test.context.jdbc.SqlConfig;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.List;
-
-import static org.assertj.core.api.Assertions.*;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.is;
 import static org.junit.jupiter.api.Assertions.assertAll;
@@ -36,7 +28,7 @@ import static org.junit.jupiter.api.Assertions.assertAll;
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @Sql(value = {"/truncate.sql", "/data.sql"},
         config = @SqlConfig(transactionMode = SqlConfig.TransactionMode.ISOLATED))
-public class ProductIntegrationTest {
+public class IntegrationTest {
     @LocalServerPort
     int port;
 
@@ -152,5 +144,23 @@ public class ProductIntegrationTest {
                 .post("/product/delete")
                 .then().log().all()
                 .statusCode(204);
+    }
+
+    @Test
+    @DisplayName("모든 회원을 조회한다")
+    void getAllMember() {
+        RestAssured
+                .given().log().all()
+                .when()
+                .get("/members")
+                .then().log().all()
+                .statusCode(200)
+                .body("size()", is(2))
+                .body("[0].id", is(1))
+                .body("[0].email", is("a@a.com"))
+                .body("[0].password", is("password1"))
+                .body("[1].id", is(2))
+                .body("[1].email", is("b@b.com"))
+                .body("[1].password", is("password2"));
     }
 }
