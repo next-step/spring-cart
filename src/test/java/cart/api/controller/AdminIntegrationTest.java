@@ -115,6 +115,19 @@ public class AdminIntegrationTest {
         assertThat(result.statusCode()).isEqualTo(HttpStatus.OK.value());
     }
 
+    @DisplayName("존재하지 않는 상품을 삭제하려하면 예외를 반환한다.")
+    @Test
+    void deleteWithException() {
+        var result = given()
+                .contentType(MediaType.APPLICATION_JSON_VALUE)
+                .when()
+                .delete("/admin/{id}", 100)
+                .then()
+                .extract();
+
+        assertThat(result.statusCode()).isEqualTo(HttpStatus.BAD_REQUEST.value());
+    }
+
     static class InvalidProductsArgumentsProvider implements ArgumentsProvider {
         @Override
         public Stream<? extends Arguments> provideArguments(ExtensionContext context) throws Exception {

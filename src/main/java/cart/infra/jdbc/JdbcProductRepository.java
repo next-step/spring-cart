@@ -23,7 +23,11 @@ public class JdbcProductRepository implements ProductRepository {
     public Product findById(Long id) {
         String sql = "SELECT * FROM products WHERE id = ?";
         RowMapper<Product> rowMapper = new BeanPropertyRowMapper<>(Product.class);
-        return jdbcTemplate.queryForObject(sql, rowMapper, id);
+        try {
+            return jdbcTemplate.queryForObject(sql, rowMapper, id);
+        } catch (Exception e) {
+            throw new NoSuchElementException("해당 상품을 찾을 수 없습니다.");
+        }
     }
 
     @Override

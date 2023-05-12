@@ -6,6 +6,7 @@ import cart.domain.repository.ProductRepository;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.NoSuchElementException;
 
 public class InMemoryProductRepository implements ProductRepository {
 
@@ -13,7 +14,11 @@ public class InMemoryProductRepository implements ProductRepository {
 
     @Override
     public Product findById(Long id) {
-        return productMap.get(id);
+        Product product = productMap.get(id);
+        if (product == null) {
+            throw new NoSuchElementException("해당 상품을 찾을 수 없습니다.");
+        }
+        return product;
     }
 
     @Override
