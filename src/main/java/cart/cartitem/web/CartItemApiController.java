@@ -7,9 +7,11 @@ import cart.cartitem.web.dto.CartItemAddRequest;
 import cart.cartitem.web.dto.CartItemResponse;
 import cart.global.authentication.Account;
 import cart.global.authentication.AccountPrincipal;
+import java.util.List;
 import javax.validation.Valid;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -24,6 +26,11 @@ public class CartItemApiController {
 
     public CartItemApiController(CartItemService cartItemService) {
         this.cartItemService = cartItemService;
+    }
+
+    @GetMapping
+    public ResponseEntity<List<CartItemResponse>> getCartItems(@AccountPrincipal Account account) {
+        return ResponseEntity.ok(CartItemResponse.from(cartItemService.findAllByMemberId(account.getId())));
     }
 
     @PostMapping

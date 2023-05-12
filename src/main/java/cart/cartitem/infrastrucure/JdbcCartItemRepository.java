@@ -3,6 +3,7 @@ package cart.cartitem.infrastrucure;
 import cart.cartitem.domain.CartItem;
 import cart.cartitem.domain.CartItemRepository;
 import cart.cartitem.domain.CartItemWithProduct;
+import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import javax.sql.DataSource;
@@ -53,6 +54,20 @@ public class JdbcCartItemRepository implements CartItemRepository {
         String sql = "SELECT id, product_id, owner_id FROM cart_item WHERE id = :id";
         return Optional.ofNullable(DataAccessUtils.singleResult(
             jdbcTemplate.query(sql, Map.of("id", id), cartItemRowMapper)));
+    }
+
+    @Override
+    public List<CartItemWithProduct> findAllWithProductByMemberId(Long memberId) {
+        String sql = "SELECT c.id, "
+                          + "p.id AS product_id, "
+                          + "p.name AS product_name,"
+                          + "p.image AS product_image, "
+                          + "p.price AS product_price, "
+                          + "c.owner_id "
+                    + "FROM cart_item c "
+                    + "INNER JOIN product p on p.id = c.product_id "
+                    + "WHERE c.owner_id = :ownerId";
+        return jdbcTemplate.query(sql, Map.of("ownerId", memberId), cartItemWithProductRowMapper);
     }
 
     @Override

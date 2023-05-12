@@ -3,7 +3,6 @@ package cart.cartitem.web;
 import static io.restassured.RestAssured.given;
 import static org.assertj.core.api.Assertions.assertThat;
 
-import cart.cartitem.application.dto.CartItemRemoveData;
 import cart.cartitem.web.dto.CartItemAddRequest;
 import io.restassured.RestAssured;
 import org.junit.jupiter.api.BeforeEach;
@@ -26,9 +25,53 @@ class CartItemApiControllerTest {
         RestAssured.port = port;
     }
 
+    @DisplayName("사용자 정보를 헤더에 포함하고 보냈을 때 장바구니 상품을 조회하면 해당 사용자가 장바구니에 담긴 상품들을 반환한다.")
+    @Test
+    void getCartItems() {
+        var result = given()
+            .auth().preemptive().basic("a@a.com", "password1")
+            .contentType(MediaType.APPLICATION_JSON_VALUE)
+            .body(new CartItemAddRequest(1L))
+            .when()
+            .get("/cart/items")
+            .then()
+            .extract();
+
+        assertThat(result.statusCode()).isEqualTo(HttpStatus.OK.value());
+    }
+
+    @DisplayName("사용자 정보를 헤더에 포함하지 않았을 때 장바구니 상품을 조회하면 에러를 반환한다.")
+    @Test
+    void getCartItemsFalse() {
+        var result = given()
+            .contentType(MediaType.APPLICATION_JSON_VALUE)
+            .body(new CartItemAddRequest(1L))
+            .when()
+            .get("/cart/items")
+            .then()
+            .extract();
+
+        assertThat(result.statusCode()).isEqualTo(HttpStatus.UNAUTHORIZED.value());
+    }
+
+    @DisplayName("불일치 하는 사용자 정보를 헤더에 포함하고 보냈을 때 장바구니 상품을 조회하면 에러를 반환한다.")
+    @Test
+    void getCartItemsFalse2() {
+        var result = given()
+            .auth().preemptive().basic("c@c.com", "password3")
+            .contentType(MediaType.APPLICATION_JSON_VALUE)
+            .body(new CartItemAddRequest(1L))
+            .when()
+            .get("/cart/items")
+            .then()
+            .extract();
+
+        assertThat(result.statusCode()).isEqualTo(HttpStatus.UNAUTHORIZED.value());
+    }
+
     @DisplayName("사용자 정보를 헤더에 포함하고 상품 아이디를 보냈을 때 장바구니에 상품을 추가하면 추가된 상품을 반환한다.")
     @Test
-    void create() {
+    void add() {
         var result = given()
             .auth().preemptive().basic("a@a.com", "password1")
             .contentType(MediaType.APPLICATION_JSON_VALUE)
@@ -43,7 +86,7 @@ class CartItemApiControllerTest {
 
     @DisplayName("사용자 정보를 헤더에 포함하고 상품 아이디를 보내지 않았을 때 장바구니에 상품을 추가하면 에러를 반환한다.")
     @Test
-    void createFalse() {
+    void addFalse() {
         var result = given()
             .auth().preemptive().basic("a@a.com", "password1")
             .contentType(MediaType.APPLICATION_JSON_VALUE)
@@ -58,7 +101,7 @@ class CartItemApiControllerTest {
 
     @DisplayName("불일치 하는 사용자 정보를 헤더에 포함하고 상품 아이디를 보냈을 때 장바구니에 상품을 추가하면 에러를 반환한다.")
     @Test
-    void createFalse2() {
+    void addFalse2() {
         var result = given()
             .auth().preemptive().basic("a@a.com", "password2")
             .contentType(MediaType.APPLICATION_JSON_VALUE)
