@@ -3,7 +3,11 @@ package cart.cart.domain.repository;
 import cart.cart.domain.entity.Cart;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface CartRepository {
-    public List<Cart> findByMemberId(Long memberId);
+    Optional<Cart> findByProductIdAndMemberId(Long productId, Long memberId);
+    List<Cart> findByMemberId(Long memberId);
+    Long insert(Cart cart);
+    int update(Cart cart);
 }

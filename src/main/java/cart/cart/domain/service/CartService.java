@@ -1,11 +1,18 @@
 package cart.cart.domain.service;
 
 import cart.cart.domain.dto.CartDto;
+import cart.cart.domain.entity.Cart;
 import cart.cart.domain.repository.CartRepository;
+import cart.cart.domain.vo.CartId;
+import cart.member.domain.entity.Member;
+import cart.member.domain.repository.MemberRepository;
+import cart.product.domain.entity.Product;
+import cart.product.domain.repository.ProductRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -19,4 +26,16 @@ public class CartService {
                 .collect(Collectors.toList());
     }
 
+    public Long addCart(Long memberId, Long productId) {
+        Optional<Cart> optionalCart = cartRepository.findByProductIdAndMemberId(memberId, productId);
+
+        if (optionalCart.isEmpty()) {
+            return cartRepository.insert(Cart.makeNewCart(memberId, productId));
+        }
+
+        Cart cart = optionalCart.get();
+        cart.increaseCount(1);
+        cartRepository.update(cart);
+        return cart.getId();
+    }
 }

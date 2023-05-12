@@ -6,5 +6,5 @@ insert into member(id, email, password) values (1L, 'a@a.com', 'password1');
 insert into member(id, email, password) values (2L, 'b@b.com', 'password2');
 
 
-insert into cart(id, member_id, product_id) values  (1L, 1L, 1L);
-insert into cart(id, member_id, product_id) values  (2L, 1L, 2L);
+insert into cart(id, member_id, product_id, count) values  (1L, 1L, 1L, 1);
+insert into cart(id, member_id, product_id, count) values  (2L, 1L, 2L, 1);

@@ -6,6 +6,11 @@ public class Count {
         validatePositive();
         this.count = count;
     }
+
+    public void increase(int value) {
+        count += value;
+    }
+
     public int getCount(){
         return count;
     }

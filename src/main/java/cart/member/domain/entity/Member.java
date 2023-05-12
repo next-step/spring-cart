@@ -13,6 +13,10 @@ public class Member {
     private String email;
     private String password;
 
+    public Member(Long memberId) {
+        id = new MemberId(memberId);
+    }
+
     public Long getId() {
         return id.getId();
     }

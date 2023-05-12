@@ -19,6 +19,18 @@ public class Cart {
     private Product product;
     private Count count;
 
+    public void increaseCount(int count) {
+        this.count.increase(count);
+    }
+
+    public static Cart makeNewCart(Long memberId, Long productId) {
+        return Cart.builder()
+                .member(new Member(memberId))
+                .product(new Product(productId))
+                .count(new Count(1))
+                .build();
+    }
+
     public Long getId() {
         return id.getId();
     }

@@ -20,6 +20,10 @@ public class Product {
     private Price price;
     private LocalDateTime createdAt;
 
+    public Product(Long id) {
+        this.id = new ProductId(id);
+    }
+
     public void setId(Long id) {
         this.id = new ProductId(id);
     }

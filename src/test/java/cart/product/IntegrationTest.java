@@ -1,5 +1,6 @@
 package cart.product;
 
+import cart.cart.web.dto.CreateCart;
 import cart.product.domain.entity.Product;
 import cart.product.domain.repository.ProductRepository;
 import cart.product.web.dto.CreateProduct;
@@ -179,5 +180,41 @@ public class IntegrationTest {
                 .body("memberId", is(1))
                 .body("carts[0].id", is(1))
                 .body("carts[1].id", is(2));
+    }
+
+    @Test
+    @DisplayName("장바구니에 새 물품을 추가한다")
+    void addNewItemInCart() {
+        Long memberId = 1L;
+        Long productId = 3L;
+        CreateCart.Request request = CreateCart.Request.of(memberId, productId);
+
+        RestAssured
+                .given().log().all()
+                .body(request)
+                .contentType(ContentType.JSON)
+                .when()
+                .post("/carts")
+                .then().log().all()
+                .statusCode(200)
+                .body("cartId", is(3));
+    }
+
+    @Test
+    @DisplayName("장바구니에 존재하는 물픔을 추가한다")
+    void addExistItemInCart() {
+        Long memberId = 1L;
+        Long productId = 1L;
+        CreateCart.Request request = CreateCart.Request.of(memberId, productId);
+
+        RestAssured
+                .given().log().all()
+                .body(request)
+                .contentType(ContentType.JSON)
+                .when()
+                .post("/carts")
+                .then().log().all()
+                .statusCode(200)
+                .body("cartId", is(1));
     }
 }
