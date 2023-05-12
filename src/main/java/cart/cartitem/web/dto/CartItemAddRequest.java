@@ -19,7 +19,7 @@ public class CartItemAddRequest {
         return productId;
     }
 
-    public CartItemAddData toCartItemAddData(Long memberId) {
-        return new CartItemAddData(productId, memberId);
+    public CartItemAddData toCartItemAddData(Long ownerId) {
+        return new CartItemAddData(productId, ownerId);
     }
 }
