@@ -4,6 +4,7 @@ import cart.cart.domain.entity.Cart;
 import cart.cart.domain.repository.CartRepository;
 import cart.member.domain.repository.MemberRepository;
 import cart.product.domain.repository.ProductRepository;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.dao.IncorrectResultSizeDataAccessException;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
@@ -46,16 +47,16 @@ public class CartDao implements CartRepository {
                     parameters,
                     new CartRowMapper(memberRepository, productRepository)
             );
-        } catch (IncorrectResultSizeDataAccessException e) {
+        } catch (EmptyResultDataAccessException e) {
             throw new IllegalArgumentException("cartId에 해당하는 정보가 없습니다");
         }
     }
 
     @Override
-    public Optional<Cart> findByProductIdAndMemberId(Long productId, Long memberId) {
+    public Optional<Cart> findByProductIdAndMemberId(Long memberId, Long productId) {
         HashMap<String, Object> parameters = new HashMap<>();
-        parameters.put("product_id", productId);
         parameters.put("member_id", memberId);
+        parameters.put("product_id", productId);
 
         try {
             return Optional.of(namedParameterJdbcTemplate.queryForObject(
@@ -64,7 +65,7 @@ public class CartDao implements CartRepository {
                     parameters,
                     new CartRowMapper(memberRepository, productRepository)
             ));
-        } catch (IncorrectResultSizeDataAccessException e) {
+        } catch (EmptyResultDataAccessException e) {
             return Optional.empty();
         }
     }

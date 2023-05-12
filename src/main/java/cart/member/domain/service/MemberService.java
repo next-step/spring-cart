@@ -18,4 +18,9 @@ public class MemberService {
                 .map(MemberDto::from)
                 .collect(Collectors.toList());
     }
+
+    public MemberDto getMember(String email, String password) {
+        return MemberDto.from(
+                memberRepository.findByEmailAndPassword(email, password));
+    }
 }

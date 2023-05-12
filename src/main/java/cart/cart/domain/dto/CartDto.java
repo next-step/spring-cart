@@ -23,6 +23,7 @@ public class CartDto {
                 .productName(cart.getProductName())
                 .productPrice(cart.getProductPrice())
                 .productImage(cart.getProductImage())
+                .count(cart.getCount())
                 .build();
     }
 }

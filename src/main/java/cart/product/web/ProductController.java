@@ -68,7 +68,7 @@ public class ProductController {
     @GetMapping("/")
     public ModelAndView showIndex() {
         ModelAndView modelAndView = new ModelAndView();
-        modelAndView.addObject("product", readProducts());
+        modelAndView.addObject("products", readProducts());
         modelAndView.setViewName("index");
         return modelAndView;
     }

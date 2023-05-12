@@ -7,7 +7,9 @@ import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.stereotype.Repository;
 import javax.sql.DataSource;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Repository
 public class MemberDao implements MemberRepository {
@@ -36,6 +38,23 @@ public class MemberDao implements MemberRepository {
             );
         } catch (IncorrectResultSizeDataAccessException e) {
             throw new IllegalArgumentException("해당 id의 회원이 존재하지 않습니다.");
+        }
+    }
+
+    @Override
+    public Member findByEmailAndPassword(String email, String password) {
+        Map<String, Object> parameters = new HashMap<>();
+        parameters.put("email", email);
+        parameters.put("password", password);
+        try {
+            return namedParameterJdbcTemplate.queryForObject(
+                    "select * from member " +
+                            " where email = :email and password = :password",
+                    parameters,
+                    new MemberRowMapper()
+            );
+        } catch (IncorrectResultSizeDataAccessException e) {
+            throw new IllegalArgumentException("email, password 가 잘못되었습니다");
         }
     }
 }
