@@ -7,4 +7,3 @@ CREATE TABLE product (
     price int NOT NULL,
     PRIMARY KEY (id)
 );
-
