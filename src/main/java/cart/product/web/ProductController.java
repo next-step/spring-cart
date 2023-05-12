@@ -21,7 +21,7 @@ public class ProductController {
 
     private final ProductService productService;
 
-    @PostMapping("/product")
+    @PostMapping("/products")
     public CreateProduct.Response createProduct(
             @Valid @RequestBody CreateProduct.Request request) {
         return CreateProduct.Response.from(productService.createProduct(
@@ -30,19 +30,19 @@ public class ProductController {
                 request.getImage()));
     }
 
-    @GetMapping("/product/{id}")
+    @GetMapping("/products/{id}")
     public ProductInfo readProduct(@PathVariable Long id) {
         return ProductInfo.from(productService.getProduct(id));
     }
 
-    @GetMapping("/product")
+    @GetMapping("/products")
     public List<ProductInfo> readProducts() {
         return productService.getAllProduct()
                 .stream().map(ProductInfo::from)
                 .collect(Collectors.toList());
     }
 
-    @PostMapping("/product/{id}")
+    @PutMapping("/products/{id}")
     public UpdateProduct.Response updateProduct(
             @PathVariable Long id,
             @Valid @RequestBody UpdateProduct.Request request
@@ -57,12 +57,12 @@ public class ProductController {
                                 .build()));
     }
 
-    @PostMapping("/product/delete")
+    @DeleteMapping("/products/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void deleteProduct(
-            @Valid @RequestBody DeleteProduct.Request request
+            @PathVariable Long id
     ) {
-        productService.deleteProduct(request.getId());
+        productService.deleteProduct(id);
     }
 
     @GetMapping("/")

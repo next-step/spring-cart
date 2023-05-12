@@ -55,7 +55,7 @@ public class IntegrationTest {
                 .contentType(ContentType.JSON)
                 .body(param)
                 .when()
-                .post("/product")
+                .post("/products")
                 .then()
                 .statusCode(200)
                 .extract();
@@ -82,7 +82,7 @@ public class IntegrationTest {
                 .given().log().all()
                 .pathParam("id", id)
                 .when()
-                .get("/product/{id}")
+                .get("/products/{id}")
                 .then().log().all()
                 .statusCode(200)
                 .body("id", response -> equalTo(1)) // equalTo
@@ -98,7 +98,7 @@ public class IntegrationTest {
         RestAssured
                 .given().log().all()
                 .when()
-                .get("/product")
+                .get("/products")
                 .then()
                 .statusCode(200)
                 .body("size()", is(3))
@@ -127,7 +127,7 @@ public class IntegrationTest {
                 .body(request)
                 .contentType(ContentType.JSON)
                 .when()
-                .post("/product/{id}")
+                .put("/products/{id}")
                 .then()
                 .statusCode(200);
     }
@@ -135,14 +135,13 @@ public class IntegrationTest {
     @Test
     @DisplayName("id 2번 상품을 삭제한다")
     void id_2번_상품을_삭제한다() {
-        DeleteProduct.Request request = new DeleteProduct.Request(2L);
+        Long id = 2L;
 
         RestAssured
                 .given().log().all()
-                .body(request)
-                .contentType(ContentType.JSON)
+                .pathParam("id", id)
                 .when()
-                .post("/product/delete")
+                .delete("/products/{id}")
                 .then().log().all()
                 .statusCode(204);
     }
