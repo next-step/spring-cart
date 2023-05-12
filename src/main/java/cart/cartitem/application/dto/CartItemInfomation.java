@@ -1,19 +1,21 @@
 package cart.cartitem.application.dto;
 
 import cart.cartitem.domain.CartItemWithProduct;
+import java.util.List;
+import java.util.stream.Collectors;
 
 public class CartItemInfomation {
 
     private final Long id;
     private final String productName;
     private final String productImage;
-    private final Long price;
+    private final Long productPrice;
 
-    public CartItemInfomation(Long id, String productName, String productImage, Long price) {
+    public CartItemInfomation(Long id, String productName, String productImage, Long productPrice) {
         this.id = id;
         this.productName = productName;
         this.productImage = productImage;
-        this.price = price;
+        this.productPrice = productPrice;
     }
 
     public static CartItemInfomation from(CartItemWithProduct cartItemWithProduct) {
@@ -21,6 +23,12 @@ public class CartItemInfomation {
             cartItemWithProduct.getProductName(),
             cartItemWithProduct.getProductImage(),
             cartItemWithProduct.getProductPrice());
+    }
+
+    public static List<CartItemInfomation> from(List<CartItemWithProduct> cartItemWithProducts) {
+        return cartItemWithProducts.stream()
+            .map(CartItemInfomation::from)
+            .collect(Collectors.toUnmodifiableList());
     }
 
     public Long getId() {
@@ -35,7 +43,7 @@ public class CartItemInfomation {
         return productImage;
     }
 
-    public Long getPrice() {
-        return price;
+    public Long getProductPrice() {
+        return productPrice;
     }
 }
