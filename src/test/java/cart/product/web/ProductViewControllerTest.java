@@ -8,6 +8,8 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.view;
 
+import cart.global.WebConfig;
+import cart.global.authentication.AuthenticationArgumentResolver;
 import cart.product.application.ProductService;
 import java.util.Collections;
 import org.junit.jupiter.api.DisplayName;
@@ -26,6 +28,9 @@ class ProductViewControllerTest {
 
     @MockBean
     private ProductService productService;
+
+    @MockBean
+    private AuthenticationArgumentResolver argumentResolver;
 
     @DisplayName("/ 경로로 접근하면 상품 목록을 조회하여 보여준다.")
     @Test

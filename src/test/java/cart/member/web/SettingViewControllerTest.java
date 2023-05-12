@@ -8,6 +8,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.view;
 
+import cart.global.authentication.AuthenticationArgumentResolver;
 import cart.member.application.MemberService;
 import java.util.Collections;
 import org.junit.jupiter.api.DisplayName;
@@ -26,6 +27,9 @@ public class SettingViewControllerTest {
 
     @MockBean
     private MemberService memberService;
+
+    @MockBean
+    private AuthenticationArgumentResolver argumentResolver;
 
     @DisplayName("/settings 경로로 접근하면 사용자 목록을 조회하여 보여준다.")
     @Test
