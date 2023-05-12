@@ -5,8 +5,11 @@ import io.restassured.RestAssured;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtensionContext;
 import org.junit.jupiter.params.ParameterizedTest;
-import org.junit.jupiter.params.provider.MethodSource;
+import org.junit.jupiter.params.provider.Arguments;
+import org.junit.jupiter.params.provider.ArgumentsProvider;
+import org.junit.jupiter.params.provider.ArgumentsSource;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.server.LocalServerPort;
 import org.springframework.http.HttpStatus;
@@ -57,7 +60,7 @@ public class AdminIntegrationTest {
 
     @DisplayName("유효하지 않은 생성 요청에는 예외를 반환한다.")
     @ParameterizedTest
-    @MethodSource("invalidProducts")
+    @ArgumentsSource(InvalidProductsArgumentsProvider.class)
     void createWithException(ProductRequest request) {
         var result = given()
                 .contentType(MediaType.APPLICATION_JSON_VALUE)
@@ -87,7 +90,7 @@ public class AdminIntegrationTest {
 
     @DisplayName("유효하지 않은 수정 요청에는 예외를 반환한다.")
     @ParameterizedTest
-    @MethodSource("invalidProducts")
+    @ArgumentsSource(InvalidProductsArgumentsProvider.class)
     void updateWithException(ProductRequest request) {
         var result = given()
                 .contentType(MediaType.APPLICATION_JSON_VALUE)
@@ -112,11 +115,14 @@ public class AdminIntegrationTest {
         assertThat(result.statusCode()).isEqualTo(HttpStatus.OK.value());
     }
 
-    static Stream<ProductRequest> invalidProducts() {
-        return Stream.of(
-                new ProductRequest("", 1000, "http://a.com"),
-                new ProductRequest("이름", -1000, "http://b.com"),
-                new ProductRequest("이름", 2000, null)
-        );
+    static class InvalidProductsArgumentsProvider implements ArgumentsProvider {
+        @Override
+        public Stream<? extends Arguments> provideArguments(ExtensionContext context) throws Exception {
+            return Stream.of(
+                    Arguments.of(new ProductRequest("", 1000, "http://a.com")),
+                    Arguments.of(new ProductRequest("이름", -1000, "http://b.com")),
+                    Arguments.of(new ProductRequest("이름", 2000, null))
+            );
+        }
     }
 }
