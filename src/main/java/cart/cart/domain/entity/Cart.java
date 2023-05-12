@@ -26,4 +26,22 @@ public class Cart {
     public int getCount() {
         return count.getCount();
     }
+    public Long getMemberId() {
+        return member.getId();
+    }
+    public String getMemberEmail() {
+        return member.getEmail();
+    }
+    public Long getProductId() {
+        return product.getId();
+    }
+    public String getProductName() {
+        return product.getName();
+    }
+    public Integer getProductPrice() {
+        return product.getPrice();
+    }
+    public String getProductImage() {
+        return product.getImage();
+    }
 }

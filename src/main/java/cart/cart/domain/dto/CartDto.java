@@ -1,8 +1,6 @@
 package cart.cart.domain.dto;
 
 import cart.cart.domain.entity.Cart;
-import cart.member.domain.entity.Member;
-import cart.product.domain.entity.Product;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -12,15 +10,19 @@ import lombok.Getter;
 @Builder
 public class CartDto {
     private Long id;
-    private Member member;
-    private Product product;
+    private Long productId;
+    private String productName;
+    private Integer productPrice;
+    private String productImage;
     private int count;
 
     public static CartDto from(Cart cart) {
         return CartDto.builder()
                 .id(cart.getId())
-                .member(cart.getMember())
-                .product(cart.getProduct())
+                .productId(cart.getProductId())
+                .productName(cart.getProductName())
+                .productPrice(cart.getProductPrice())
+                .productImage(cart.getProductImage())
                 .build();
     }
 }
