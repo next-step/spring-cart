@@ -1,13 +1,12 @@
 package cart.cart.web;
 
-import cart.cart.domain.dto.CartDto;
 import cart.cart.domain.service.CartService;
 import cart.cart.web.dto.CreateCart;
 import cart.cart.web.dto.ReadMemberCarts;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
@@ -25,5 +24,11 @@ public class CartController {
     public CreateCart.Response createCart(@RequestBody CreateCart.Request request) {
         return CreateCart.Response.of(
                 cartService.addCart(request.getMemberId(), request.getProductId()));
+    }
+
+    @DeleteMapping("/carts/{cartId}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void deleteCart(@PathVariable Long cartId) {
+        cartService.deleteCart(cartId);
     }
 }

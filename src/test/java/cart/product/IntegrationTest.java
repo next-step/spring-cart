@@ -217,4 +217,18 @@ public class IntegrationTest {
                 .statusCode(200)
                 .body("cartId", is(1));
     }
+
+    @Test
+    @DisplayName("장바구니의 물품을 삭제합니다")
+    void deleteItemInCart() {
+        Long cartId = 1L;
+
+        RestAssured
+                .given().log().all()
+                .pathParam("cartId", cartId)
+                .when()
+                .delete("/carts/{cartId}")
+                .then().log().all()
+                .statusCode(204);
+    }
 }

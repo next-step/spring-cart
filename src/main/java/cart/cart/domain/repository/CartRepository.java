@@ -6,8 +6,10 @@ import java.util.List;
 import java.util.Optional;
 
 public interface CartRepository {
+    Cart findById(Long cartId);
     Optional<Cart> findByProductIdAndMemberId(Long productId, Long memberId);
     List<Cart> findByMemberId(Long memberId);
     Long insert(Cart cart);
     int update(Cart cart);
+    int delete(Cart cart);
 }

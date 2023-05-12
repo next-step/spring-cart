@@ -38,4 +38,9 @@ public class CartService {
         cartRepository.update(cart);
         return cart.getId();
     }
+
+    public void deleteCart(Long cartId) {
+        Cart cart = cartRepository.findById(cartId);
+        cartRepository.delete(cart);
+    }
 }

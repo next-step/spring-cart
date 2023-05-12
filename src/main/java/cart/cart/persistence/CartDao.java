@@ -37,6 +37,21 @@ public class CartDao implements CartRepository {
     }
 
     @Override
+    public Cart findById(Long cartId) {
+        HashMap<String, Object> parameters = new HashMap<>();
+        parameters.put("id", cartId);
+        try {
+            return namedParameterJdbcTemplate.queryForObject(
+                    "select * from cart where id = :id",
+                    parameters,
+                    new CartRowMapper(memberRepository, productRepository)
+            );
+        } catch (IncorrectResultSizeDataAccessException e) {
+            throw new IllegalArgumentException("cartId에 해당하는 정보가 없습니다");
+        }
+    }
+
+    @Override
     public Optional<Cart> findByProductIdAndMemberId(Long productId, Long memberId) {
         HashMap<String, Object> parameters = new HashMap<>();
         parameters.put("product_id", productId);
@@ -88,6 +103,17 @@ public class CartDao implements CartRepository {
                         " product_id = :product_id," +
                         " count = :count " +
                         " where id = :id",
+                parameters
+        );
+    }
+
+    @Override
+    public int delete(Cart cart) {
+        Map<String, Object> parameters = new HashMap<>();
+        parameters.put("id", cart.getId());
+
+        return namedParameterJdbcTemplate.update(
+                "delete from cart where id = :id",
                 parameters
         );
     }
