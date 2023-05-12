@@ -175,6 +175,9 @@ public class IntegrationTest {
                 .when()
                 .get("/carts")
                 .then().log().all()
-                .statusCode(200);
+                .statusCode(200)
+                .body("memberId", is(1))
+                .body("carts[0].id", is(1))
+                .body("carts[1].id", is(2));
     }
 }
