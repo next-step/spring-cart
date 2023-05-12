@@ -3,6 +3,7 @@ package cart.data;
 import cart.data.entity.CartProduct;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface ProductRepository {
 
@@ -10,7 +11,7 @@ public interface ProductRepository {
 
     List<CartProduct> getProducts();
 
-    CartProduct getProductById(long id);
+    Optional<CartProduct> getProductById(long id);
 
     void updateProduct(CartProduct cartProduct);
 

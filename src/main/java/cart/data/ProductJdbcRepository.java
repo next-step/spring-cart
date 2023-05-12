@@ -1,21 +1,25 @@
 package cart.data;
 
 import cart.data.entity.CartProduct;
-import org.springframework.jdbc.core.JdbcTemplate;
-import org.springframework.jdbc.core.simple.SimpleJdbcInsert;
-import org.springframework.stereotype.Repository;
-
-import javax.sql.DataSource;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
+import javax.sql.DataSource;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.core.RowMapper;
+import org.springframework.jdbc.core.simple.SimpleJdbcInsert;
+import org.springframework.stereotype.Repository;
 
 @Repository
-public class ProductRepositoryImpl implements ProductRepository {
+public class ProductJdbcRepository implements ProductRepository {
 
     private final SimpleJdbcInsert simpleJdbcInsert;
+    private final Logger logger = LoggerFactory.getLogger(this.getClass());
 
-    public ProductRepositoryImpl(DataSource dataSource) {
+    public ProductJdbcRepository(DataSource dataSource) {
         this.simpleJdbcInsert = new SimpleJdbcInsert(dataSource).withTableName("CART_PRODUCT");
     }
 
@@ -33,26 +37,20 @@ public class ProductRepositoryImpl implements ProductRepository {
     public List<CartProduct> getProducts() {
         JdbcTemplate jdbcTemplate = simpleJdbcInsert.getJdbcTemplate();
         String sql = "select * from CART_PRODUCT";
-        return jdbcTemplate.query(sql, (rs, rowNum) -> {
-            long productId = rs.getLong("product_id");
-            String productName = rs.getString("product_name");
-            int productPrice = rs.getInt("product_price");
-            String productImageUrl = rs.getString("product_image_url");
-            return new CartProduct(productId, productName, productPrice, productImageUrl);
-        });
+        return jdbcTemplate.query(sql, this.cartProductMapper());
     }
 
     @Override
-    public CartProduct getProductById(long id) {
+    public Optional<CartProduct> getProductById(long id) {
         JdbcTemplate jdbcTemplate = simpleJdbcInsert.getJdbcTemplate();
         String sql = "select * from CART_PRODUCT where product_id = ?";
-        return jdbcTemplate.queryForObject(sql, (rs, rowNum) -> {
-            long productId = rs.getLong("product_id");
-            String productName = rs.getString("product_name");
-            int productPrice = rs.getInt("product_price");
-            String productImageUrl = rs.getString("product_image_url");
-            return new CartProduct(productId, productName, productPrice, productImageUrl);
-        }, id);
+        CartProduct cartProduct = null;
+        try {
+            cartProduct = jdbcTemplate.queryForObject(sql, this.cartProductMapper(), id);
+        } catch (Exception e) {
+            logger.info("sql 오류 -> {}", e.getMessage());
+        }
+        return Optional.ofNullable(cartProduct);
     }
 
     @Override
@@ -69,6 +67,19 @@ public class ProductRepositoryImpl implements ProductRepository {
     public void removeProduct(long id) {
         JdbcTemplate jdbcTemplate = simpleJdbcInsert.getJdbcTemplate();
         String sql = "delete from CART_PRODUCT where product_id = ?";
-        jdbcTemplate.update(sql, id);
+        int updateCount = jdbcTemplate.update(sql, id);
+        if (updateCount != 1) {
+            throw new RuntimeException(id + "에 해당하는 상품을 삭제하는데 오류가 발생하였습니다.");
+        }
+    }
+
+    private RowMapper<CartProduct> cartProductMapper() {
+        return (rs, rowNum) -> {
+            long productId = rs.getLong("product_id");
+            String productName = rs.getString("product_name");
+            int productPrice = rs.getInt("product_price");
+            String productImageUrl = rs.getString("product_image_url");
+            return new CartProduct(productId, productName, productPrice, productImageUrl);
+        };
     }
 }
