@@ -32,27 +32,24 @@ class ProductDaoTest {
         productDao = new ProductDao(jdbcTemplate, dataSource);
     }
 
-    private Product insertProduct(String name, String imageUrl, int price) {
-        Product givenProduct = Product.builder()
-                .name(name)
-                .imageUrl(imageUrl)
-                .price(price)
-                .build();
-
-        return productDao.insert(givenProduct);
-    }
-
     @Test
     void insert() {
+        // given, when
         Product insertedProduct = insertProduct("상품A", "image.com/imageA", 10000);
+
+        // then
         assertThat(insertedProduct.getId()).isNotNull();
     }
 
     @Test
     void findById() {
+        // given
         Product insertedProduct = insertProduct("상품A", "image.com/imageA", 10000);
+
+        // when
         Product foundProduct = assertDoesNotThrow(() -> productDao.findById(insertedProduct.getId()).get());
 
+        // then
         assertThat(insertedProduct.getName()).isEqualTo(foundProduct.getName());
         assertThat(insertedProduct.getImageUrl()).isEqualTo(foundProduct.getImageUrl());
         assertThat(insertedProduct.getPrice()).isEqualTo(foundProduct.getPrice());
@@ -60,10 +57,14 @@ class ProductDaoTest {
 
     @Test
     void findAll() {
+        // given
         insertProduct("상품A", "image.com/imageA", 10000);
         insertProduct("상품B", "image.com/imageB", 20000);
 
+        // when
         List<Product> products = productDao.findAll();
+
+        // then
         assertThat(products).flatExtracting(Product::getName).containsExactly("상품A", "상품B");
         assertThat(products).flatExtracting(Product::getImageUrl)
                 .containsExactly("image.com/imageA", "image.com/imageB");
@@ -72,6 +73,7 @@ class ProductDaoTest {
 
     @Test
     void update() {
+        // given
         Product insertedProduct = insertProduct("상품A", "image.com/imageA", 10000);
         Product updateProduct = Product.builder()
                 .id(insertedProduct.getId())
@@ -80,11 +82,13 @@ class ProductDaoTest {
                 .price(20000)
                 .build();
 
+        // when
         Long updatedProductId = productDao.update(updateProduct);
+
+        // then
         assertThat(insertedProduct.getId()).isEqualTo(updatedProductId);
 
         Product foundProduct = assertDoesNotThrow(() -> productDao.findById(updatedProductId).get());
-
         assertThat(foundProduct.getName()).isEqualTo(updateProduct.getName());
         assertThat(foundProduct.getImageUrl()).isEqualTo(updateProduct.getImageUrl());
         assertThat(foundProduct.getPrice()).isEqualTo(updateProduct.getPrice());
@@ -92,10 +96,24 @@ class ProductDaoTest {
 
     @Test
     void delete() {
+        // given
         Product insertedProduct = insertProduct("상품A", "image.com/imageA", 10000);
+
+        // when
         productDao.delete(insertedProduct);
 
+        // then
         assertThatThrownBy(() -> productDao.findById(insertedProduct.getId()).get())
                 .isInstanceOf(NoSuchElementException.class);
+    }
+
+    private Product insertProduct(String name, String imageUrl, int price) {
+        Product givenProduct = Product.builder()
+                .name(name)
+                .imageUrl(imageUrl)
+                .price(price)
+                .build();
+
+        return productDao.insert(givenProduct);
     }
 }
