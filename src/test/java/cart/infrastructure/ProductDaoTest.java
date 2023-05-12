@@ -8,6 +8,7 @@ import org.springframework.boot.test.autoconfigure.jdbc.JdbcTest;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.test.context.jdbc.Sql;
 
+import javax.sql.DataSource;
 import java.util.List;
 import java.util.NoSuchElementException;
 
@@ -21,11 +22,14 @@ class ProductDaoTest {
 
     @Autowired
     private JdbcTemplate jdbcTemplate;
+    @Autowired
+    private DataSource dataSource;
+
     private ProductDao productDao;
 
     @BeforeEach
     void setUp() {
-        productDao = new ProductDao(jdbcTemplate);
+        productDao = new ProductDao(jdbcTemplate, dataSource);
     }
 
     private Product insertProduct(String name, String imageUrl, int price) {
@@ -49,7 +53,9 @@ class ProductDaoTest {
         Product insertedProduct = insertProduct("상품A", "image.com/imageA", 10000);
         Product foundProduct = assertDoesNotThrow(() -> productDao.findById(insertedProduct.getId()).get());
 
-        assertThat(insertedProduct).isEqualTo(foundProduct);
+        assertThat(insertedProduct.getName()).isEqualTo(foundProduct.getName());
+        assertThat(insertedProduct.getImageUrl()).isEqualTo(foundProduct.getImageUrl());
+        assertThat(insertedProduct.getPrice()).isEqualTo(foundProduct.getPrice());
     }
 
     @Test

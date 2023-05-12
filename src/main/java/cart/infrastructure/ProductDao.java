@@ -1,31 +1,48 @@
 package cart.infrastructure;
 
 import cart.domain.product.Product;
-import lombok.RequiredArgsConstructor;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
-import org.springframework.jdbc.core.PreparedStatementCreator;
 import org.springframework.jdbc.core.RowMapper;
-import org.springframework.jdbc.support.GeneratedKeyHolder;
-import org.springframework.jdbc.support.KeyHolder;
+import org.springframework.jdbc.core.namedparam.BeanPropertySqlParameterSource;
+import org.springframework.jdbc.core.namedparam.SqlParameterSource;
+import org.springframework.jdbc.core.simple.SimpleJdbcInsert;
 import org.springframework.stereotype.Repository;
 
-import java.sql.PreparedStatement;
+import javax.sql.DataSource;
 import java.util.List;
 import java.util.Optional;
 
-@RequiredArgsConstructor
 @Repository
 public class ProductDao {
 
     private final JdbcTemplate jdbcTemplate;
+    private final SimpleJdbcInsert jdbcInsert;
+    private final RowMapper<Product> rowMapper;
+
+    public ProductDao(JdbcTemplate jdbcTemplate, DataSource dataSource) {
+        this.jdbcTemplate = jdbcTemplate;
+        this.jdbcInsert = new SimpleJdbcInsert(dataSource)
+                .withTableName("product")
+                .usingGeneratedKeyColumns("id");
+        this.rowMapper = rowMapper();
+    }
+
+    private RowMapper<Product> rowMapper() {
+        return (resultSet, rowNum) -> Product.builder()
+                .id(resultSet.getLong("id"))
+                .name(resultSet.getString("name"))
+                .imageUrl(resultSet.getString("image_url"))
+                .price(resultSet.getInt("price"))
+                .build();
+    }
 
     public Product insert(Product product) {
-        KeyHolder keyHolder = new GeneratedKeyHolder();
-        jdbcTemplate.update(productPreparedStatementCreator(product), keyHolder);
+        SqlParameterSource parameterSource = new BeanPropertySqlParameterSource(product);
+        long id = jdbcInsert.executeAndReturnKey(parameterSource).longValue();
 
         return Product.builder()
-                .id(keyHolder.getKeyAs(Long.class))
+                .id(id)
                 .name(product.getName())
                 .imageUrl(product.getImageUrl())
                 .price(product.getPrice())
@@ -35,19 +52,17 @@ public class ProductDao {
     public Optional<Product> findById(Long id) {
         String sql = "SELECT * FROM product WHERE ID = ?";
 
-        Optional<Product> product;
         try {
-            product = Optional.ofNullable(jdbcTemplate.queryForObject(sql, productRowMapper(), id));
+            return Optional.ofNullable(jdbcTemplate.queryForObject(sql, rowMapper, id));
         } catch (EmptyResultDataAccessException exception) {
-            product = Optional.empty();
+            return Optional.empty();
         }
-        return product;
     }
 
     public List<Product> findAll() {
         String sql = "SELECT * FROM product";
 
-        return jdbcTemplate.query(sql, productRowMapper());
+        return jdbcTemplate.query(sql, rowMapper);
     }
 
     public Long update(Product product) {
@@ -62,27 +77,6 @@ public class ProductDao {
 
         jdbcTemplate.update(sql, product.getId());
         return product.getId();
-    }
-
-    private PreparedStatementCreator productPreparedStatementCreator(Product product) {
-        String sql = "INSERT INTO product(name, image_url, price) VALUES (?, ?, ?)";
-
-        return connection -> {
-            PreparedStatement ps = connection.prepareStatement(sql, new String[]{"id"});
-            ps.setString(1, product.getName());
-            ps.setString(2, product.getImageUrl());
-            ps.setInt(3, product.getPrice());
-            return ps;
-        };
-    }
-
-    private RowMapper<Product> productRowMapper() {
-        return (resultSet, rowNum) -> Product.builder()
-                .id(resultSet.getLong("id"))
-                .name(resultSet.getString("name"))
-                .imageUrl(resultSet.getString("image_url"))
-                .price(resultSet.getInt("price"))
-                .build();
     }
 
 }
