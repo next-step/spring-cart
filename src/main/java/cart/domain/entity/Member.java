@@ -1,13 +1,13 @@
 package cart.domain.entity;
 
-public class User {
+public class Member {
     private Long id;
     private String email;
     private String password;
 
-    public User() {}
+    public Member() {}
 
-    public User(Long id, String email, String password) {
+    public Member(Long id, String email, String password) {
         this.id = id;
         this.email = email;
         this.password = password;

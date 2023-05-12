@@ -8,7 +8,6 @@ import java.util.Collection;
 
 @Service
 public class ProductService {
-
     private final ProductRepository productRepository;
 
     public ProductService(ProductRepository productRepository) {
