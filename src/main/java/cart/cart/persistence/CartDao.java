@@ -38,15 +38,15 @@ public class CartDao implements CartRepository {
     }
 
     @Override
-    public Cart findById(Long cartId) {
+    public Optional<Cart> findById(Long cartId) {
         HashMap<String, Object> parameters = new HashMap<>();
         parameters.put("id", cartId);
         try {
-            return namedParameterJdbcTemplate.queryForObject(
+            return Optional.of(namedParameterJdbcTemplate.queryForObject(
                     "select * from cart where id = :id",
                     parameters,
                     new CartRowMapper(memberRepository, productRepository)
-            );
+            ));
         } catch (EmptyResultDataAccessException e) {
             throw new IllegalArgumentException("cartId에 해당하는 정보가 없습니다");
         }

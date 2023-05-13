@@ -40,7 +40,7 @@ public class CartService {
     }
 
     public void deleteCart(Long cartId) {
-        Cart cart = cartRepository.findById(cartId);
+        Cart cart = cartRepository.findById(cartId).get();
         cartRepository.delete(cart);
     }
 }

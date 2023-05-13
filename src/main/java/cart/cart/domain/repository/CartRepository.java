@@ -6,7 +6,7 @@ import java.util.List;
 import java.util.Optional;
 
 public interface CartRepository {
-    Cart findById(Long cartId);
+    Optional<Cart> findById(Long cartId);
     Optional<Cart> findByProductIdAndMemberId(Long memberId, Long productId);
     List<Cart> findByMemberId(Long memberId);
     Long insert(Cart cart);
