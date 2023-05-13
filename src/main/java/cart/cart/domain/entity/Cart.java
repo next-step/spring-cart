@@ -14,10 +14,10 @@ import lombok.Getter;
 @AllArgsConstructor
 @Builder
 public class Cart {
-    private CartId id;
-    private Member member;
-    private Product product;
-    private Count count;
+    private final CartId id;
+    private final Member member;
+    private final Product product;
+    private final Count count;
 
     public void increaseCount(int count) {
         this.count.increase(count);
