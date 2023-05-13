@@ -29,28 +29,16 @@ import static org.assertj.core.api.Assertions.*;
 @JdbcTest
 class CartRepositoryTest {
 
-    CartRepository cartRepository;
+    private CartRepository cartRepository;
     @Mock
-    MemberRepository memberRepository;
+    private MemberRepository memberRepository;
     @Mock
-    ProductRepository productRepository;
+    private ProductRepository productRepository;
     @Autowired
-    DataSource dataSource;
+    private DataSource dataSource;
     @BeforeEach
     void setUp() {
         cartRepository = new CartDao(memberRepository, productRepository, dataSource);
-    }
-    @Test
-    @DisplayName("Cart 추가에 성공한다")
-    void insert_success() {
-
-
-
-        // when
-        //Long newId = cartRepository.insert(cart);
-
-        // then
-        //assertThat(newId).isNotNull();
     }
 
     @Test
