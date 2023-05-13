@@ -33,6 +33,12 @@ public class JdbcMemberRepository implements MemberRepository {
         }
     }
 
+    @Override
+    public void insert(Member member) {
+        String sql = "INSERT INTO members (email, password) VALUES (?, ?)";
+        jdbcTemplate.update(sql, member.getEmail(), member.getPassword());
+    }
+
     private RowMapper<Member> getRowMapper() {
         return (rs, rowNum) -> {
             return new Member(

@@ -27,7 +27,8 @@ public class InMemoryMemberRepository implements MemberRepository {
         return members.get(0);
     }
 
-    void insert(Member member) {
+    @Override
+    public void insert(Member member) {
         memberMap.put(member.getId(), member);
     }
 }
