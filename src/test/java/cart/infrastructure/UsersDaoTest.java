@@ -83,11 +83,11 @@ class UsersDaoTest {
     }
 
     private User insertUser(String email, String password) {
-        User user = User.builder()
+        User givenUser = User.builder()
                 .email(email)
                 .password(password)
                 .build();
 
-        return usersDao.insert(user);
+        return usersDao.insert(givenUser);
     }
 }
