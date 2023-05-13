@@ -10,6 +10,7 @@ import cart.product.domain.entity.Product;
 import cart.product.domain.repository.ProductRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
@@ -26,6 +27,7 @@ public class CartService {
                 .collect(Collectors.toList());
     }
 
+    @Transactional
     public Long addCart(Long memberId, Long productId) {
         Optional<Cart> optionalCart = cartRepository.findByProductIdAndMemberId(memberId, productId);
 
@@ -39,6 +41,7 @@ public class CartService {
         return cart.getId();
     }
 
+    @Transactional
     public void deleteCart(Long cartId) {
         Cart cart = cartRepository.findById(cartId).get();
         cartRepository.delete(cart);
