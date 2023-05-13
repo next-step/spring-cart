@@ -9,12 +9,12 @@ import lombok.Getter;
 @AllArgsConstructor
 @Builder
 public class CartDto {
-    private Long id;
-    private Long productId;
-    private String productName;
-    private Integer productPrice;
-    private String productImage;
-    private int count;
+    private final Long id;
+    private final Long productId;
+    private final String productName;
+    private final Integer productPrice;
+    private final String productImage;
+    private final int count;
 
     public static CartDto from(Cart cart) {
         return CartDto.builder()

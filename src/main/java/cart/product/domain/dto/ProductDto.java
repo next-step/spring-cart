@@ -7,10 +7,10 @@ import lombok.*;
 @AllArgsConstructor
 @Builder
 public class ProductDto {
-    private Long id;
-    private String name;
-    private String image;
-    private int price;
+    private final Long id;
+    private final String name;
+    private final String image;
+    private final int price;
 
     public static ProductDto fromEntity(Product product) {
         return ProductDto.builder()

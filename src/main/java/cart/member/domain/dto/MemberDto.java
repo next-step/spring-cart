@@ -9,9 +9,9 @@ import lombok.Getter;
 @AllArgsConstructor
 @Builder
 public class MemberDto {
-    private Long id;
-    private String email;
-    private String password;
+    private final Long id;
+    private final String email;
+    private final String password;
 
     public static MemberDto from(Member member) {
         return MemberDto.builder()
