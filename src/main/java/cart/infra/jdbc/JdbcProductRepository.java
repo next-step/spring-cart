@@ -2,7 +2,6 @@ package cart.infra.jdbc;
 
 import cart.domain.entity.Product;
 import cart.domain.repository.ProductRepository;
-import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
@@ -22,9 +21,8 @@ public class JdbcProductRepository implements ProductRepository {
     @Override
     public Product findById(Long id) {
         String sql = "SELECT * FROM products WHERE id = ?";
-        RowMapper<Product> rowMapper = new BeanPropertyRowMapper<>(Product.class);
         try {
-            return jdbcTemplate.queryForObject(sql, rowMapper, id);
+            return jdbcTemplate.queryForObject(sql, getRowMapper(), id);
         } catch (Exception e) {
             throw new NoSuchElementException("해당 상품을 찾을 수 없습니다.");
         }
@@ -39,14 +37,7 @@ public class JdbcProductRepository implements ProductRepository {
     @Override
     public Collection<Product> findAll() {
         String sql = "SELECT * FROM products";
-        return jdbcTemplate.query(sql, (rs, rowNum) -> {
-            return new Product(
-                rs.getLong("id"),
-                rs.getString("name"),
-                rs.getInt("price"),
-                rs.getString("image_url")
-            );
-        });
+        return jdbcTemplate.query(sql, getRowMapper());
     }
 
     @Override
@@ -65,5 +56,16 @@ public class JdbcProductRepository implements ProductRepository {
         }
         String sql = "DELETE FROM products WHERE id = ?";
         jdbcTemplate.update(sql, id);
+    }
+
+    private RowMapper<Product> getRowMapper() {
+        return (rs, rowNum) -> {
+            return new Product(
+                rs.getLong("id"),
+                rs.getString("name"),
+                rs.getInt("price"),
+                rs.getString("image_url")
+            );
+        };
     }
 }

@@ -26,3 +26,12 @@ CREATE TABLE MEMBERS (
 insert into MEMBERS(email, password)
 values ('a@a.com', 'password1'),
        ('b@b.com', 'password2');
+
+CREATE TABLE CART_ITEMS (
+     id          INT         NOT NULL AUTO_INCREMENT,
+     member_id          INT         NOT NULL,
+     product_id          INT         NOT NULL,
+     PRIMARY KEY (id),
+     FOREIGN KEY (member_id) references MEMBERS(id),
+     FOREIGN KEY (product_id) references PRODUCTS(id)
+);
