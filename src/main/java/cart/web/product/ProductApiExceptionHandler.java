@@ -1,4 +1,4 @@
-package cart.web;
+package cart.web.product;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ExceptionHandler;

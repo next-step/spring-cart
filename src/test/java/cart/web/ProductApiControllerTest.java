@@ -2,8 +2,8 @@ package cart.web;
 
 import cart.domain.product.Product;
 import cart.infrastructure.ProductDao;
-import cart.web.dto.ProductSaveRequestDto;
-import cart.web.dto.ProductUpdateRequestDto;
+import cart.web.product.dto.ProductSaveRequestDto;
+import cart.web.product.dto.ProductUpdateRequestDto;
 import io.restassured.RestAssured;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

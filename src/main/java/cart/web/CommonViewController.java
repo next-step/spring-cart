@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 
 @RequiredArgsConstructor
 @Controller
-public class ViewController {
+public class CommonViewController {
 
     private final ProductService productService;
 
@@ -26,4 +26,9 @@ public class ViewController {
         return "admin";
     }
 
+    @GetMapping("/settings")
+    public String setting(Model model) {
+        // TODO 회원 목록 model에 담기
+        return "settings";
+    }
 }

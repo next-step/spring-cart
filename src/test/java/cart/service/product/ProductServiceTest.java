@@ -2,9 +2,9 @@ package cart.service.product;
 
 import cart.domain.product.Product;
 import cart.infrastructure.ProductDao;
-import cart.web.dto.ProductResponseDto;
-import cart.web.dto.ProductSaveRequestDto;
-import cart.web.dto.ProductUpdateRequestDto;
+import cart.web.product.dto.ProductResponseDto;
+import cart.web.product.dto.ProductSaveRequestDto;
+import cart.web.product.dto.ProductUpdateRequestDto;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;

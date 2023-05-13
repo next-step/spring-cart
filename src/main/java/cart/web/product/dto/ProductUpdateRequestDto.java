@@ -1,4 +1,4 @@
-package cart.web.dto;
+package cart.web.product.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
