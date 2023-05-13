@@ -19,7 +19,8 @@ CREATE TABLE MEMBERS (
      password     VARCHAR(100) NOT NULL,
      created_at  DATETIME    NOT NULL default current_timestamp,
      updated_at  DATETIME    NOT NULL default current_timestamp,
-     PRIMARY KEY (id)
+     PRIMARY KEY (id),
+     UNIQUE KEY idx (email, password)
 );
 
 insert into MEMBERS(email, password)

@@ -17,4 +17,8 @@ public class MemberService {
     public Collection<Member> getAll() {
         return memberRepository.findAll();
     }
+
+    public Member findMember(String email, String password) {
+        return memberRepository.findByEmailAndPassword(email, password);
+    }
 }

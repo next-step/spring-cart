@@ -6,4 +6,5 @@ import java.util.Collection;
 
 public interface MemberRepository {
     Collection<Member> findAll();
+    Member findByEmailAndPassword(String email, String password);
 }

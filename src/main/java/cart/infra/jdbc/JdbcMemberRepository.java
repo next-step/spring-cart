@@ -2,10 +2,13 @@ package cart.infra.jdbc;
 
 import cart.domain.entity.Member;
 import cart.domain.repository.MemberRepository;
+import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
 
 import java.util.Collection;
+import java.util.NoSuchElementException;
 
 @Repository
 public class JdbcMemberRepository implements MemberRepository {
@@ -25,5 +28,16 @@ public class JdbcMemberRepository implements MemberRepository {
                     rs.getString("password")
             );
         });
+    }
+
+    @Override
+    public Member findByEmailAndPassword(String email, String password) {
+        String sql = "SELECT * FROM members WHERE id = ?";
+        RowMapper<Member> rowMapper = new BeanPropertyRowMapper<>(Member.class);
+        try {
+            return jdbcTemplate.queryForObject(sql, rowMapper, email, password);
+        } catch (Exception e) {
+            throw new NoSuchElementException("해당 회원을 찾을 수 없습니다.");
+        }
     }
 }
