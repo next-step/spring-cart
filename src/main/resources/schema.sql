@@ -14,7 +14,7 @@ CREATE TABLE product
 CREATE TABLE users
 (
     id       bigint       NOT NULL AUTO_INCREMENT,
-    email    varchar(50)  NOT NULL,
+    email    varchar(50)  NOT NULL UNIQUE,
     password varchar(100) NOT NULL,
     PRIMARY KEY (id)
 );
