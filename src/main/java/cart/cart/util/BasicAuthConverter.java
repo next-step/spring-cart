@@ -1,7 +1,5 @@
 package cart.cart.util;
 
-import org.springframework.util.Base64Utils;
-
 import java.util.Base64;
 
 public class BasicAuthConverter {
