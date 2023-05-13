@@ -10,6 +10,8 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 
+import java.util.Objects;
+
 @Getter
 @AllArgsConstructor
 @Builder
@@ -55,5 +57,18 @@ public class Cart {
     }
     public String getProductImage() {
         return product.getImage();
+    }
+
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj == this) return true;
+        if (! (obj instanceof Cart)) return false;
+        Cart cart = (Cart) obj;
+        return cart.getId() == id.getId();
+    }
+    @Override
+    public int hashCode() {
+        return Objects.hash(id.getId());
     }
 }
