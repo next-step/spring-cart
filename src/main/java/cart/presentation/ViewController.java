@@ -1,6 +1,8 @@
 package cart.presentation;
 
+import cart.business.MemberService;
 import cart.business.ProductService;
+import cart.presentation.dto.ViewMember;
 import cart.presentation.dto.ViewProduct;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -12,9 +14,11 @@ import java.util.List;
 public class ViewController {
 
     private final ProductService adminService;
+    private final MemberService memberService;
 
-    public ViewController(ProductService adminService) {
+    public ViewController(ProductService adminService, MemberService memberService) {
         this.adminService = adminService;
+        this.memberService = memberService;
     }
 
     @GetMapping("/")
@@ -29,5 +33,11 @@ public class ViewController {
         List<ViewProduct> viewProducts = adminService.getProducts();
         model.addAttribute("products", viewProducts);
         return "admin";
+    }
+
+    @GetMapping("/settings")
+    public String settingsPage(Model model) {
+        model.addAttribute("members", memberService.getMembers());
+        return "settings";
     }
 }
