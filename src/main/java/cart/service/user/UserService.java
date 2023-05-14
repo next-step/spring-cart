@@ -6,11 +6,17 @@ import cart.infrastructure.security.AuthenticationException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @RequiredArgsConstructor
 @Service
 public class UserService {
 
     private final UsersDao usersDao;
+
+    public List<User> findAll() {
+        return usersDao.findAll();
+    }
 
     public User login(String email, String password) {
         User foundUser = usersDao.findByEmail(email)

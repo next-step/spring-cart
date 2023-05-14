@@ -8,8 +8,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.jdbc.Sql;
 
-import static org.assertj.core.api.Assertions.assertThatThrownBy;
-import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
+import java.util.List;
+
+import static org.assertj.core.api.Assertions.*;
 
 @Sql(scripts = "classpath:schema.sql")
 @SpringBootTest
@@ -24,6 +25,22 @@ class UserServiceTest {
     private UserService userService;
     @Autowired
     private UsersDao usersDao;
+
+    @Test
+    void findAll() {
+        // given
+        usersDao.insert(USER);
+        usersDao.insert(User.builder().email("b@b.com").password("passwordB").build());
+
+        // when
+        List<User> users = userService.findAll();
+
+        // then
+        assertThat(users).flatExtracting(User::getEmail)
+                .containsExactly("a@a.com", "b@b.com");
+        assertThat(users).flatExtracting(User::getPassword)
+                .containsExactly("passwordA", "passwordB");
+    }
 
     @Test
     void login_valid() {

@@ -1,6 +1,7 @@
 package cart.web;
 
 import cart.service.product.ProductService;
+import cart.service.user.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -11,6 +12,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 public class CommonViewController {
 
     private final ProductService productService;
+    private final UserService userService;
 
     @GetMapping("/")
     public String index(Model model) {
@@ -28,7 +30,13 @@ public class CommonViewController {
 
     @GetMapping("/settings")
     public String setting(Model model) {
-        // TODO 회원 목록 model에 담기
+        model.addAttribute("users", userService.findAll());
+
         return "settings";
+    }
+
+    @GetMapping("/cart")
+    public String cart() {
+        return "cart";
     }
 }
