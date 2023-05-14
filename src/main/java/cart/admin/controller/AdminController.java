@@ -1,12 +1,14 @@
 package cart.admin.controller;
 
 import cart.product.dto.request.ProductRequest;
+import cart.product.dto.response.ProductResponse;
 import cart.product.service.ProductService;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.validation.Valid;
+import java.util.List;
 
 
 @RequestMapping("/admin")
@@ -26,19 +28,20 @@ public class AdminController {
         return modelAndView;
     }
 
-    @PostMapping("/create-product")
+    @PostMapping("/product")
     public void insertProduct(Model model, @RequestBody @Valid ProductRequest productRequest) {
         productService.insert(productRequest);
         model.addAttribute("products", productService.findAll()); // 최신화 시켜주기
     }
 
-    @PutMapping("/update-product/{id}")
+    @PutMapping("/product/{id}")
     public void updateProduct(Model model, @PathVariable Long id, @RequestBody ProductRequest productRequest) {
         productService.update(id, productRequest);
-        model.addAttribute("products", productService.findAll()); // 최신화 시켜주기
+        List<ProductResponse> all = productService.findAll();
+        model.addAttribute("products", all); // 최신화 시켜주기
     }
 
-    @DeleteMapping("/delete-product/{id}")
+    @DeleteMapping("/product/{id}")
     public void deleteProduct(Model model, @PathVariable Long id) {
         productService.delete(id);
         model.addAttribute("products", productService.findAll()); // 최신화 시켜주기

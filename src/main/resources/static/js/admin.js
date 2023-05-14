@@ -47,7 +47,7 @@ form.addEventListener('submit', (event) => {
 // TODO: [1단계] 상품 관리 CRUD API에 맞게 변경
 const createProduct = (product) => {
     axios.request({//TODO 각 axios.post, put, delete로 변경하면 데이터가 안담기는거 다시 확인하기
-        url: '/admin/create-product',
+        url: '/admin/product',
         method: 'post',
         data: product
     }).then((response) => {
@@ -62,7 +62,7 @@ const updateProduct = (product) => {
     const { id } = product;
 
     axios.request({//TODO 각 axios.post, put, delete로 변경하면 데이터가 안담기는거 다시 확인하기
-        url: `/admin/update-product/${id}`,
+        url: `/admin/product/${id}`,
         method: 'put',
         data: product
     }).then((response) => {
@@ -75,7 +75,7 @@ const updateProduct = (product) => {
 // TODO: [1단계] 상품 관리 CRUD API에 맞게 변경
 const deleteProduct = (id) => {
     axios.request({ //TODO 각 axios.post, put, delete로 변경하면 데이터가 안담기는거 다시 확인하기
-        url: `/admin/delete-product/${id}`,
+        url: `/admin/product/${id}`,
         method: 'delete'
     }).then((response) => {
         window.location.reload();

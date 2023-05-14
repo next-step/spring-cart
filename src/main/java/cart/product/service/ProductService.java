@@ -30,7 +30,7 @@ public class ProductService {
 
     public void update(Long id, ProductRequest productRequest) {
         Product product = productDao.findById(id).orElseThrow(() -> new ProductNotFoundException(ErrorCode.NOT_FOUND_PRODUCT));
-        productDao.update(product);
+        productDao.update(productRequest, product.getId());
     }
 
     public void delete(Long id) {

@@ -24,9 +24,9 @@ public class ProductDao {
         return jdbcTemplate.query(SQL, (resultSet, rowNum) -> new Product(resultSet.getLong("id"), resultSet.getString("name"), resultSet.getString("img"), resultSet.getLong("price"), resultSet.getTimestamp("created_at").toLocalDateTime()));
     }
 
-    public void update(Product product) {
+    public void update(ProductRequest productRequest, Long productId) {
         String SQL = "UPDATE PRODUCTS SET name = ?, img = ?, price = ? WHERE id = ?";
-        jdbcTemplate.update(SQL, product.getName(), product.getImg(), product.getPrice(), product.getId());
+        jdbcTemplate.update(SQL, productRequest.getName(), productRequest.getImg(), productRequest.getPrice(), productId);
     }
 
     public void delete(Long id) {
@@ -35,7 +35,7 @@ public class ProductDao {
     }
 
     public Optional<Product> findById(Long id) {
-        String SQL = "SELECT * FROM PRODUCT WHERE id = ?";
-        return Optional.ofNullable(jdbcTemplate.queryForObject(SQL, (resultSet, rowNum) -> new Product(resultSet.getLong("id"), resultSet.getString("name"), resultSet.getString("img"), resultSet.getLong("price"), resultSet.getTimestamp("created_at").toLocalDateTime())));
+        String SQL = "SELECT * FROM PRODUCTS WHERE id = ?";
+        return Optional.ofNullable(jdbcTemplate.queryForObject(SQL, (resultSet, rowNum) -> new Product(resultSet.getLong("id"), resultSet.getString("name"), resultSet.getString("img"), resultSet.getLong("price"), resultSet.getTimestamp("created_at").toLocalDateTime()), id));
     }
 }
