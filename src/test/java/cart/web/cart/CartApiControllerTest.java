@@ -70,23 +70,41 @@ class CartApiControllerTest {
     }
 
     @Test
+    void findAll_invalid_no_authorization() {
+        RestAssured.given()
+                .contentType(MediaType.APPLICATION_JSON_VALUE)
+                .when().get("/api/v1/carts")
+                .then()
+                .statusCode(HttpStatus.BAD_REQUEST.value());
+    }
+
+    @Test
     void add() {
         // given
         CartAddRequestDto requestDto = new CartAddRequestDto(3L);
 
         // when
-        Long addedCartId = RestAssured.given().log().all()
+        Long addedCartId = RestAssured.given()
                 .contentType(MediaType.APPLICATION_JSON_VALUE)
                 .header("Authorization", authorizationHeader("a@a.com", "passwordA"))
                 .body(requestDto)
                 .when().post("/api/v1/carts")
 
         // then
-                .then().log().all()
+                .then()
                 .statusCode(HttpStatus.CREATED.value()).extract().as(Long.class);
 
         Cart foundCart = assertDoesNotThrow(() -> cartDao.findById(addedCartId).get());
         assertThat(foundCart.getProductId()).isEqualTo(3L);
+    }
+
+    @Test
+    void add_invalid_no_authorization() {
+        RestAssured.given()
+                .contentType(MediaType.APPLICATION_JSON_VALUE)
+                .when().post("/api/v1/carts")
+                .then()
+                .statusCode(HttpStatus.BAD_REQUEST.value());
     }
 
     @Test
@@ -104,21 +122,24 @@ class CartApiControllerTest {
         assertThat(cartDao.findById(deletedCartId)).isEmpty();
     }
 
-    // TODO 예외 처리 로직 구현 후 예외 케이스 테스트
-//    @Test
-//    void delete_invalid_access_denied() {
-//        // given, when
-//        Long deletedCartId = RestAssured.given()
-//                .contentType(MediaType.APPLICATION_JSON_VALUE)
-//                .header("Authorization", authorizationHeader("b@b.com", "passwordB"))
-//                .when().delete("/api/v1/carts/1")
-//
-//                // then
-//                .then()
-//                .statusCode(HttpStatus.OK.value()).extract().as(Long.class);
-//
-//        assertThat(cartDao.findById(deletedCartId)).isEmpty();
-//    }
+    @Test
+    void delete_invalid_no_authorization() {
+        RestAssured.given()
+                .contentType(MediaType.APPLICATION_JSON_VALUE)
+                .when().delete("/api/v1/carts/1")
+                .then()
+                .statusCode(HttpStatus.BAD_REQUEST.value());
+    }
+
+    @Test
+    void delete_invalid_access_denied() {
+        RestAssured.given()
+                .contentType(MediaType.APPLICATION_JSON_VALUE)
+                .header("Authorization", authorizationHeader("b@b.com", "passwordB"))
+                .when().delete("/api/v1/carts/1")
+                .then()
+                .statusCode(HttpStatus.UNAUTHORIZED.value());
+    }
 
     private String authorizationHeader(String email, String password) {
         String credential = new String(Base64.encodeBase64((email + ":" + password).getBytes()));

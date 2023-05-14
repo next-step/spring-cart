@@ -1,16 +1,24 @@
-package cart.web.product;
+package cart.web;
 
+import cart.infrastructure.security.AccessDeniedException;
+import cart.infrastructure.security.AuthenticationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
-@RestControllerAdvice(basePackageClasses = {ProductApiExceptionHandler.class})
-public class ProductApiExceptionHandler {
+@RestControllerAdvice
+public class ApiExceptionHandler {
 
     @ResponseStatus(HttpStatus.BAD_REQUEST)
-    @ExceptionHandler(IllegalArgumentException.class)
-    public String illegalArgumentExceptionHandler(IllegalArgumentException exception) {
+    @ExceptionHandler({IllegalArgumentException.class, AuthenticationException.class})
+    public String badRequestExceptionHandler(RuntimeException exception) {
+        return exception.getMessage();
+    }
+
+    @ResponseStatus(HttpStatus.UNAUTHORIZED)
+    @ExceptionHandler(AccessDeniedException.class)
+    public String unauthorizedExceptionHandler(AccessDeniedException exception) {
         return exception.getMessage();
     }
 
