@@ -11,6 +11,10 @@ public class CartMember {
         this.memberPassword = memberPassword;
     }
 
+    public Long getMemberId() {
+        return memberId;
+    }
+
     public String getMemberEmail() {
         return memberEmail;
     }

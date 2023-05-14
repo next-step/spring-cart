@@ -9,7 +9,7 @@ public class ViewMember {
 
     public ViewMember(CartMember cartMember) {
         this.email = cartMember.getMemberEmail();
-        this.password = cartMember.getMemberEmail();
+        this.password = cartMember.getMemberPassword();
     }
 
     public String getEmail() {

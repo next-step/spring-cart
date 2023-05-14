@@ -2,7 +2,6 @@ package cart.presentation;
 
 import cart.business.MemberService;
 import cart.business.ProductService;
-import cart.presentation.dto.ViewMember;
 import cart.presentation.dto.ViewProduct;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -39,5 +38,11 @@ public class ViewController {
     public String settingsPage(Model model) {
         model.addAttribute("members", memberService.getMembers());
         return "settings";
+
+    }
+
+    @GetMapping("/cart")
+    public String cartPage() {
+        return "cart";
     }
 }
