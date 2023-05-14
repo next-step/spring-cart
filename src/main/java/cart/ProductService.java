@@ -27,4 +27,8 @@ public class ProductService {
   public void delete(Long id) {
     productRepository.deleteById(id);
   }
+
+  public void addProduct(ProductCreateDto createDto) {
+    productRepository.save(createDto.toEntity());
+  }
 }

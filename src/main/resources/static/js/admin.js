@@ -52,11 +52,15 @@ form.addEventListener('submit', (event) => {
 
 // TODO: [1단계] 상품 관리 CRUD API에 맞게 변경
 const createProduct = (product) => {
-    axios.request({
-        url: '',
-    }).then((response) => {
+    axios.post(`/products`, product, {
+        headers: {
+            'Content-Type': 'application/json',
+        },
+    })
+    .then((response) => {
         window.location.reload();
-    }).catch((error) => {
+    })
+    .catch((error) => {
         console.error(error);
     });
 };

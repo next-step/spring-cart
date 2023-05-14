@@ -45,4 +45,9 @@ public class ProductRepository {
     String sql = "DELETE FROM product WHERE id = ?";
     jdbcTemplate.update(sql, id);
   }
+
+  public void save(Product entity) {
+    String sql = "INSERT INTO product (name, image, price) VALUES (?, ?, ?)";
+    jdbcTemplate.update(sql,entity.getName(), entity.getImage(), entity.getPrice());
+  }
 }
