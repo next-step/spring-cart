@@ -8,12 +8,19 @@ const showAddModal = () => {
 const showEditModal = (product) => {
     const elements = modal.getElementsByTagName('input');
     for (const element of elements) {
-        element.value = product[element.getAttribute('name')];
+        if (element.id === 'name') {
+            element.value = product.name;
+        } else if (element.id === 'price') {
+            element.value = product.price;
+        } else if (element.id === 'image-url') {
+            element.value = product.image;
+        }
     }
     modal.dataset.formType = 'edit';
     modal.dataset.productId = product.id;
     modal.style.display = 'block';
 };
+
 
 const hideAddModal = () => {
     modal.style.display = 'none';
