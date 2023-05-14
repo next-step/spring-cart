@@ -43,7 +43,8 @@ public class CartService {
 
     @Transactional
     public void deleteCart(Long cartId) {
-        Cart cart = cartRepository.findById(cartId).get();
+        Cart cart = cartRepository.findById(cartId)
+                .orElseThrow(() -> new IllegalArgumentException("cartId에 해당하는 정보가 없습니다"));
         cartRepository.delete(cart);
     }
 }
