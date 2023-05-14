@@ -4,6 +4,7 @@ import cart.product.domain.Product;
 import cart.product.dto.request.ProductRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -19,9 +20,9 @@ public class ProductDao {
         jdbcTemplate.update(SQL, productRequest.getName(), productRequest.getImg(), productRequest.getPrice());
     }
 
+    private final RowMapper<Product> productsRowMapper = (resultSet, rowNum) -> new Product(resultSet.getLong("id"), resultSet.getString("name"), resultSet.getString("img"), resultSet.getLong("price"), resultSet.getTimestamp("created_at").toLocalDateTime());
     public List<Product> findAll() {
-        String SQL = "SELECT * FROM PRODUCTS";
-        return jdbcTemplate.query(SQL, (resultSet, rowNum) -> new Product(resultSet.getLong("id"), resultSet.getString("name"), resultSet.getString("img"), resultSet.getLong("price"), resultSet.getTimestamp("created_at").toLocalDateTime()));
+        return jdbcTemplate.query("SELECT * FROM PRODUCTS", productsRowMapper);
     }
 
     public void update(ProductRequest productRequest, Long productId) {

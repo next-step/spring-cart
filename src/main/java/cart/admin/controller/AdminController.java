@@ -1,14 +1,12 @@
 package cart.admin.controller;
 
 import cart.product.dto.request.ProductRequest;
-import cart.product.dto.response.ProductResponse;
 import cart.product.service.ProductService;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.validation.Valid;
-import java.util.List;
 
 
 @RequestMapping("/admin")
