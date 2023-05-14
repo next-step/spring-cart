@@ -1,4 +1,4 @@
-package cart.cart.util;
+package cart.auth;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

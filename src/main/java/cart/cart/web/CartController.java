@@ -1,9 +1,7 @@
 package cart.cart.web;
 
-import cart.cart.domain.dto.CartDto;
 import cart.cart.domain.service.CartService;
-import cart.cart.util.AuthInfo;
-import cart.cart.util.BasicAuthConverter;
+import cart.auth.AuthInfo;
 import cart.cart.web.dto.CreateAuthRequest;
 import cart.cart.web.dto.CreateCart;
 import cart.cart.web.dto.ReadMemberCarts;
@@ -15,9 +13,9 @@ import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
-import javax.security.auth.message.AuthException;
+import javax.naming.AuthenticationException;
 import javax.servlet.http.HttpServletRequest;
-import java.util.List;
+import java.util.Base64;
 
 
 @RestController
@@ -29,19 +27,29 @@ public class CartController {
 
     @GetMapping(value = "/carts/auth")
     public ReadMemberCarts.Response readMemberCartsInAuth(
-            HttpServletRequest request) throws AuthException {
+            HttpServletRequest request) throws AuthenticationException {
         MemberDto memberDto = getMemberFromAuth(request);
         return readMemberCarts(memberDto.getId());
     }
 
-    private MemberDto getMemberFromAuth(HttpServletRequest request) throws AuthException {
+    private MemberDto getMemberFromAuth(HttpServletRequest request) throws AuthenticationException {
         String authorization = request.getHeader("Authorization");
         if (!StringUtils.hasText(authorization)) {
-            throw new AuthException("인증 정보가 없습니다");
+            throw new AuthenticationException("인증 정보가 없습니다");
         }
-        AuthInfo authInfo = BasicAuthConverter.convert(authorization);
+        AuthInfo authInfo = convert(authorization);
         return memberService.getMember(authInfo.getUsername(), authInfo.getPassword());
     }
+
+    private AuthInfo convert(String basicAuthLiteral) {
+        String authLiteral = basicAuthLiteral.replace("Basic ", "");
+        String decodedString
+                = new String(Base64.getDecoder().decode(authLiteral.getBytes()));
+
+        String[] authArray = decodedString.split(":");
+        return new AuthInfo(authArray[0], authArray[1]);
+    }
+
 
     @GetMapping("/carts")
     public ReadMemberCarts.Response readMemberCarts(@RequestParam Long memberId) {
@@ -51,7 +59,7 @@ public class CartController {
 
     @PostMapping("/carts/auth")
     public CreateCart.Response createCart(@RequestBody CreateAuthRequest request,
-                                          HttpServletRequest httpServletRequest) throws AuthException {
+                                          HttpServletRequest httpServletRequest) throws AuthenticationException {
         MemberDto memberDto = getMemberFromAuth(httpServletRequest);
         return CreateCart.Response.of(
                 cartService.addCart(memberDto.getId(), request.getProductId()));
