@@ -5,7 +5,6 @@ import cart.auth.AuthPrincipal;
 import cart.member.domain.dto.MemberDto;
 import cart.member.domain.service.MemberService;
 import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.core.MethodParameter;
 import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
@@ -16,10 +15,8 @@ import org.springframework.web.method.support.ModelAndViewContainer;
 
 import javax.naming.AuthenticationException;
 import javax.servlet.http.HttpServletRequest;
-import java.util.Arrays;
 import java.util.Base64;
 
-@Slf4j
 @Component
 @RequiredArgsConstructor
 public class AuthenticationPrincipalArgumentResolver implements HandlerMethodArgumentResolver {
@@ -33,7 +30,6 @@ public class AuthenticationPrincipalArgumentResolver implements HandlerMethodArg
 
     @Override
     public Object resolveArgument(MethodParameter parameter, ModelAndViewContainer mavContainer, NativeWebRequest webRequest, WebDataBinderFactory binderFactory) throws AuthenticationException {
-        log.info("## AuthenticationPrincipalArgumentResolver reached");
         HttpServletRequest request = (HttpServletRequest) webRequest.getNativeRequest();
         MemberDto member = getMemberFromAuth(request);
         return AuthPrincipal.from(member);
@@ -54,7 +50,6 @@ public class AuthenticationPrincipalArgumentResolver implements HandlerMethodArg
                 = new String(Base64.getDecoder().decode(authLiteral.getBytes()));
 
         String[] authArray = decodedString.split(":");
-        log.info("### covert auth : ", Arrays.toString(authArray));
         return new AuthInfo(authArray[0], authArray[1]);
     }
 }
