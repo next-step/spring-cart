@@ -1,5 +1,7 @@
 package cart.web.user;
 
+import cart.domain.user.User;
+import cart.infrastructure.security.BasicAuthorizationParser;
 import cart.service.user.UserService;
 import cart.web.user.dto.UserDto;
 import lombok.RequiredArgsConstructor;
@@ -20,11 +22,11 @@ public class UserArgumentResolver implements HandlerMethodArgumentResolver {
 
     @Override
     public boolean supportsParameter(MethodParameter parameter) {
-        return parameter.hasParameterAnnotation(User.class);
+        return parameter.hasParameterAnnotation(CurrentUser.class);
     }
 
     @Override
-    public Object resolveArgument(MethodParameter parameter, ModelAndViewContainer mavContainer, NativeWebRequest webRequest, WebDataBinderFactory binderFactory) throws Exception {
+    public User resolveArgument(MethodParameter parameter, ModelAndViewContainer mavContainer, NativeWebRequest webRequest, WebDataBinderFactory binderFactory) throws Exception {
         String authorizationHeader = webRequest.getHeader(AUTHORIZATION_HEADER_NAME);
 
         if (authorizationHeader == null) {

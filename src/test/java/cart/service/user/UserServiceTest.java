@@ -1,7 +1,8 @@
 package cart.service.user;
 
 import cart.domain.user.User;
-import cart.infrastructure.UsersDao;
+import cart.infrastructure.dao.UsersDao;
+import cart.infrastructure.security.AuthenticationException;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;

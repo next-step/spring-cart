@@ -1,6 +1,7 @@
-package cart.infrastructure;
+package cart.infrastructure.dao;
 
 import cart.domain.user.User;
+import cart.infrastructure.dao.UsersDao;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;

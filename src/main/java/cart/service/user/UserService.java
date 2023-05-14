@@ -1,7 +1,8 @@
 package cart.service.user;
 
 import cart.domain.user.User;
-import cart.infrastructure.UsersDao;
+import cart.infrastructure.dao.UsersDao;
+import cart.infrastructure.security.AuthenticationException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 

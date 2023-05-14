@@ -1,4 +1,4 @@
-package cart.infrastructure;
+package cart.infrastructure.dao;
 
 import cart.domain.product.Product;
 import org.springframework.dao.EmptyResultDataAccessException;

@@ -1,7 +1,7 @@
 package cart.service.product;
 
 import cart.domain.product.Product;
-import cart.infrastructure.ProductDao;
+import cart.infrastructure.dao.ProductDao;
 import cart.web.product.dto.ProductResponseDto;
 import cart.web.product.dto.ProductSaveRequestDto;
 import cart.web.product.dto.ProductUpdateRequestDto;

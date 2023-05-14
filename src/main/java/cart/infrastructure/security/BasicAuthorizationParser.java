@@ -1,4 +1,4 @@
-package cart.web.user;
+package cart.infrastructure.security;
 
 import cart.web.user.dto.UserDto;
 import org.apache.tomcat.util.codec.binary.Base64;

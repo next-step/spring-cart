@@ -1,4 +1,4 @@
-package cart.web.user;
+package cart.infrastructure.security;
 
 import cart.web.user.dto.UserDto;
 import org.apache.tomcat.util.codec.binary.Base64;
@@ -11,10 +11,10 @@ class BasicAuthorizationParserTest {
     @Test
     void parse() {
         // given
-        String authorizationValue = new String(Base64.encodeBase64("a@a.com:passwordA".getBytes()));
+        String credential = new String(Base64.encodeBase64("a@a.com:passwordA".getBytes()));
 
         // when
-        UserDto userDto = BasicAuthorizationParser.parse("BASIC " + authorizationValue);
+        UserDto userDto = BasicAuthorizationParser.parse("BASIC " + credential);
 
         // then
         assertThat(userDto.getEmail()).isEqualTo("a@a.com");

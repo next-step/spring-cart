@@ -1,7 +1,7 @@
-package cart.web;
+package cart.web.product;
 
 import cart.domain.product.Product;
-import cart.infrastructure.ProductDao;
+import cart.infrastructure.dao.ProductDao;
 import cart.web.product.dto.ProductSaveRequestDto;
 import cart.web.product.dto.ProductUpdateRequestDto;
 import io.restassured.RestAssured;
@@ -28,13 +28,13 @@ class ProductApiControllerTest {
     @LocalServerPort
     int port;
 
+    @Autowired
+    private ProductDao productDao;
+
     @BeforeEach
     void setUp() {
         RestAssured.port = port;
     }
-
-    @Autowired
-    private ProductDao productDao;
 
     @Test
     void save() {

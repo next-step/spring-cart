@@ -1,6 +1,6 @@
-package cart.infrastructure;
+package cart.infrastructure.dao;
 
-import cart.domain.user.User;
+import cart.domain.cart.Cart;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
@@ -14,41 +14,41 @@ import java.util.List;
 import java.util.Optional;
 
 @Repository
-public class UsersDao {
+public class CartDao {
 
     private final JdbcTemplate jdbcTemplate;
     private final SimpleJdbcInsert jdbcInsert;
-    private final RowMapper<User> rowMapper;
+    private final RowMapper<Cart> rowMapper;
 
-    public UsersDao(JdbcTemplate jdbcTemplate, DataSource dataSource) {
+    public CartDao(JdbcTemplate jdbcTemplate, DataSource dataSource) {
         this.jdbcTemplate = jdbcTemplate;
         this.jdbcInsert = new SimpleJdbcInsert(dataSource)
-                .withTableName("users")
+                .withTableName("cart")
                 .usingGeneratedKeyColumns("id");
         this.rowMapper = rowMapper();
     }
 
-    private RowMapper<User> rowMapper() {
-        return (resultSet, rowNum) -> User.builder()
+    private RowMapper<Cart> rowMapper() {
+        return (resultSet, rowNum) -> Cart.builder()
                 .id(resultSet.getLong("id"))
-                .email(resultSet.getString("email"))
-                .password(resultSet.getString("password"))
+                .userId(resultSet.getLong("user_id"))
+                .productId(resultSet.getLong("product_id"))
                 .build();
     }
 
-    public User insert(User user) {
-        SqlParameterSource parameterSource = new BeanPropertySqlParameterSource(user);
+    public Cart insert(Cart cart) {
+        SqlParameterSource parameterSource = new BeanPropertySqlParameterSource(cart);
         Long id = jdbcInsert.executeAndReturnKey(parameterSource).longValue();
 
-        return User.builder()
+        return Cart.builder()
                 .id(id)
-                .email(user.getEmail())
-                .password(user.getPassword())
+                .userId(cart.getUserId())
+                .productId(cart.getProductId())
                 .build();
     }
 
-    public Optional<User> findById(Long id) {
-        String sql = "SELECT * FROM users WHERE id = ?";
+    public Optional<Cart> findById(Long id) {
+        String sql = "SELECT * FROM cart WHERE id = ?";
 
         try {
             return Optional.ofNullable(jdbcTemplate.queryForObject(sql, rowMapper, id));
@@ -57,19 +57,17 @@ public class UsersDao {
         }
     }
 
-    public Optional<User> findByEmail(String email) {
-        String sql = "SELECT * FROM users WHERE email LIKE ?";
+    public List<Cart> findAllByUserId(Long userId) {
+        String sql = "SELECT * FROM cart WHERE user_id = ?";
 
-        try {
-            return Optional.ofNullable(jdbcTemplate.queryForObject(sql, rowMapper, email));
-        } catch (EmptyResultDataAccessException exception) {
-            return Optional.empty();
-        }
+        return jdbcTemplate.query(sql, rowMapper, userId);
     }
 
-    public List<User> findAll() {
-        String sql = "SELECT * FROM users";
+    public Long delete(Long id) {
+        String sql = "DELETE FROM cart WHERE id = ?";
 
-        return jdbcTemplate.query(sql, rowMapper);
+        jdbcTemplate.update(sql, id);
+        return id;
     }
+
 }

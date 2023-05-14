@@ -1,4 +1,4 @@
-package cart.infrastructure;
+package cart.infrastructure.dao;
 
 import cart.domain.cart.Cart;
 import cart.domain.product.Product;
@@ -11,13 +11,12 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.test.context.jdbc.Sql;
 
 import javax.sql.DataSource;
-
 import java.util.List;
 import java.util.NoSuchElementException;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 
 @Sql(scripts = "classpath:schema.sql")
 @JdbcTest
