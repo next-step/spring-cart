@@ -1,8 +1,11 @@
 package cart.web.product.dto;
 
 import cart.domain.product.Product;
+import lombok.AccessLevel;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
+@NoArgsConstructor(access = AccessLevel.PRIVATE)
 @Getter
 public class ProductResponseDto {
 
