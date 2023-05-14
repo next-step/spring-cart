@@ -1,7 +1,11 @@
 package cart.service.product;
 
+import cart.domain.cart.Cart;
 import cart.domain.product.Product;
+import cart.domain.user.User;
+import cart.infrastructure.dao.CartDao;
 import cart.infrastructure.dao.ProductDao;
+import cart.infrastructure.dao.UsersDao;
 import cart.web.product.dto.ProductResponseDto;
 import cart.web.product.dto.ProductSaveRequestDto;
 import cart.web.product.dto.ProductUpdateRequestDto;
@@ -23,6 +27,10 @@ class ProductServiceTest {
 
     @Autowired
     private ProductDao productDao;
+    @Autowired
+    private CartDao cartDao;
+    @Autowired
+    private UsersDao usersDao;
     @Autowired
     private ProductService productService;
 
@@ -84,6 +92,26 @@ class ProductServiceTest {
         // then
         assertThatThrownBy(() -> productDao.findById(deletedProductId).get())
                 .isInstanceOf(NoSuchElementException.class);
+    }
+
+    @Test
+    void delete_product_exists_in_cart() {
+        // given
+        Long insertedProductId = insertProduct("상품A", "image.com/imageA", 10000).getId();
+
+        usersDao.insert(User.builder().email("a@a.com").password("passwordA").build());
+        usersDao.insert(User.builder().email("b@b.com").password("passwordB").build());
+
+        cartDao.insert(Cart.builder().userId(1L).productId(1L).build());
+        cartDao.insert(Cart.builder().userId(2L).productId(1L).build());
+
+        // when
+        Long deletedProductId = productService.delete(insertedProductId);
+
+        // then
+        assertThat(productDao.findById(deletedProductId)).isEmpty();
+        assertThat(cartDao.findById(1L)).isEmpty();
+        assertThat(cartDao.findById(2L)).isEmpty();
     }
 
     private Product insertProduct(String name, String imageUrl, int price) {

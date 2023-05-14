@@ -2,6 +2,7 @@ package cart.infrastructure.dao;
 
 import cart.domain.cart.Cart;
 import org.springframework.dao.EmptyResultDataAccessException;
+import org.springframework.jdbc.core.BatchPreparedStatementSetter;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.namedparam.BeanPropertySqlParameterSource;
@@ -10,6 +11,8 @@ import org.springframework.jdbc.core.simple.SimpleJdbcInsert;
 import org.springframework.stereotype.Repository;
 
 import javax.sql.DataSource;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
 import java.util.List;
 import java.util.Optional;
 
@@ -63,11 +66,33 @@ public class CartDao {
         return jdbcTemplate.query(sql, rowMapper, userId);
     }
 
+    public List<Cart> findAllByProductId(Long productId) {
+        String sql = "SELECT * FROM cart WHERE product_id = ?";
+
+        return jdbcTemplate.query(sql, rowMapper, productId);
+    }
+
     public Long delete(Long id) {
         String sql = "DELETE FROM cart WHERE id = ?";
 
         jdbcTemplate.update(sql, id);
         return id;
+    }
+
+    public void batchDelete(List<Long> ids) {
+        String sql = "DELETE FROM cart WHERE id = ?";
+
+        jdbcTemplate.batchUpdate(sql, new BatchPreparedStatementSetter() {
+            @Override
+            public void setValues(PreparedStatement ps, int i) throws SQLException {
+                ps.setLong(1, ids.get(i));
+            }
+
+            @Override
+            public int getBatchSize() {
+                return ids.size();
+            }
+        });
     }
 
 }

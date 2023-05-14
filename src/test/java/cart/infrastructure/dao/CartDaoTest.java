@@ -89,6 +89,25 @@ class CartDaoTest {
     }
 
     @Test
+    void findAllByProductId() {
+        // given
+        User insertedUser1 = insertUser("a@a.com", "passwordA");
+        User insertedUser2 = insertUser("b@b.com", "passwordB");
+
+        Product insertedProduct = insertProduct("상품A", "image.com/imageA", 10000);
+
+        insertCart(insertedUser1.getId(), insertedProduct.getId());
+        insertCart(insertedUser2.getId(), insertedProduct.getId());
+
+        // when
+        List<Cart> carts = cartDao.findAllByProductId(insertedProduct.getId());
+
+        // then
+        assertThat(carts).flatExtracting(Cart::getUserId)
+                .containsExactly(insertedUser1.getId(), insertedUser2.getId());
+    }
+
+    @Test
     void delete() {
         // given
         User insertedUser = insertUser("a@a.com", "passwordA");
@@ -100,6 +119,25 @@ class CartDaoTest {
 
         // then
         assertThatThrownBy(() -> cartDao.findById(insertedCart.getId()).get())
+                .isInstanceOf(NoSuchElementException.class);
+    }
+
+    @Test
+    void batchDelete() {
+        // given
+        User insertedUser1 = insertUser("a@a.com", "passwordA");
+        User insertedUser2 = insertUser("b@b.com", "passwordB");
+        Product insertedProduct = insertProduct("상품A", "image.com/imageA", 10000);
+        Cart insertedCart1 = insertCart(insertedUser1.getId(), insertedProduct.getId());
+        Cart insertedCart2 = insertCart(insertedUser2.getId(), insertedProduct.getId());
+
+        // when
+        cartDao.batchDelete(List.of(insertedCart1.getId(), insertedCart2.getId()));
+
+        // then
+        assertThatThrownBy(() -> cartDao.findById(insertedCart1.getId()).get())
+                .isInstanceOf(NoSuchElementException.class);
+        assertThatThrownBy(() -> cartDao.findById(insertedCart2.getId()).get())
                 .isInstanceOf(NoSuchElementException.class);
     }
 

@@ -1,6 +1,8 @@
 package cart.service.product;
 
+import cart.domain.cart.Cart;
 import cart.domain.product.Product;
+import cart.infrastructure.dao.CartDao;
 import cart.infrastructure.dao.ProductDao;
 import cart.web.product.dto.ProductResponseDto;
 import cart.web.product.dto.ProductSaveRequestDto;
@@ -16,6 +18,7 @@ import java.util.stream.Collectors;
 public class ProductService {
 
     private final ProductDao productDao;
+    private final CartDao cartDao;
 
     public List<ProductResponseDto> findAll() {
         return productDao.findAll().stream()
@@ -39,7 +42,17 @@ public class ProductService {
         Product product = productDao.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("해당 상품이 존재하지 않습니다. id = " + id));
 
+        deleteCarts(product);
+
         return productDao.delete(product);
+    }
+
+    private void deleteCarts(Product product) {
+        List<Long> cartIds = cartDao.findAllByProductId(product.getId()).stream()
+                .map(Cart::getId)
+                .collect(Collectors.toList());
+
+        cartDao.batchDelete(cartIds);
     }
 
 }
