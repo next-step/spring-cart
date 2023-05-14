@@ -65,10 +65,10 @@ public class Cart {
         if (obj == this) return true;
         if (! (obj instanceof Cart)) return false;
         Cart cart = (Cart) obj;
-        return cart.getId() == id.getId();
+        return id.equals(cart.id);
     }
     @Override
     public int hashCode() {
-        return Objects.hash(id.getId());
+        return Objects.hash(id);
     }
 }
