@@ -37,7 +37,6 @@ public class ProductService {
 	}
 
 	private Product findProduct(Long id) {
-		System.out.println(productRepository.findById(id));
 		return productRepository.findById(id)
 			.orElseThrow(() -> new ServiceException(ErrorType.PRODUCT_NOT_FOUND));
 	}
