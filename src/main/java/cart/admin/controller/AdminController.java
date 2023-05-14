@@ -29,22 +29,18 @@ public class AdminController {
     }
 
     @PostMapping("/product")
-    public void insertProduct(Model model, @RequestBody @Valid ProductRequest productRequest) {
+    public void insertProduct(@RequestBody @Valid ProductRequest productRequest) {
         productService.insert(productRequest);
-        model.addAttribute("products", productService.findAll()); // 최신화 시켜주기
     }
 
     @PutMapping("/product/{id}")
-    public void updateProduct(Model model, @PathVariable Long id, @RequestBody ProductRequest productRequest) {
+    public void updateProduct(@PathVariable Long id, @RequestBody ProductRequest productRequest) {
         productService.update(id, productRequest);
-        List<ProductResponse> all = productService.findAll();
-        model.addAttribute("products", all); // 최신화 시켜주기
     }
 
     @DeleteMapping("/product/{id}")
-    public void deleteProduct(Model model, @PathVariable Long id) {
+    public void deleteProduct(@PathVariable Long id) {
         productService.delete(id);
-        model.addAttribute("products", productService.findAll()); // 최신화 시켜주기
     }
 
 
