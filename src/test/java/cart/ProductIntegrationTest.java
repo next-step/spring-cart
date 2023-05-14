@@ -28,7 +28,7 @@ public class ProductIntegrationTest {
                 .contentType(MediaType.APPLICATION_JSON_VALUE)
                 .when()
                 .get("/products")
-                .then()
+                .then().log().all()
                 .extract();
 
         assertThat(result.statusCode()).isEqualTo(HttpStatus.OK.value());
