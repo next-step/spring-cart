@@ -38,8 +38,7 @@ form.addEventListener('submit', (event) => {
     const formData = new FormData(event.target);
     let product = {};
     for (const entry of formData.entries()) {
-        const [key, value] = entry;
-        product[key] = value;
+        product[entry[0]] = entry[1];
     }
 
     if (modal.dataset.formType === 'edit') {
@@ -66,22 +65,27 @@ const createProduct = (product) => {
 const updateProduct = (product) => {
     const { id } = product;
 
-    axios.request({
-        url: '',
-    }).then((response) => {
+    axios.put(`/products`, product, {
+        headers: {
+            'Content-Type': 'application/json',
+        },
+    })
+    .then((response) => {
         window.location.reload();
-    }).catch((error) => {
+    })
+    .catch((error) => {
         console.error(error);
     });
 };
 
+
 // TODO: [1단계] 상품 관리 CRUD API에 맞게 변경
 const deleteProduct = (id) => {
-    axios.request({
-        url: '',
-    }).then((response) => {
+    axios.delete(`/products/${id}`)
+    .then((response) => {
         window.location.reload();
-    }).catch((error) => {
+    })
+    .catch((error) => {
         console.error(error);
     });
 };
