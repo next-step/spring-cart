@@ -26,7 +26,7 @@ public class CartService {
     public List<CartResponseDto> findAll(User user) {
         List<Cart> userCarts = cartDao.findAllByUserId(user.getId());
         List<Product> userProducts = userCarts.stream()
-                .map(userCart -> productDao.findById(userCart.getId()).get())
+                .map(userCart -> productDao.findById(userCart.getProductId()).get())
                 .collect(Collectors.toList());
 
         return IntStream.range(0, userCarts.size())

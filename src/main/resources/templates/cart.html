@@ -51,9 +51,9 @@
                         <div class="cart-item">
                           <div class="cart-item-info">
                             <img src="${cartItem.imageUrl}" alt="상품 이미지"/>
-                            <div class="cart-item-name" th:text="${cartItem.name}">상품 이름</div>
-                            <div class="cart-item-price" th:text="${cartItem.price}">상품 가격</div>
-                            <button type="submit" id="delete-btn" class="cart-item-delete" onclick="removeCartItem(${cartItem.id})">Delete</button>
+                            <div class="cart-item-name">${cartItem.name}</div>
+                            <div class="cart-item-price">${cartItem.price}</div>
+                            <button type="submit" id="delete-btn" class="cart-item-delete" onclick="removeCartItem(${cartItem.cartId})">Delete</button>
                           </div>
                         </div>
                       `;
