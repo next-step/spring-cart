@@ -1,7 +1,7 @@
-create table ITEM
+create table product
 (
     ID    BIGINT,
     NAME  CHARACTER VARYING(50),
-    IMAGE CHARACTER VARYING(50),
+    IMAGE CHARACTER VARYING(100),
     PRICE DOUBLE PRECISION
 );
