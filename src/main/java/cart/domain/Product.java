@@ -17,4 +17,12 @@ public class Product {
         this.image = image;
         this.price = price;
     }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public static Product of(String name, String image, int price) {
+        return new Product(name, image, price);
+    }
 }
