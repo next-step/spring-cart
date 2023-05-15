@@ -1,5 +1,6 @@
-package cart;
+package cart.dto;
 
+import cart.domain.Product;
 import java.math.BigDecimal;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
@@ -23,7 +24,7 @@ public class ProductUpdateDto {
   @NonNull
   BigDecimal price;
 
-  public Product toEntity(Product product) {
+  public Product toEntity() {
     return Product.builder()
         .id(getId())
         .name(getName())

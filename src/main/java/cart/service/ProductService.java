@@ -1,5 +1,9 @@
-package cart;
+package cart.service;
 
+import cart.repository.ProductRepository;
+import cart.domain.Product;
+import cart.dto.ProductCreateDto;
+import cart.dto.ProductUpdateDto;
 import java.util.List;
 import org.springframework.stereotype.Service;
 
@@ -17,7 +21,7 @@ public class ProductService {
   }
 
   public void updateProduct(ProductUpdateDto updateDto) {
-    productRepository.update(updateDto);
+    productRepository.update(updateDto.toEntity());
   }
 
   public Product findById(Long id) {

@@ -1,4 +1,4 @@
-package cart;
+package cart.domain;
 
 import java.math.BigDecimal;
 import lombok.AccessLevel;
@@ -11,18 +11,11 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor
 @Builder
-public class ProductReadDto {
+public class Product {
+
   Long id;
   String name;
   String image;
   BigDecimal price;
 
-  public static ProductReadDto toDto(Product product) {
-    return ProductReadDto.builder()
-        .id(product.getId())
-        .name(product.getName())
-        .image(product.getImage())
-        .price(product.getPrice())
-        .build();
-  }
 }

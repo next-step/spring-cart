@@ -1,5 +1,7 @@
-package cart;
+package cart.repository;
 
+import cart.domain.Product;
+import cart.dto.ProductUpdateDto;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -24,10 +26,10 @@ public class ProductRepository {
             .build());
   }
 
-  public void update(ProductUpdateDto updateDto) {
+  public void update(Product product) {
     String sql = "UPDATE product SET name = ?, price = ?, image = ? WHERE id = ?";
-    jdbcTemplate.update(sql, updateDto.getName(), updateDto.getPrice(), updateDto.getImage(),
-        updateDto.getId());
+    jdbcTemplate.update(sql, product.getName(), product.getPrice(), product.getImage(),
+        product.getId());
   }
 
   public Product findById(Long id) {

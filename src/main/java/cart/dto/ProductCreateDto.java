@@ -1,7 +1,7 @@
-package cart;
+package cart.dto;
 
+import cart.domain.Product;
 import java.math.BigDecimal;
-import java.time.LocalDateTime;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
