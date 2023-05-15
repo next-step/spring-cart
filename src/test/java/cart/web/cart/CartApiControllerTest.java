@@ -15,8 +15,6 @@ import org.springframework.http.MediaType;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.test.context.jdbc.Sql;
 
-import java.util.List;
-
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import static org.hamcrest.Matchers.is;
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
@@ -57,7 +55,7 @@ class CartApiControllerTest {
     }
 
     @Test
-    void findAll() {
+    void 정상_모든_장바구니_아이템을_조회한다() {
         RestAssured.given()
                 .contentType(MediaType.APPLICATION_JSON_VALUE)
                 .header("Authorization", authorizationHeader("a@a.com", "passwordA"))
@@ -70,7 +68,7 @@ class CartApiControllerTest {
     }
 
     @Test
-    void findAll_invalid_no_authorization() {
+    void 비정상_모든_장바구니_아이템을_조회한다_유저_정보가_없는_경우() {
         RestAssured.given()
                 .contentType(MediaType.APPLICATION_JSON_VALUE)
                 .when().get("/api/v1/carts")
@@ -79,7 +77,7 @@ class CartApiControllerTest {
     }
 
     @Test
-    void add() {
+    void 정상_장바구니_아이템을_추가한다() {
         // given
         CartAddRequestDto requestDto = new CartAddRequestDto(3L);
 
@@ -99,7 +97,7 @@ class CartApiControllerTest {
     }
 
     @Test
-    void add_invalid_no_authorization() {
+    void 비정상_장바구니_아이템을_추가한다_유저_정보가_없는_경우() {
         RestAssured.given()
                 .contentType(MediaType.APPLICATION_JSON_VALUE)
                 .when().post("/api/v1/carts")
@@ -108,7 +106,7 @@ class CartApiControllerTest {
     }
 
     @Test
-    void delete_valid() {
+    void 정상_장바구니_아이템을_삭제한다() {
         // given, when
         Long deletedCartId = RestAssured.given()
                 .contentType(MediaType.APPLICATION_JSON_VALUE)
@@ -123,7 +121,7 @@ class CartApiControllerTest {
     }
 
     @Test
-    void delete_invalid_no_authorization() {
+    void 비정상_장바구니_아이템을_삭제한다_유저_정보가_없는_경우() {
         RestAssured.given()
                 .contentType(MediaType.APPLICATION_JSON_VALUE)
                 .when().delete("/api/v1/carts/1")
@@ -132,7 +130,7 @@ class CartApiControllerTest {
     }
 
     @Test
-    void delete_invalid_access_denied() {
+    void 비정상_장바구니_아이템을_삭제한다_다른_유저의_아이템인_경우() {
         RestAssured.given()
                 .contentType(MediaType.APPLICATION_JSON_VALUE)
                 .header("Authorization", authorizationHeader("b@b.com", "passwordB"))

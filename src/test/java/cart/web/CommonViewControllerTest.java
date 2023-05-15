@@ -19,9 +19,33 @@ class CommonViewControllerTest {
     }
 
     @Test
-    void index() {
+    void index_페이지를_반환한다() {
         RestAssured
                 .when().get("/")
+                .then()
+                .statusCode(HttpStatus.OK.value());
+    }
+
+    @Test
+    void admin_페이지를_반환한다() {
+        RestAssured
+                .when().get("/admin")
+                .then()
+                .statusCode(HttpStatus.OK.value());
+    }
+
+    @Test
+    void settings_페이지를_반환한다() {
+        RestAssured
+                .when().get("/settings")
+                .then()
+                .statusCode(HttpStatus.OK.value());
+    }
+
+    @Test
+    void cart_페이지를_반환한다() {
+        RestAssured
+                .when().get("/cart")
                 .then()
                 .statusCode(HttpStatus.OK.value());
     }

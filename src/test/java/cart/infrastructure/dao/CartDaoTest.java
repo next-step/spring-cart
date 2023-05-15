@@ -39,7 +39,7 @@ class CartDaoTest {
     }
 
     @Test
-    void insert() {
+    void cart_테이블에_장바구니_데이터를_삽입한다() {
         // given
         User insertedUser = insertUser("a@a.com", "passwordA");
         Product insertedProduct = insertProduct("상품A", "image.com/imageA", 10000);
@@ -52,7 +52,7 @@ class CartDaoTest {
     }
 
     @Test
-    void findById() {
+    void cart_테이블에서_id로_장바구니_데이터를_찾는다() {
         // given
         User insertedUser = insertUser("a@a.com", "passwordA");
         Product insertedProduct = insertProduct("상품A", "image.com/imageA", 10000);
@@ -67,7 +67,7 @@ class CartDaoTest {
     }
 
     @Test
-    void findAllByUserId() {
+    void cart_테이블에서_userId로_모든_장바구니_데이터를_찾는다() {
         // given
         User insertedUser = insertUser("a@a.com", "passwordA");
         User anotherUser = insertUser("b@b.com", "passwordB");
@@ -89,7 +89,7 @@ class CartDaoTest {
     }
 
     @Test
-    void findAllByProductId() {
+    void cart_테이블에서_productId로_모든_장바구니_데이터를_찾는다() {
         // given
         User insertedUser1 = insertUser("a@a.com", "passwordA");
         User insertedUser2 = insertUser("b@b.com", "passwordB");
@@ -108,7 +108,7 @@ class CartDaoTest {
     }
 
     @Test
-    void delete() {
+    void cart_테이블에서_하나의_장바구니_데이터를_삭제한다() {
         // given
         User insertedUser = insertUser("a@a.com", "passwordA");
         Product insertedProduct = insertProduct("상품A", "image.com/imageA", 10000);
@@ -123,7 +123,7 @@ class CartDaoTest {
     }
 
     @Test
-    void batchDelete() {
+    void cart_테이블에서_여러개의_장바구니_데이터를_삭제한다() {
         // given
         User insertedUser1 = insertUser("a@a.com", "passwordA");
         User insertedUser2 = insertUser("b@b.com", "passwordB");

@@ -12,8 +12,8 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 class BasicAuthorizationParserTest {
 
     @ValueSource(strings = {"BASIC", "Basic", "basic", " BASIC ", " Basic ", " basic "})
-    @ParameterizedTest
-    void parse_valid(String authorizationType) {
+    @ParameterizedTest(name = "정상_authorization_header의_값을_파싱한다 - {0}")
+    void 정상_authorization_header의_값을_파싱한다(String authorizationType) {
         // given
         String credential = new String(Base64.encodeBase64("a@a.com:passwordA".getBytes()));
 
@@ -27,8 +27,8 @@ class BasicAuthorizationParserTest {
 
     @EmptySource
     @ValueSource(strings = {"abc123", "abc;123", "a;1", "가나다"})
-    @ParameterizedTest
-    void parse_invalid(String authorizationValue) {
+    @ParameterizedTest(name = "비정상_authorization_header의_값을_파싱한다_잘못된_값이_주어진_경우 - {0}")
+    void 비정상_authorization_header의_값을_파싱한다_잘못된_값이_주어진_경우(String authorizationValue) {
         // given
         String credential = new String(Base64.encodeBase64(authorizationValue.getBytes()));
 

@@ -37,7 +37,7 @@ class ProductApiControllerTest {
     }
 
     @Test
-    void save() {
+    void 상품을_저장한다() {
         // given
         ProductSaveRequestDto requestDto = new ProductSaveRequestDto("상품A", "image.com/imageA", 10000);
 
@@ -58,7 +58,7 @@ class ProductApiControllerTest {
     }
 
     @Test
-    void update_valid() {
+    void 정상_상품을_수정한다() {
         // given
         Product givenProduct = Product.builder()
                 .name("상품A")
@@ -86,7 +86,7 @@ class ProductApiControllerTest {
     }
 
     @Test
-    void update_invalid_nonexistent() {
+    void 비정상_상품을_수정한다_존재하지_않는_상품인_경우() {
         RestAssured.given()
                 .contentType(MediaType.APPLICATION_JSON_VALUE)
                 .body(new ProductUpdateRequestDto("", "", 0))
@@ -96,7 +96,7 @@ class ProductApiControllerTest {
     }
 
     @Test
-    void delete_valid() {
+    void 정상_상품을_삭제한다() {
         // given
         Product givenProduct = Product.builder()
                 .name("상품A")
@@ -120,7 +120,7 @@ class ProductApiControllerTest {
     }
 
     @Test
-    void delete_invalid_nonexistent() {
+    void 정상_상품을_삭제한다_존재하지_않는_상품인_경우() {
         RestAssured.given()
                 .contentType(MediaType.APPLICATION_JSON_VALUE)
                 .body(new ProductUpdateRequestDto("", "", 0))

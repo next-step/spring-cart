@@ -23,7 +23,7 @@ public class ProductIntegrationTest {
     }
 
     @Test
-    public void getProducts() {
+    public void 모든_상품을_조회한다() {
         var result = given()
                 .contentType(MediaType.APPLICATION_JSON_VALUE)
                 .when()

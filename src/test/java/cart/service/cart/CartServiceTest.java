@@ -59,7 +59,7 @@ class CartServiceTest {
     }
 
     @Test
-    void findAll() {
+    void 주어진_유저가_담은_모든_장바구니_아이템을_조회한다() {
         // given, when
         List<CartResponseDto> cartResponseDtos = cartService.findAll(USER_1);
 
@@ -75,7 +75,7 @@ class CartServiceTest {
     }
 
     @Test
-    void add_valid() {
+    void 정상_주어진_유저의_장바구니에_아이템을_추가한다() {
         // given
         CartAddRequestDto requestDto = new CartAddRequestDto(3L);
 
@@ -89,7 +89,7 @@ class CartServiceTest {
     }
 
     @Test
-    void add_invalid_nonexistent_product() {
+    void 비정상_주어진_유저의_장바구니에_아이템을_추가한다_상품이_존재하지_않는_경우() {
         // given
         CartAddRequestDto requestDto = new CartAddRequestDto(4L);
 
@@ -99,7 +99,7 @@ class CartServiceTest {
     }
 
     @Test
-    void remove_valid() {
+    void 정상_주어진_유저의_장바구니에서_아이템을_삭제한다() {
         // given, when
         Long removedCartId = cartService.remove(USER_1, 1L);
 
@@ -108,13 +108,13 @@ class CartServiceTest {
     }
 
     @Test
-    void remove_invalid_nonexistent_cart() {
+    void 비정상_주어진_유저의_장바구니에서_아이템을_삭제한다_장바구니_아이템이_존재하지_않는_경우() {
         assertThatThrownBy(() -> cartService.remove(USER_1, 4L))
                 .isInstanceOf(IllegalArgumentException.class);
     }
 
     @Test
-    void remove_invalid_access_denied() {
+    void 비정상_주어진_유저의_장바구니에서_아이템을_삭제한다_다른_유저의_아이템인_경우() {
         assertThatThrownBy(() -> cartService.remove(USER_1, 3L))
                 .isInstanceOf(AccessDeniedException.class);
     }

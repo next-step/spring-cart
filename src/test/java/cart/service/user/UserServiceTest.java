@@ -27,7 +27,7 @@ class UserServiceTest {
     private UsersDao usersDao;
 
     @Test
-    void findAll() {
+    void 모든_유저를_조회한다() {
         // given
         usersDao.insert(USER);
         usersDao.insert(User.builder().email("b@b.com").password("passwordB").build());
@@ -43,7 +43,7 @@ class UserServiceTest {
     }
 
     @Test
-    void login_valid() {
+    void 정상_유저가_로그인_한다() {
         // given
         User insertedUser = usersDao.insert(USER);
 
@@ -57,7 +57,7 @@ class UserServiceTest {
     }
 
     @Test
-    void login_invalid_nonexistent_email() {
+    void 비정상_유저가_로그인_한다_존재하지_않는_이메일인_경우() {
         // given
         User insertedUser = usersDao.insert(USER);
 
@@ -67,7 +67,7 @@ class UserServiceTest {
     }
 
     @Test
-    void login_invalid_incorrect_password() {
+    void 비정상_유저가_로그인_한다_비밀번호가_틀린_경우() {
         // given
         User insertedUser = usersDao.insert(USER);
 

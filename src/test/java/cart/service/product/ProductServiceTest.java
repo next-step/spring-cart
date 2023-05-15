@@ -35,7 +35,7 @@ class ProductServiceTest {
     private ProductService productService;
 
     @Test
-    void findAll() {
+    void 모든_상품을_조회한다() {
         // given
         insertProduct("상품A", "image.com/imageA", 10000);
         insertProduct("상품B", "image.com/imageB", 20000);
@@ -51,7 +51,7 @@ class ProductServiceTest {
     }
 
     @Test
-    void save() {
+    void 상품을_저장한다() {
         // given
         ProductSaveRequestDto requestDto = new ProductSaveRequestDto("상품A", "image.com/imageA", 10000);
 
@@ -66,7 +66,7 @@ class ProductServiceTest {
     }
 
     @Test
-    void update() {
+    void 상품을_수정한다() {
         // given
         Long insertedProductId = insertProduct("상품A", "image.com/imageA", 10000).getId();
         ProductUpdateRequestDto requestDto = new ProductUpdateRequestDto("상품B", "image.com/imageB", 20000);
@@ -82,7 +82,7 @@ class ProductServiceTest {
     }
 
     @Test
-    void delete() {
+    void 상품을_삭제한다() {
         // given
         Long insertedProductId = insertProduct("상품A", "image.com/imageA", 10000).getId();
 
@@ -95,7 +95,7 @@ class ProductServiceTest {
     }
 
     @Test
-    void delete_product_exists_in_cart() {
+    void 유저의_장바구니에_담긴_상품을_삭제한다() {
         // given
         Long insertedProductId = insertProduct("상품A", "image.com/imageA", 10000).getId();
 

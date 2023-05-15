@@ -33,7 +33,7 @@ class ProductDaoTest {
     }
 
     @Test
-    void insert() {
+    void product_테이블에_상품_데이터를_삽입한다() {
         // given, when
         Product insertedProduct = insertProduct("상품A", "image.com/imageA", 10000);
 
@@ -42,7 +42,7 @@ class ProductDaoTest {
     }
 
     @Test
-    void findById() {
+    void product_테이블에서_id로_상품_데이터를_찾는다() {
         // given
         Product insertedProduct = insertProduct("상품A", "image.com/imageA", 10000);
 
@@ -56,7 +56,7 @@ class ProductDaoTest {
     }
 
     @Test
-    void findAll() {
+    void product_테이블의_모든_상품_데이터를_찾는다() {
         // given
         insertProduct("상품A", "image.com/imageA", 10000);
         insertProduct("상품B", "image.com/imageB", 20000);
@@ -72,7 +72,7 @@ class ProductDaoTest {
     }
 
     @Test
-    void update() {
+    void product_테이블의_상품_데이터를_수정한다() {
         // given
         Product insertedProduct = insertProduct("상품A", "image.com/imageA", 10000);
         Product updateProduct = Product.builder()
@@ -95,7 +95,7 @@ class ProductDaoTest {
     }
 
     @Test
-    void delete() {
+    void product_테이블의_상품_데이터를_삭제한다() {
         // given
         Product insertedProduct = insertProduct("상품A", "image.com/imageA", 10000);
 

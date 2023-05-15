@@ -1,7 +1,6 @@
 package cart.infrastructure.dao;
 
 import cart.domain.user.User;
-import cart.infrastructure.dao.UsersDao;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,7 +9,6 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.test.context.jdbc.Sql;
 
 import javax.sql.DataSource;
-
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -33,7 +31,7 @@ class UsersDaoTest {
     }
 
     @Test
-    void insert() {
+    void users_테이블에_유저_데이터를_삽입한다() {
         // given, when
         User insertedUser = insertUser("a@a.com", "passwordA");
 
@@ -42,7 +40,7 @@ class UsersDaoTest {
     }
 
     @Test
-    void findById() {
+    void users_테이블에서_id로_유저_데이터를_찾는다() {
         // given
         User insertedUser = insertUser("a@a.com", "passwordA");
 
@@ -55,7 +53,7 @@ class UsersDaoTest {
     }
 
     @Test
-    void findByEmail() {
+    void users_테이블에서_email로_유저_데이터를_찾는다() {
         // given
         User insertedUser = insertUser("a@a.com", "passwordA");
 
@@ -68,7 +66,7 @@ class UsersDaoTest {
     }
 
     @Test
-    void findAll() {
+    void users_테이블의_모든_유저_데이터를_찾는다() {
         // given
         List<User> insertedUsers = List.of(
                 insertUser("a@a.com", "passwordA"),
