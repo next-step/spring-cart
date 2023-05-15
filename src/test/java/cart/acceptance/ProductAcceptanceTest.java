@@ -22,6 +22,7 @@ class ProductAcceptanceTest {
     void getProductsTest() {
 
         var response = 상품_목록_요청("/products");
+
         assertThat(response.statusCode()).isEqualTo(HttpStatus.OK.value());
     }
 
@@ -30,6 +31,7 @@ class ProductAcceptanceTest {
     void getProductsExceptionTest() {
 
         var response = 상품_목록_요청("/peo");
+
         assertThat(response.statusCode()).isEqualTo(HttpStatus.NOT_FOUND.value());
     }
 
@@ -38,6 +40,7 @@ class ProductAcceptanceTest {
     void postProduct() {
 
         var response = 상품_생성_요청(createRequest);
+
         assertThat(response.statusCode()).isEqualTo(HttpStatus.OK.value());
     }
 
@@ -65,4 +68,25 @@ class ProductAcceptanceTest {
 
         assertThat(response.statusCode()).isEqualTo(HttpStatus.NOT_FOUND.value());
     }
+
+    @Test
+    @DisplayName("상품을 삭제한다.")
+    void deleteProduct() {
+
+        var id = 상품_생성_요청(createRequest).jsonPath().getLong("id");
+
+        var response = 상품_삭제_요청(id);
+
+        assertThat(response.statusCode()).isEqualTo(HttpStatus.NO_CONTENT.value());
+    }
+
+    @Test
+    @DisplayName("삭제하려는 상품이 존재하지 않으면 삭제에 실패한다.")
+    void deleteProductException() {
+
+        var response = 상품_삭제_요청(3L);
+
+        assertThat(response.statusCode()).isEqualTo(HttpStatus.NOT_FOUND.value());
+    }
+
 }
