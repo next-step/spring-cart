@@ -40,4 +40,9 @@ public class ProductService {
         findById(productId);
         productRepository.edit(productId, productEditRequest);
     }
+
+    public void delete(Long productId) {
+        findById(productId);
+        productRepository.delete(productId);
+    }
 }

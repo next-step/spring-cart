@@ -64,4 +64,10 @@ public class JdbcProductRepository implements ProductRepository{
                 productEditRequest.getImage(),
                 productEditRequest.getPrice(), id);
     }
+
+    @Override
+    public void delete(Long id) {
+        String sql = "delete from products where id=?";
+        jdbcTemplate.update(sql, id);
+    }
 }
