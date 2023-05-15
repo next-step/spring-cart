@@ -1,13 +1,16 @@
 package cart.repository;
 
+import cart.controller.dto.ProductEditRequest;
 import cart.domain.Product;
 import lombok.RequiredArgsConstructor;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.stereotype.Repository;
 import java.sql.PreparedStatement;
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 @RequiredArgsConstructor
@@ -16,7 +19,9 @@ public class JdbcProductRepository implements ProductRepository{
     private final JdbcTemplate jdbcTemplate;
 
     private final RowMapper<Product> productRowMapper =
-            (resultSet, rowNum) -> new Product(resultSet.getString("name"),
+            (resultSet, rowNum) -> new Product(
+                    resultSet.getLong("id"),
+                    resultSet.getString("name"),
                     resultSet.getString("image"),
                     resultSet.getInt("price"));
 
@@ -40,4 +45,23 @@ public class JdbcProductRepository implements ProductRepository{
         return product;
     }
 
+    @Override
+    public Optional<Product> findById(Long id) {
+        String sql = "select * from products where id = ?";
+        try {
+            Product product = jdbcTemplate.queryForObject(sql, productRowMapper, id);
+            return Optional.of(product);
+        } catch (EmptyResultDataAccessException e) {
+            return Optional.empty();
+        }
+    }
+
+    @Override
+    public void edit(Long id, ProductEditRequest productEditRequest) {
+        String sql = "update products set name=?, image=?, price=? where id=?";
+        jdbcTemplate.update(sql,
+                productEditRequest.getName(),
+                productEditRequest.getImage(),
+                productEditRequest.getPrice(), id);
+    }
 }

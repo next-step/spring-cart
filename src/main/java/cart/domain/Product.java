@@ -25,4 +25,5 @@ public class Product {
     public static Product of(String name, String image, int price) {
         return new Product(name, image, price);
     }
+
 }
