@@ -10,6 +10,7 @@ import cart.web.cart.dto.CartAddRequestDto;
 import cart.web.cart.dto.CartResponseDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
@@ -17,6 +18,7 @@ import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
 @RequiredArgsConstructor
+@Transactional(readOnly = true)
 @Service
 public class CartService {
 
@@ -34,6 +36,7 @@ public class CartService {
                 .collect(Collectors.toList());
     }
 
+    @Transactional
     public Long add(User user, CartAddRequestDto requestDto) {
         Optional<Product> product = productDao.findById(requestDto.getProductId());
         if (product.isEmpty()) {
@@ -47,6 +50,7 @@ public class CartService {
         return cartDao.insert(cart).getId();
     }
 
+    @Transactional
     public Long remove(User user, Long cartId) {
         Cart cart = cartDao.findById(cartId)
                 .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 장바구니 아이템입니다."));
@@ -54,7 +58,7 @@ public class CartService {
         if (checkAuthority(user, cart)) {
             throw new AccessDeniedException("권한이 없는 장바구니 아이템입니다.");
         }
-        
+
         return cartDao.delete(cartId);
     }
 

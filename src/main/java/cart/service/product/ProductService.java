@@ -9,11 +9,13 @@ import cart.web.product.dto.ProductSaveRequestDto;
 import cart.web.product.dto.ProductUpdateRequestDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
+@Transactional(readOnly = true)
 @Service
 public class ProductService {
 
@@ -26,10 +28,12 @@ public class ProductService {
                 .collect(Collectors.toList());
     }
 
+    @Transactional
     public Long save(ProductSaveRequestDto requestDto) {
         return productDao.insert(requestDto.toEntity()).getId();
     }
 
+    @Transactional
     public Long update(Long id, ProductUpdateRequestDto requestDto) {
         Product product = productDao.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("해당 상품이 존재하지 않습니다. id = " + id));
@@ -38,6 +42,7 @@ public class ProductService {
         return productDao.update(product);
     }
 
+    @Transactional
     public Long delete(Long id) {
         Product product = productDao.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("해당 상품이 존재하지 않습니다. id = " + id));
