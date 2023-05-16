@@ -1,13 +1,15 @@
-package cart.user.domain;
+package cart.user.dto.response;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 @Getter
-@NoArgsConstructor
+@Setter
 @AllArgsConstructor
-public class User {
+@NoArgsConstructor
+public class MemberResponse {
     private String email;
     private String password;
 }
