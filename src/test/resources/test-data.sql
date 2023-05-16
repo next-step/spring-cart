@@ -1,3 +1,7 @@
+drop table if exists CART_ITEM;
+drop table if exists PRODUCT;
+drop table if exists MEMBER;
+
 create table PRODUCT
 (
     id         int auto_increment primary key,
