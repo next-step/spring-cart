@@ -3,7 +3,7 @@ package cart.application.dto;
 import lombok.Getter;
 
 @Getter
-public class CreateProductRequest {
+public class ProductRequest {
   private String name;
   private int price;
   private String imageUrl;
