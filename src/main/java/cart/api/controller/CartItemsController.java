@@ -6,7 +6,6 @@ import cart.domain.entity.Product;
 import cart.domain.repository.ProductRepository;
 import cart.domain.service.AuthService;
 import cart.domain.service.CartItemService;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -26,7 +25,7 @@ public class CartItemsController {
     }
     
     @GetMapping
-    public List<Product> getCartProducts(Model model, @RequestHeader String authorization) {
+    public List<Product> getCartProducts(@RequestHeader String authorization) {
         Member member = authService.validateAndLogin(authorization);
         return cartItemService.getAllByMember(member.getId())
                 .stream()
@@ -36,13 +35,13 @@ public class CartItemsController {
     }
 
     @PostMapping("{productId}")
-    public void addCart(Model model, @RequestHeader String authorization, @PathVariable Long productId) {
+    public void addCart(@RequestHeader String authorization, @PathVariable Long productId) {
         Member member = authService.validateAndLogin(authorization);
         cartItemService.add(new CartItem(member.getId(), productId));
     }
 
     @DeleteMapping("{productId}")
-    public void remove(Model model, @RequestHeader String authorization, @PathVariable Long productId) {
+    public void remove(@RequestHeader String authorization, @PathVariable Long productId) {
         Member member = authService.validateAndLogin(authorization);
         cartItemService.delete(new CartItem(member.getId(), productId));
     }

@@ -41,6 +41,12 @@ public class JdbcProductRepository implements ProductRepository {
     }
 
     @Override
+    public void deleteAll() {
+        String sql = "DELETE FROM products";
+        jdbcTemplate.update(sql);
+    }
+
+    @Override
     public void update(Long id, Product product) {
         if (findById(id) == null) {
             throw new NoSuchElementException("해당 상품이 존재하지 않습니다.");

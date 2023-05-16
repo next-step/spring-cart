@@ -8,6 +8,5 @@ public interface CartItemRepository {
     void insert(CartItem cartItem);
     void delete(CartItem cartItem);
     Collection<CartItem> findAllByMemberId(Long memberId);
-
     CartItem findByCartItem(CartItem cartItem);
 }

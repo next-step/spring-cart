@@ -40,4 +40,8 @@ public class InMemoryProductRepository implements ProductRepository {
     public Collection<Product> findAll() {
         return productMap.values();
     }
+
+    @Override
+    public void deleteAll() {
+    }
 }

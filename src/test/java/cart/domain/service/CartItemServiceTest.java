@@ -2,9 +2,7 @@ package cart.domain.service;
 
 import cart.domain.entity.CartItem;
 import cart.domain.repository.CartItemRepository;
-import cart.domain.repository.ProductRepository;
 import cart.testdouble.InMemoryCartItemRepository;
-import cart.testdouble.InMemoryProductRepository;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -17,8 +15,7 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 class CartItemServiceTest {
 
     private CartItemRepository cartItemRepository = new InMemoryCartItemRepository();
-    private ProductRepository productRepository = new InMemoryProductRepository();
-    private CartItemService cartItemService = new CartItemService(cartItemRepository, productRepository);
+    private CartItemService cartItemService = new CartItemService(cartItemRepository);
 
     @Test
     void getAllByMember() {
