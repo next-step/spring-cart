@@ -1,6 +1,7 @@
 package cart.infra.auth;
 
 import cart.api.dto.AuthInfo;
+import cart.domain.exception.AuthorizationException;
 import org.apache.tomcat.util.codec.binary.Base64;
 import org.springframework.stereotype.Service;
 
@@ -12,7 +13,7 @@ public class BasicAuthorizationExtractor implements AuthorizationExtractor<AuthI
     @Override
     public AuthInfo extract(String authorization) {
         if (authorization == null) {
-            return null;
+            throw new AuthorizationException("인증 정보가 없습니다.");
         }
 
         if (authorization.toLowerCase().startsWith(BASIC_TYPE.toLowerCase())) {
@@ -26,6 +27,6 @@ public class BasicAuthorizationExtractor implements AuthorizationExtractor<AuthI
 
             return new AuthInfo(email, password);
         }
-        return null;
+        throw new AuthorizationException("인증 정보가 올바르지 않습니다.");
     }
 }
