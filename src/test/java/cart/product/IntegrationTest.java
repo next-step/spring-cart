@@ -1,33 +1,26 @@
 package cart.product;
 
+import cart.cart.web.dto.CreateCart;
 import cart.product.domain.entity.Product;
 import cart.product.domain.repository.ProductRepository;
-import cart.product.persistence.ProductRowMapper;
 import cart.product.web.dto.CreateProduct;
 import cart.product.web.dto.DeleteProduct;
 import cart.product.web.dto.UpdateProduct;
 import io.restassured.RestAssured;
 import io.restassured.http.ContentType;
-import io.restassured.path.json.JsonPath;
 import io.restassured.response.ExtractableResponse;
 import io.restassured.response.Response;
 import org.assertj.core.api.Assertions;
-import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.server.LocalServerPort;
-import org.springframework.core.io.ResourceLoader;
-import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.test.context.jdbc.Sql;
 import org.springframework.test.context.jdbc.SqlConfig;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.List;
-
-import static org.assertj.core.api.Assertions.*;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.is;
 import static org.junit.jupiter.api.Assertions.assertAll;
@@ -36,7 +29,7 @@ import static org.junit.jupiter.api.Assertions.assertAll;
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @Sql(value = {"/truncate.sql", "/data.sql"},
         config = @SqlConfig(transactionMode = SqlConfig.TransactionMode.ISOLATED))
-public class ProductIntegrationTest {
+public class IntegrationTest {
     @LocalServerPort
     int port;
 
@@ -62,7 +55,7 @@ public class ProductIntegrationTest {
                 .contentType(ContentType.JSON)
                 .body(param)
                 .when()
-                .post("/product")
+                .post("/products")
                 .then()
                 .statusCode(200)
                 .extract();
@@ -89,7 +82,7 @@ public class ProductIntegrationTest {
                 .given().log().all()
                 .pathParam("id", id)
                 .when()
-                .get("/product/{id}")
+                .get("/products/{id}")
                 .then().log().all()
                 .statusCode(200)
                 .body("id", response -> equalTo(1)) // equalTo
@@ -105,7 +98,7 @@ public class ProductIntegrationTest {
         RestAssured
                 .given().log().all()
                 .when()
-                .get("/product")
+                .get("/products")
                 .then()
                 .statusCode(200)
                 .body("size()", is(3))
@@ -134,7 +127,7 @@ public class ProductIntegrationTest {
                 .body(request)
                 .contentType(ContentType.JSON)
                 .when()
-                .post("/product/{id}")
+                .put("/products/{id}")
                 .then()
                 .statusCode(200);
     }
@@ -142,14 +135,98 @@ public class ProductIntegrationTest {
     @Test
     @DisplayName("id 2번 상품을 삭제한다")
     void id_2번_상품을_삭제한다() {
-        DeleteProduct.Request request = new DeleteProduct.Request(2L);
+        Long id = 2L;
+
+        RestAssured
+                .given().log().all()
+                .pathParam("id", id)
+                .when()
+                .delete("/products/{id}")
+                .then().log().all()
+                .statusCode(204);
+    }
+
+    @Test
+    @DisplayName("모든 회원을 조회한다")
+    void getAllMember() {
+        RestAssured
+                .given().log().all()
+                .when()
+                .get("/members")
+                .then().log().all()
+                .statusCode(200)
+                .body("size()", is(2))
+                .body("[0].id", is(1))
+                .body("[0].email", is("a@a.com"))
+                .body("[0].password", is("password1"))
+                .body("[1].id", is(2))
+                .body("[1].email", is("b@b.com"))
+                .body("[1].password", is("password2"));
+    }
+
+    @Test
+    @DisplayName("회원에 해당하는 장바구니를 조회한다")
+    void getCartsByMember() {
+        Long memberId = 1L;
+
+        RestAssured
+                .given().log().all()
+                .queryParam("memberId", memberId)
+                .when()
+                .get("/carts")
+                .then().log().all()
+                .statusCode(200)
+                .body("memberId", is(1))
+                .body("carts[0].id", is(1))
+                .body("carts[1].id", is(2));
+    }
+
+    @Test
+    @DisplayName("장바구니에 새 물품을 추가한다")
+    void addNewItemInCart() {
+        Long memberId = 1L;
+        Long productId = 3L;
+        CreateCart.Request request = CreateCart.Request.of(memberId, productId);
 
         RestAssured
                 .given().log().all()
                 .body(request)
                 .contentType(ContentType.JSON)
                 .when()
-                .post("/product/delete")
+                .post("/carts")
+                .then().log().all()
+                .statusCode(200)
+                .body("cartId", is(3));
+    }
+
+    @Test
+    @DisplayName("장바구니에 존재하는 물픔을 추가한다")
+    void addExistItemInCart() {
+        Long memberId = 1L;
+        Long productId = 1L;
+        CreateCart.Request request = CreateCart.Request.of(memberId, productId);
+
+        RestAssured
+                .given().log().all()
+                .body(request)
+                .contentType(ContentType.JSON)
+                .when()
+                .post("/carts")
+                .then().log().all()
+                .statusCode(200)
+                .body("cartId", is(1));
+    }
+
+    @Test
+    @DisplayName("장바구니의 물품을 삭제합니다")
+    void deleteItemInCart() {
+        Long cartId = 1L;
+
+        RestAssured
+                .given().log().all()
+                .pathParam("cartId", cartId)
+                .when()
+                .delete("/carts/{cartId}")
                 .then().log().all()
                 .statusCode(204);
     }

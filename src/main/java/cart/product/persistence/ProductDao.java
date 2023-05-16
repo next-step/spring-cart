@@ -2,6 +2,7 @@ package cart.product.persistence;
 
 import cart.product.domain.entity.Product;
 import cart.product.domain.repository.ProductRepository;
+import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.jdbc.core.namedparam.SqlParameterSource;
@@ -30,7 +31,6 @@ public class ProductDao implements ProductRepository {
     @Override
     public Product insert(Product product) {
         Map<String, Object> parameters = new HashMap<>();
-        parameters.put("id", product.getId());
         parameters.put("name", product.getName());
         parameters.put("price", product.getPrice());
         parameters.put("image", product.getImage());
@@ -44,11 +44,15 @@ public class ProductDao implements ProductRepository {
     @Override
     public Product findById(Long id) {
         SqlParameterSource parameters = new MapSqlParameterSource("id", id);
-        return namedParameterJdbcTemplate.queryForObject(
-                "select * from product where id = :id",
-                parameters,
-                new ProductRowMapper()
-        );
+        try {
+            return namedParameterJdbcTemplate.queryForObject(
+                    "select * from product where id = :id",
+                    parameters,
+                    new ProductRowMapper()
+            );
+        } catch (DataAccessException e) {
+            throw new IllegalArgumentException("해당 id의 상품이 존재하지 않습니다.");
+        }
     }
 
     @Override

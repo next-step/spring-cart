@@ -3,6 +3,9 @@ package cart.product.domain.service;
 import cart.product.domain.dto.ProductDto;
 import cart.product.domain.entity.Product;
 import cart.product.domain.repository.ProductRepository;
+import cart.product.domain.vo.ImagePath;
+import cart.product.domain.vo.Price;
+import cart.product.domain.vo.ProductName;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -18,9 +21,9 @@ public class ProductService {
     @Transactional
     public ProductDto createProduct(String productName, int price, String imagePath) {
         return ProductDto.fromEntity(productRepository.insert(Product.builder()
-                .name(productName)
-                .price(price)
-                .image(imagePath)
+                .name(new ProductName(productName))
+                .price(new Price(price))
+                .image(new ImagePath(imagePath))
                 .build()));
     }
 
@@ -39,9 +42,9 @@ public class ProductService {
         return ProductDto.fromEntity(
                 productRepository.updateProduct(id,
                         Product.builder()
-                                .name(productDto.getName())
-                                .price(productDto.getPrice())
-                                .image(productDto.getImage())
+                                .name(new ProductName(productDto.getName()))
+                                .price(new Price(productDto.getPrice()))
+                                .image(new ImagePath(productDto.getImage()))
                                 .build()));
     }
 

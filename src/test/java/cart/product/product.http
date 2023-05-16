@@ -11,3 +11,6 @@ Content-Type: application/json
   "price" : 1000,
   "imagePath" : "/images/water"
 }
+
+### DELETE deleteCart
+DELETE http://localhost:8080/carts/1
