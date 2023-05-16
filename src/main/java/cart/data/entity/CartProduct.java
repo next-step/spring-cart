@@ -11,13 +11,12 @@ public class CartProduct {
     private String productName;
     private int productPrice;
     private String productImageUrl;
-    private LocalDateTime createdAt;
+    private LocalDateTime createdAt = LocalDateTime.now();
 
     public CartProduct(Product product) {
         this.productName = product.getName();
         this.productPrice = product.getPrice();
         this.productImageUrl = product.getImageUrl();
-        this.createdAt = LocalDateTime.now();
     }
 
     public CartProduct(Long productId, String productName, int productPrice, String productImageUrl) {

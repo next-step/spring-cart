@@ -17,12 +17,12 @@ public class MemberJdbcRepository implements MemberRepository {
 
     public MemberJdbcRepository(DataSource dataSource) {
         this.simpleJdbcInsert = new SimpleJdbcInsert(dataSource)
-                .withTableName("CART_MEMBER");
+                .withTableName("MEMBER");
     }
 
     @Override
     public List<CartMember> getMembers() {
-        String sql = "select * from CART_MEMBER";
+        String sql = "select * from MEMBER";
         JdbcTemplate jdbcTemplate = simpleJdbcInsert.getJdbcTemplate();
 
         return jdbcTemplate.query(sql, carMemberRowMapper());
@@ -31,9 +31,7 @@ public class MemberJdbcRepository implements MemberRepository {
     @Override
     public Optional<CartMember> getMember(String email, String password) {
         JdbcTemplate jdbcTemplate = simpleJdbcInsert.getJdbcTemplate();
-        String sql = "select * " +
-                "from CART_MEMBER " +
-                "where member_email = ? and member_password = ?";
+        String sql = "select * from MEMBER where email = ? and password = ?";
         CartMember cartMember;
         try {
             cartMember = jdbcTemplate.queryForObject(sql, carMemberRowMapper(), email, password);
@@ -45,9 +43,9 @@ public class MemberJdbcRepository implements MemberRepository {
 
     private RowMapper<CartMember> carMemberRowMapper() {
         return (rs, rowNum) -> {
-            long memberId = rs.getLong("member_id");
-            String memberEmail = rs.getString("member_email");
-            String memberPassword = rs.getString("member_password");
+            long memberId = rs.getLong("id");
+            String memberEmail = rs.getString("email");
+            String memberPassword = rs.getString("password");
             return new CartMember(memberId, memberEmail, memberPassword);
         };
     }

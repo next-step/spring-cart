@@ -34,16 +34,16 @@ public class ItemJdbcRepository implements ItemRepository {
     public List<ViewCartItem> getCartItems(Long memberId) {
         JdbcTemplate jdbcTemplate = simpleJdbcInsert.getJdbcTemplate();
 
-        String sql = "select b.item_id as id, \n" +
-                "       p.product_image_url as imageUrl, \n" +
-                "       p.product_name as name, \n" +
-                "       p.product_price as price\n" +
-                "from CART_ITEM b \n" +
-                "inner join CART_MEMBER m \n" +
-                "on b.member_id = m.member_id \n" +
-                "inner join CART_PRODUCT p \n" +
-                "on b.product_id = p.product_id \n" +
-                "where b.member_id = ?";
+        String sql = "select i.id as id, \n" +
+                "       p.image_url as imageUrl, \n" +
+                "       p.name as name, \n" +
+                "       p.price as price\n" +
+                "from CART_ITEM i \n" +
+                "inner join MEMBER m \n" +
+                "on i.member_id = m.id \n" +
+                "inner join PRODUCT p \n" +
+                "on i.product_id = p.id \n" +
+                "where i.member_id = ?";
 
         return jdbcTemplate.query(sql, (rs, rowNum) -> {
             long id = rs.getLong("id");
@@ -55,12 +55,9 @@ public class ItemJdbcRepository implements ItemRepository {
     }
 
     @Override
-    public void removeFromCart(Long id) {
+    public int removeFromCart(Long id) {
         JdbcTemplate jdbcTemplate = simpleJdbcInsert.getJdbcTemplate();
-        String sql = "delete from CART_ITEM where item_id = ?";
-        int updateCount = jdbcTemplate.update(sql, id);
-        if (updateCount != 1) {
-            throw new RuntimeException(id + "에 해당하는 장바구니 아이탬을 삭제하는데 오류가 발생하였습니다.");
-        }
+        String sql = "delete from CART_ITEM where id = ?";
+        return jdbcTemplate.update(sql, id);
     }
 }

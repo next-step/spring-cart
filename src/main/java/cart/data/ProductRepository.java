@@ -15,5 +15,5 @@ public interface ProductRepository {
 
     void updateProduct(CartProduct cartProduct);
 
-    void removeProduct(long id);
+    int removeProduct(long id);
 }

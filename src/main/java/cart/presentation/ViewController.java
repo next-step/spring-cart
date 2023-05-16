@@ -12,24 +12,24 @@ import java.util.List;
 @Controller
 public class ViewController {
 
-    private final ProductService adminService;
+    private final ProductService productService;
     private final MemberService memberService;
 
-    public ViewController(ProductService adminService, MemberService memberService) {
-        this.adminService = adminService;
+    public ViewController(ProductService productService, MemberService memberService) {
+        this.productService = productService;
         this.memberService = memberService;
     }
 
     @GetMapping("/")
     public String mainController(Model model) {
-        List<ViewProduct> viewProducts = adminService.getProducts();
+        List<ViewProduct> viewProducts = productService.getProducts();
         model.addAttribute("products", viewProducts);
         return "index";
     }
 
     @GetMapping("/admin")
     public String adminPage(Model model) {
-        List<ViewProduct> viewProducts = adminService.getProducts();
+        List<ViewProduct> viewProducts = productService.getProducts();
         model.addAttribute("products", viewProducts);
         return "admin";
     }

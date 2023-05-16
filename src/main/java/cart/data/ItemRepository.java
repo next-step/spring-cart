@@ -11,5 +11,5 @@ public interface ItemRepository {
 
     List<ViewCartItem> getCartItems(Long memberId);
 
-    void removeFromCart(Long id);
+    int removeFromCart(Long id);
 }
