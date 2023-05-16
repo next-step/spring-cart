@@ -2,6 +2,8 @@ package cart.acceptance;
 
 import cart.controller.dto.ProductEditRequest;
 import cart.controller.dto.ProductRequest;
+import cart.controller.dto.ProductResponse;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -41,7 +43,16 @@ class ProductAcceptanceTest {
 
         var response = 상품_생성_요청(createRequest);
 
-        assertThat(response.statusCode()).isEqualTo(HttpStatus.OK.value());
+        var id = response.jsonPath().getLong("id");
+        var productResponse = 상품_조회_단건_요청(id).as(ProductResponse.class);
+
+        Assertions.assertAll(
+                () -> assertThat(response.statusCode()).isEqualTo(HttpStatus.OK.value()),
+                () -> assertThat(productResponse.getName()).isEqualTo(createRequest.getName()),
+                () -> assertThat(productResponse.getImage()).isEqualTo(createRequest.getImage()),
+                () -> assertThat(productResponse.getPrice()).isEqualTo(createRequest.getPrice())
+        );
+
     }
 
     @Test
@@ -52,11 +63,12 @@ class ProductAcceptanceTest {
 
         var response = 상품_수정_요청(id, editRequest);
 
+        var productResponse = 상품_조회_단건_요청(id).as(ProductResponse.class);
         assertAll(
                 () -> assertThat(response.statusCode()).isEqualTo(HttpStatus.OK.value()),
-                () -> assertThat(상품_조회_단건_요청(id).jsonPath().getString("name")).isEqualTo(editRequest.getName()),
-                () -> assertThat(상품_조회_단건_요청(id).jsonPath().getString("image")).isEqualTo(editRequest.getImage()),
-                () -> assertThat(상품_조회_단건_요청(id).jsonPath().getInt("price")).isEqualTo(editRequest.getPrice())
+                () -> assertThat(productResponse.getName()).isEqualTo(editRequest.getName()),
+                () -> assertThat(productResponse.getImage()).isEqualTo(editRequest.getImage()),
+                () -> assertThat(productResponse.getPrice()).isEqualTo(editRequest.getPrice())
                 );
     }
 

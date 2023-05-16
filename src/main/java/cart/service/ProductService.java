@@ -6,20 +6,16 @@ import cart.controller.dto.ProductResponse;
 import cart.domain.Product;
 import cart.exception.JwpCartApplicationException;
 import cart.repository.ProductRepository;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-
 import java.util.List;
-
 import static cart.exception.ErrorCode.PRODUCT_NOT_FOUND;
 
 @Service
+@RequiredArgsConstructor
 public class ProductService {
 
     private final ProductRepository productRepository;
-
-    public ProductService(ProductRepository productRepository) {
-        this.productRepository = productRepository;
-    }
 
     public List<Product> findAll() {
         return productRepository.findAll();

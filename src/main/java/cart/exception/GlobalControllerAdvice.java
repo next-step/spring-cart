@@ -24,4 +24,11 @@ public class GlobalControllerAdvice {
         return ResponseEntity.status(e.getErrorCode().getStatus().value())
                 .body(errorResponse);
     }
+
+    @ExceptionHandler(Exception.class)
+    public ResponseEntity<?> applicationHandler(Exception e) {
+        log.error("Error occurs {}", e.toString());
+        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                .body(ErrorCode.INTERNAL_SERVER_ERROR.getMessage());
+    }
 }

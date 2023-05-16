@@ -16,4 +16,8 @@ public interface ProductRepository {
     void edit(Long id, ProductEditRequest productEditRequest);
 
     void delete(Long id);
+
+    void deleteAll();
+
+    int count();
 }

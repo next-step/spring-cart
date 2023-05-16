@@ -70,4 +70,14 @@ public class JdbcProductRepository implements ProductRepository{
         String sql = "delete from products where id=?";
         jdbcTemplate.update(sql, id);
     }
+
+    @Override
+    public void deleteAll() {
+        jdbcTemplate.update("delete from products");
+    }
+
+    @Override
+    public int count() {
+        return jdbcTemplate.queryForObject("select count(*) from products", Integer.class);
+    }
 }
