@@ -56,4 +56,16 @@ public class ProductRepository {
           return preparedStatement;
         });
   }
+
+  public void deleteById(Long id) {
+    String query = "DELETE FROM PRODUCt WHERE ID = ?";
+
+    jdbcTemplate.update(
+        connection -> {
+          PreparedStatement preparedStatement = connection.prepareStatement(query);
+          preparedStatement.setLong(1, id);
+
+          return preparedStatement;
+        });
+  }
 }

@@ -45,4 +45,8 @@ public class ProductService {
 
     return FindProductResponse.builder().id(id).name(name).price(price).imageUrl(imageUrl).build();
   }
+
+  public void removeProduct(Long id) {
+    this.productRepository.deleteById(id);
+  }
 }

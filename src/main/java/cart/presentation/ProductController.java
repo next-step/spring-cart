@@ -43,4 +43,10 @@ public class ProductController {
     FindProductResponse response = this.productService.modifyProduct(id, request);
     return ResponseEntity.ok(response);
   }
+
+  @DeleteMapping("/products/{id}")
+  public ResponseEntity removeProduct(@PathVariable("id") Long id) {
+    this.productService.removeProduct(id);
+    return ResponseEntity.ok().build();
+  }
 }
