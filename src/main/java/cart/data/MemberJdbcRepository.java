@@ -14,6 +14,12 @@ import java.util.Optional;
 public class MemberJdbcRepository implements MemberRepository {
 
     private SimpleJdbcInsert simpleJdbcInsert;
+    private final RowMapper<CartMember> carMemberRowMapper = (rs, rowNum) -> {
+        long memberId = rs.getLong("id");
+        String memberEmail = rs.getString("email");
+        String memberPassword = rs.getString("password");
+        return new CartMember(memberId, memberEmail, memberPassword);
+    };
 
     public MemberJdbcRepository(DataSource dataSource) {
         this.simpleJdbcInsert = new SimpleJdbcInsert(dataSource)
@@ -24,29 +30,18 @@ public class MemberJdbcRepository implements MemberRepository {
     public List<CartMember> getMembers() {
         String sql = "select * from MEMBER";
         JdbcTemplate jdbcTemplate = simpleJdbcInsert.getJdbcTemplate();
-
-        return jdbcTemplate.query(sql, carMemberRowMapper());
+        return jdbcTemplate.query(sql, this.carMemberRowMapper);
     }
 
     @Override
     public Optional<CartMember> getMember(String email, String password) {
         JdbcTemplate jdbcTemplate = simpleJdbcInsert.getJdbcTemplate();
         String sql = "select * from MEMBER where email = ? and password = ?";
-        CartMember cartMember;
         try {
-            cartMember = jdbcTemplate.queryForObject(sql, carMemberRowMapper(), email, password);
+            return Optional.ofNullable(
+                    jdbcTemplate.queryForObject(sql, this.carMemberRowMapper, email, password));
         } catch (Exception e) {
             return Optional.empty();
-        };
-        return Optional.ofNullable(cartMember);
-    }
-
-    private RowMapper<CartMember> carMemberRowMapper() {
-        return (rs, rowNum) -> {
-            long memberId = rs.getLong("id");
-            String memberEmail = rs.getString("email");
-            String memberPassword = rs.getString("password");
-            return new CartMember(memberId, memberEmail, memberPassword);
-        };
+        }
     }
 }

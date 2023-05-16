@@ -18,7 +18,8 @@ public class ItemJdbcRepository implements ItemRepository {
 
     public ItemJdbcRepository(DataSource dataSource) {
         this.simpleJdbcInsert = new SimpleJdbcInsert(dataSource)
-                .withTableName("CART_ITEM");
+                .withTableName("CART_ITEM")
+                .usingGeneratedKeyColumns("id");
     }
 
     @Override

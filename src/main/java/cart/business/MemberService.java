@@ -17,7 +17,9 @@ public class MemberService {
     }
 
     public List<ViewMember> getMembers() {
-         return memberRepository.getMembers().stream().map(ViewMember::new)
+        return memberRepository.getMembers()
+                .stream()
+                .map(ViewMember::new)
                 .collect(Collectors.toList());
     }
 }
