@@ -10,6 +10,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -50,12 +51,14 @@ class ProductRepositoryTest {
     jdbcTemplate.batchUpdate("INSERT INTO product (NAME, IMAGE, PRICE) VALUES (?,?,?)", products);
   }
 
+  @DisplayName("전체 상품을 조회한다.")
   @Test
   void getAll() {
     List<Product> products = repository.getAll();
     assertThat(products).hasSize(3);
   }
 
+  @DisplayName("상품의 정보를 수정한다.")
   @Test
   void update() {
     Product product = new Product(1L, "coffee", "test.jpg", new BigDecimal("10000"));
@@ -65,6 +68,7 @@ class ProductRepositoryTest {
     assertThat(product.getName()).isEqualTo(updatedProduct.getName());
   }
 
+  @DisplayName("상품의 id로 상품을 조회한다.")
   @Test
   void findById() {
     Product product = repository.findById(1L);
@@ -72,6 +76,7 @@ class ProductRepositoryTest {
     assertThat(product.getName()).isEqualTo("치킨");
   }
 
+  @DisplayName("상품의 id로 상품을 삭제한다.")
   @Test
   void deleteById() {
     repository.deleteById(1L);
@@ -80,6 +85,7 @@ class ProductRepositoryTest {
     assertThat(products).hasSize(2);
   }
 
+  @DisplayName("상품을 등록한다.")
   @Test
   void save() {
     ProductCreateDto createDto = new ProductCreateDto("kimbab", "kimbab.jpg", new BigDecimal(1000));

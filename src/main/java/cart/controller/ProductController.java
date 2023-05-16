@@ -29,8 +29,10 @@ public class ProductController {
     return ResponseEntity.ok(products);
   }
 
-  @PutMapping(value = "/products")
-  public void updateProduct(@RequestBody ProductUpdateDto updateDto) {
+  @PutMapping(value = "/products/{id}")
+  public void updateProduct(@PathVariable Long id,
+      @RequestBody ProductUpdateDto updateDto) {
+    productService.findById(id);
     productService.updateProduct(updateDto);
   }
 
@@ -40,7 +42,7 @@ public class ProductController {
   }
 
   @PostMapping("/products")
-  public void addProduct(@RequestBody ProductCreateDto createDto){
+  public void addProduct(@RequestBody ProductCreateDto createDto) {
     productService.addProduct(createDto);
   }
 }

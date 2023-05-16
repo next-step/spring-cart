@@ -2,25 +2,22 @@ package cart.dto;
 
 import cart.domain.Product;
 import java.math.BigDecimal;
-import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 import lombok.NonNull;
 
 @Getter
-@NoArgsConstructor(access = AccessLevel.PROTECTED, force = true)
 @AllArgsConstructor
 @Builder
 public class ProductCreateDto {
 
   @NonNull
-  String name;
+  private String name;
   @NonNull
-  String image;
+  private String image;
   @NonNull
-  BigDecimal price;
+  private BigDecimal price;
 
   public Product toEntity() {
     return Product.builder()

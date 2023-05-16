@@ -1,7 +1,6 @@
 package cart.repository;
 
 import cart.domain.Product;
-import cart.dto.ProductUpdateDto;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -10,8 +9,6 @@ import org.springframework.stereotype.Repository;
 @RequiredArgsConstructor
 @Repository
 public class ProductRepository {
-
-  private static Long sequence = 1L;
 
   private final JdbcTemplate jdbcTemplate;
 
@@ -50,6 +47,6 @@ public class ProductRepository {
 
   public void save(Product entity) {
     String sql = "INSERT INTO product (name, image, price) VALUES (?, ?, ?)";
-    jdbcTemplate.update(sql,entity.getName(), entity.getImage(), entity.getPrice());
+    jdbcTemplate.update(sql, entity.getName(), entity.getImage(), entity.getPrice());
   }
 }
