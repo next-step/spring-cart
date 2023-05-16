@@ -1,7 +1,7 @@
 package cart.application;
 
-import cart.application.dto.CreateProductRequest;
 import cart.application.dto.FindProductResponse;
+import cart.application.dto.ProductRequest;
 import cart.domain.Product;
 import cart.repository.ProductRepository;
 import lombok.RequiredArgsConstructor;
@@ -16,7 +16,7 @@ public class ProductService {
 
   private final ProductRepository productRepository;
 
-  public Long register(CreateProductRequest request) {
+  public Long register(ProductRequest request) {
     return this.productRepository.save(
         request.getName(), request.getPrice(), request.getImageUrl());
   }
@@ -34,5 +34,15 @@ public class ProductService {
                     .imageUrl(product.getImageUrl())
                     .build())
         .collect(Collectors.toList());
+  }
+
+  public FindProductResponse modifyProduct(Long id, ProductRequest request) {
+    String name = request.getName();
+    int price = request.getPrice();
+    String imageUrl = request.getImageUrl();
+
+    this.productRepository.update(id, name, price, imageUrl);
+
+    return FindProductResponse.builder().id(id).name(name).price(price).imageUrl(imageUrl).build();
   }
 }
