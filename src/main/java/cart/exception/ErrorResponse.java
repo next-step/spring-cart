@@ -1,13 +1,13 @@
 package cart.exception;
 
 public class ErrorResponse {
-	private final String errorCode;
+	private final int errorStatus;
 
-	private final String message;
+	private final String errorMessage;
 
-	public ErrorResponse(String errorCode, String message) {
-		this.errorCode = errorCode;
-		this.message = message;
+	public ErrorResponse(int errorStatus, String errorMessage) {
+		this.errorStatus = errorStatus;
+		this.errorMessage = errorMessage;
 	}
 
 }
