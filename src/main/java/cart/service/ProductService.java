@@ -4,10 +4,10 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import cart.domain.Product;
-import cart.dto.ProductRequestDto;
-import cart.dto.ProductResponseDto;
-import cart.dto.ProductUpdateRequest;
-import cart.dto.ProductsResponseDto;
+import cart.dto.product.ProductCreateRequestDto;
+import cart.dto.product.ProductResponseDto;
+import cart.dto.product.ProductUpdateRequest;
+import cart.dto.product.ProductsResponseDto;
 import cart.exception.ErrorType;
 import cart.exception.ServiceException;
 import cart.repository.ProductRepository;

@@ -10,10 +10,10 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import cart.dto.ProductRequestDto;
-import cart.dto.ProductResponseDto;
-import cart.dto.ProductUpdateRequest;
-import cart.dto.ProductsResponseDto;
+import cart.dto.product.ProductCreateRequestDto;
+import cart.dto.product.ProductResponseDto;
+import cart.dto.product.ProductUpdateRequest;
+import cart.dto.product.ProductsResponseDto;
 import cart.service.ProductService;
 
 @RestController
