@@ -39,7 +39,7 @@ public class JdbcProductRepository implements ProductRepository {
 	public Product save(Product product) {
 		BeanPropertySqlParameterSource parameterSource = new BeanPropertySqlParameterSource(product);
 		Number key = jdbcInsert.executeAndReturnKey(parameterSource);
-		product.setId(key.longValue());
+		product.updateId(key.longValue());
 		return product;
 	}
 
