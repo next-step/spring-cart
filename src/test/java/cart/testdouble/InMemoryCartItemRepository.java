@@ -3,7 +3,10 @@ package cart.testdouble;
 import cart.domain.entity.CartItem;
 import cart.domain.repository.CartItemRepository;
 
-import java.util.*;
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 public class InMemoryCartItemRepository implements CartItemRepository {
@@ -17,7 +20,7 @@ public class InMemoryCartItemRepository implements CartItemRepository {
 
     @Override
     public void delete(CartItem cartItem) {
-        cartItemMap.remove(findByCartItem(cartItem).getId());
+        cartItemMap.remove(findByCartItem(cartItem).orElseThrow().getId());
     }
 
     @Override
@@ -29,14 +32,10 @@ public class InMemoryCartItemRepository implements CartItemRepository {
     }
 
     @Override
-    public CartItem findByCartItem(CartItem cartItem) {
-        List<CartItem> target = cartItemMap.values()
+    public Optional<CartItem> findByCartItem(CartItem cartItem) {
+        return cartItemMap.values()
                 .stream()
                 .filter(item -> cartItem.getMemberId().equals(item.getMemberId()) && cartItem.getProductId().equals(item.getProductId()))
-                .collect(Collectors.toList());
-        if (target.isEmpty()) {
-            throw new NoSuchElementException("카트에 해당 상품이 존재하지 않습니다.");
-        }
-        return target.get(0);
+                .findAny();
     }
 }

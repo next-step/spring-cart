@@ -45,7 +45,7 @@ class ProductServiceTest {
 
         productService.update(1L, new Product(1L, "b", 2000, "http://b.com"));
 
-        Product updated = productRepository.findById(1L);
+        Product updated = productRepository.findById(1L).get();
         assertThat(updated.getName()).isEqualTo("b");
         assertThat(updated.getPrice()).isEqualTo(2000);
         assertThat(updated.getImageUrl()).isEqualTo("http://b.com");

@@ -8,6 +8,7 @@ import org.springframework.stereotype.Repository;
 
 import java.util.Collection;
 import java.util.NoSuchElementException;
+import java.util.Optional;
 
 @Repository
 public class JdbcProductRepository implements ProductRepository {
@@ -19,10 +20,10 @@ public class JdbcProductRepository implements ProductRepository {
     }
 
     @Override
-    public Product findById(Long id) {
+    public Optional<Product> findById(Long id) {
         String sql = "SELECT * FROM products WHERE id = ?";
         try {
-            return jdbcTemplate.queryForObject(sql, getRowMapper(), id);
+            return Optional.of(jdbcTemplate.queryForObject(sql, getRowMapper(), id));
         } catch (Exception e) {
             throw new NoSuchElementException("해당 상품을 찾을 수 없습니다.");
         }
@@ -48,18 +49,14 @@ public class JdbcProductRepository implements ProductRepository {
 
     @Override
     public void update(Long id, Product product) {
-        if (findById(id) == null) {
-            throw new NoSuchElementException("해당 상품이 존재하지 않습니다.");
-        }
+        findById(id).orElseThrow(() -> new NoSuchElementException("해당 상품이 존재하지 않습니다."));
         String sql = "UPDATE products SET name = ?, price = ?, image_url = ? WHERE id = ?";
         jdbcTemplate.update(sql, product.getName(), product.getPrice(), product.getImageUrl(), id);
     }
 
     @Override
     public void delete(Long id) {
-        if (findById(id) == null) {
-            throw new NoSuchElementException("해당 상품이 존재하지 않습니다.");
-        }
+        findById(id).orElseThrow(() -> new NoSuchElementException("해당 상품이 존재하지 않습니다."));
         String sql = "DELETE FROM products WHERE id = ?";
         jdbcTemplate.update(sql, id);
     }

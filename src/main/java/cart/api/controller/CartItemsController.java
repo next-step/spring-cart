@@ -9,6 +9,7 @@ import cart.domain.service.CartItemService;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @RestController
@@ -31,6 +32,7 @@ public class CartItemsController {
                 .stream()
                 .map(CartItem::getProductId)
                 .map(productRepository::findById)
+                .map(Optional::orElseThrow)
                 .collect(Collectors.toList());
     }
 

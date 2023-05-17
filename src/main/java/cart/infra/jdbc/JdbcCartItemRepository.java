@@ -8,6 +8,7 @@ import org.springframework.stereotype.Repository;
 
 import java.util.Collection;
 import java.util.NoSuchElementException;
+import java.util.Optional;
 
 @Repository
 public class JdbcCartItemRepository implements CartItemRepository {
@@ -31,10 +32,10 @@ public class JdbcCartItemRepository implements CartItemRepository {
     }
 
     @Override
-    public CartItem findByCartItem(CartItem cartItem) {
+    public Optional<CartItem> findByCartItem(CartItem cartItem) {
         String sql = "SELECT * FROM cart_items WHERE member_id = ? and product_id = ?";
         try {
-            return jdbcTemplate.queryForObject(sql, getRowMapper(), cartItem.getMemberId(), cartItem.getProductId());
+            return Optional.of(jdbcTemplate.queryForObject(sql, getRowMapper(), cartItem.getMemberId(), cartItem.getProductId()));
         } catch (Exception e) {
             throw new NoSuchElementException("카트에서 해당 상품을 찾을 수 없습니다.");
         }
@@ -42,10 +43,7 @@ public class JdbcCartItemRepository implements CartItemRepository {
 
     @Override
     public void delete(CartItem cartItem) {
-        CartItem found = findByCartItem(cartItem);
-        if (found == null) {
-            throw new NoSuchElementException("카트에 해당 상품이 존재하지 않습니다.");
-        }
+        CartItem found = findByCartItem(cartItem).orElseThrow(() -> new NoSuchElementException("카트에 해당 상품이 존재하지 않습니다."));
         String sql = "DELETE FROM cart_items WHERE id = ?";
         jdbcTemplate.update(sql, found.getId());
     }
