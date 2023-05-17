@@ -8,7 +8,8 @@ const addCartItem = (productId) => {
 
     // TODO: [2단계] 장바구니 CRUD API에 맞게 변경
     axios.request({
-        url: '',
+        url: `cart/items/${productId}`,
+        method: 'POST',
         headers: {
             'Authorization': `Basic ${credentials}`
         }
@@ -19,7 +20,7 @@ const addCartItem = (productId) => {
     });
 }
 
-const removeCartItem = (id) => {
+const removeCartItem = (productId) => {
     const credentials = localStorage.getItem('credentials');
     if (!credentials) {
         alert('사용자 정보가 없습니다.');
@@ -29,7 +30,8 @@ const removeCartItem = (id) => {
 
     // TODO: [2단계] 장바구니 CRUD API에 맞게 변경
     axios.request({
-        url: '',
+        url: `cart/items/${productId}`,
+        method: 'DELETE',
         headers: {
             'Authorization': `Basic ${credentials}`
         }

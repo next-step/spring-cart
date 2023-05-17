@@ -13,3 +13,25 @@ values ('치킨', 20000, 'https://i.namu.wiki/i/YVm0x8WHfLBtSyejD01_GTV1ITfWOJ-X
 ('샐러드', 18000, 'https://i.namu.wiki/i/_cLeYQStb5Xf8h6vC4ZtRoGFvsF1-rb9wqUMJ9pS510fYeJCGOnh-CQ0A0n9YNHbZ5Roi4WX3NB5RTPdYmhJyg.webp'),
 ('피자', 30000, 'https://handmadepizza.co.kr/uploadFiles/TB_MENU_MAIN/20230403163710691_93d0900607594ee2bfdbd6da4330fbfb.png');
 
+CREATE TABLE MEMBERS (
+     id          INT         NOT NULL AUTO_INCREMENT,
+     email     VARCHAR(100) NOT NULL,
+     password     VARCHAR(100) NOT NULL,
+     created_at  DATETIME    NOT NULL default current_timestamp,
+     updated_at  DATETIME    NOT NULL default current_timestamp,
+     PRIMARY KEY (id),
+     UNIQUE KEY idx (email, password)
+);
+
+insert into MEMBERS(email, password)
+values ('a@a.com', 'password1'),
+       ('b@b.com', 'password2');
+
+CREATE TABLE CART_ITEMS (
+     id          INT         NOT NULL AUTO_INCREMENT,
+     member_id          INT         NOT NULL,
+     product_id          INT         NOT NULL,
+     PRIMARY KEY (id),
+     FOREIGN KEY (member_id) references MEMBERS(id),
+     FOREIGN KEY (product_id) references PRODUCTS(id)
+);

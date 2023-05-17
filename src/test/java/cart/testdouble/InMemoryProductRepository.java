@@ -3,22 +3,19 @@ package cart.testdouble;
 import cart.domain.entity.Product;
 import cart.domain.repository.ProductRepository;
 
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.NoSuchElementException;
+import java.util.*;
 
 public class InMemoryProductRepository implements ProductRepository {
 
     private Map<Long, Product> productMap = new HashMap<>();
 
     @Override
-    public Product findById(Long id) {
+    public Optional<Product> findById(Long id) {
         Product product = productMap.get(id);
         if (product == null) {
             throw new NoSuchElementException("해당 상품을 찾을 수 없습니다.");
         }
-        return product;
+        return Optional.of(product);
     }
 
     @Override
@@ -39,5 +36,9 @@ public class InMemoryProductRepository implements ProductRepository {
     @Override
     public Collection<Product> findAll() {
         return productMap.values();
+    }
+
+    @Override
+    public void deleteAll() {
     }
 }
