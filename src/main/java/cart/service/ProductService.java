@@ -24,8 +24,9 @@ public class ProductService {
     return productRepository.getAll();
   }
 
-  public void updateProduct(ProductUpdateDto updateDto) {
-    productRepository.update(updateDto.toEntity());
+  public void updateProduct(ProductUpdateDto updateDto,Long productId) {
+    Product product = this.findById(productId);
+    productRepository.update(updateDto.toEntity(product));
   }
 
   @Transactional(readOnly = true)
