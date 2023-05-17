@@ -11,10 +11,10 @@ import lombok.Getter;
 @Builder
 public class ProductReadDto {
 
-  private Long id;
-  private String name;
-  private String image;
-  private BigDecimal price;
+  private final Long id;
+  private final String name;
+  private final String image;
+  private final BigDecimal price;
 
   public static ProductReadDto toDto(Product product) {
     return ProductReadDto.builder()

@@ -13,13 +13,13 @@ import lombok.NonNull;
 public class ProductUpdateDto {
 
   @NonNull
-  private Long id;
+  private final Long id;
   @NonNull
-  private String name;
+  private final String name;
   @NonNull
-  private String image;
+  private final String image;
   @NonNull
-  private BigDecimal price;
+  private final BigDecimal price;
 
   public Product toEntity() {
     return Product.builder()
