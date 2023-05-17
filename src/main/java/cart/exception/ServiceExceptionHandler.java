@@ -1,16 +1,26 @@
 package cart.exception;
 
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
+import java.util.NoSuchElementException;
+
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.servlet.ModelAndView;
 
 @ControllerAdvice
 public class ServiceExceptionHandler {
+	@ExceptionHandler(value = NoSuchElementException.class)
+	public String handleNoSuchElementException() {
+		return "error/404";
+	}
+
 	@ExceptionHandler(ServiceException.class)
-	public ResponseEntity<ErrorResponse> handleExceptionHandler(ServiceException e) {
-		ErrorResponse errorResponse = new ErrorResponse(e.errorCode(), e.getMessage());
-		return ResponseEntity.status(HttpStatus.BAD_REQUEST)
-			.body(errorResponse);
+	public ModelAndView handleExceptionHandler(ServiceException e) {
+		ModelAndView modelAndView = new ModelAndView();
+		ErrorType errorType = e.getErrorType();
+		modelAndView.setViewName("error/error_page");
+		modelAndView.addObject("error",
+			new ErrorResponse(e.getErrorType().getStatusValue(), e.getMessage()));
+		modelAndView.setStatus(errorType.getErrorStatus());
+		return modelAndView;
 	}
 }
