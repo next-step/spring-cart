@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<body>
+<div class="errorPage">
+    <div class="outer">
+        <div class="middle">
+            <div class="inner text-center">
+                <div class="inner-circle"><i class="fa fa-home"></i><span th:text="${status}">상태코드</span></div>
+                <span class="inner-status" th:text="${error}">에러 명</span>
+                <span class="inner-detail">
+                    요청이 잘못 되었습니다.
+                </span>
+                <span class="inner-detail" th:text="${message}">
+                    에러 메시지
+                </span>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>
