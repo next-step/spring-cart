@@ -69,4 +69,10 @@ public class JdbcProductRepository implements ProductRepository {
 		String sql = "DELETE FROM product WHERE id = :id";
 		jdbcTemplate.update(sql, Map.of("id", product.getId()));
 	}
+
+	@Override
+	public void deleteAll() {
+		String sql = "DELETE FROM product";
+		jdbcTemplate.update(sql, (SqlParameterSource)null);
+	}
 }
