@@ -21,9 +21,9 @@ public class ProductUpdateDto {
   @NonNull
   private final BigDecimal price;
 
-  public Product toEntity() {
+  public Product toEntity(Product product) {
     return Product.builder()
-        .id(getId())
+        .id(product.getId())
         .name(getName())
         .image(getImage())
         .price(getPrice())
