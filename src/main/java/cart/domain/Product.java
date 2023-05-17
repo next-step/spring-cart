@@ -30,31 +30,25 @@ public class Product {
 		return id;
 	}
 
-	public void setId(Long id) {
-		this.id = id;
-	}
-
 	public String getName() {
 		return name;
-	}
-
-	public void setName(String name) {
-		this.name = name;
 	}
 
 	public String getImage() {
 		return image;
 	}
 
-	public void setImage(String image) {
-		this.image = image;
-	}
-
 	public Long getPrice() {
 		return price;
 	}
 
-	public void setPrice(Long price) {
+	public void updateId(long id) {
+		this.id = id;
+	}
+
+	public void update(String name, String image, Long price) {
+		this.name = name;
+		this.image = image;
 		this.price = price;
 	}
 
