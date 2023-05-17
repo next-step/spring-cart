@@ -1,19 +1,28 @@
 package cart.exception;
 
+import org.springframework.http.HttpStatus;
+
 public enum ErrorType {
-	INVALID_PRODUCT_NAME("잘못된 상품명입니다."),
-	INVALID_PRODUCT_IMAGE("잘못된 상품 이미지입니다."),
-	INVALID_PRODUCT_PRICE("잘못된 상품 가격입니다."),
-	PRODUCT_NOT_FOUND("상품을 찾을 수 없습니다.");
+	ACCESS_DENIED(HttpStatus.FORBIDDEN, "해당 권한이 없습니다."),
+	NOT_FOUND(HttpStatus.NOT_FOUND, "해당 정보를 찾을 수 없습니다.");
+	private final HttpStatus errorStatus;
+	private final String errorMessage;
 
-	private final String message;
-
-	ErrorType(String message) {
-		this.message = message;
+	ErrorType(HttpStatus errorStatus, String errorMessage) {
+		this.errorStatus = errorStatus;
+		this.errorMessage = errorMessage;
 	}
 
-	public String getMessage() {
-		return message;
+	public HttpStatus getErrorStatus() {
+		return errorStatus;
+	}
+
+	public int getStatusValue() {
+		return errorStatus.value();
+	}
+
+	public String getErrorMessage() {
+		return errorMessage;
 	}
 
 }
