@@ -8,12 +8,19 @@ const showAddModal = () => {
 const showEditModal = (product) => {
     const elements = modal.getElementsByTagName('input');
     for (const element of elements) {
-        element.value = product[element.getAttribute('name')];
+        if (element.id === 'name') {
+            element.value = product.name;
+        } else if (element.id === 'price') {
+            element.value = product.price;
+        } else if (element.id === 'image-url') {
+            element.value = product.image;
+        }
     }
     modal.dataset.formType = 'edit';
     modal.dataset.productId = product.id;
     modal.style.display = 'block';
 };
+
 
 const hideAddModal = () => {
     modal.style.display = 'none';
@@ -31,8 +38,7 @@ form.addEventListener('submit', (event) => {
     const formData = new FormData(event.target);
     let product = {};
     for (const entry of formData.entries()) {
-        const [key, value] = entry;
-        product[key] = value;
+        product[entry[0]] = entry[1];
     }
 
     if (modal.dataset.formType === 'edit') {
@@ -46,35 +52,43 @@ form.addEventListener('submit', (event) => {
 
 // TODO: [1단계] 상품 관리 CRUD API에 맞게 변경
 const createProduct = (product) => {
-    axios.request({
-        url: '',
-    }).then((response) => {
+    axios.post(`/products`, product, {
+        headers: {
+            'Content-Type': 'application/json',
+        },
+    })
+    .then((response) => {
         window.location.reload();
-    }).catch((error) => {
+    })
+    .catch((error) => {
         console.error(error);
     });
 };
 
 // TODO: [1단계] 상품 관리 CRUD API에 맞게 변경
 const updateProduct = (product) => {
-    const { id } = product;
 
-    axios.request({
-        url: '',
-    }).then((response) => {
+    axios.put(`/products/${product.id}`, product, {
+        headers: {
+            'Content-Type': 'application/json',
+        },
+    })
+    .then((response) => {
         window.location.reload();
-    }).catch((error) => {
+    })
+    .catch((error) => {
         console.error(error);
     });
 };
 
+
 // TODO: [1단계] 상품 관리 CRUD API에 맞게 변경
 const deleteProduct = (id) => {
-    axios.request({
-        url: '',
-    }).then((response) => {
+    axios.delete(`/products/${id}`)
+    .then((response) => {
         window.location.reload();
-    }).catch((error) => {
+    })
+    .catch((error) => {
         console.error(error);
     });
 };
