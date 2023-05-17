@@ -55,10 +55,7 @@ public class JdbcProductRepository implements ProductRepository {
 		String sql = "SELECT id,name,image,price FROM product WHERE id=:id";
 		SqlParameterSource sqlParameterSource = new MapSqlParameterSource("id", id);
 		List<Product> products = jdbcTemplate.query(sql, sqlParameterSource, productRowMapper);
-		if (products.isEmpty()) {
-			return Optional.empty();
-		}
-		return Optional.ofNullable(products.get(0));
+		return products.stream().findAny();
 	}
 
 	@Override
