@@ -11,10 +11,10 @@ import lombok.Getter;
 @Builder
 public class Product {
 
-  private Long id;
-  private String name;
-  private String image;
-  private BigDecimal price;
+  private final Long id;
+  private final String name;
+  private final String image;
+  private final BigDecimal price;
 
   @Override
   public boolean equals(Object o) {
