@@ -32,6 +32,12 @@ public class JdbcCartItemRepository implements CartItemRepository {
     }
 
     @Override
+    public Collection<CartItem> findAllByProductId(Long productId) {
+        String sql = "SELECT * FROM cart_items WHERE product_id = ?";
+        return jdbcTemplate.query(sql, getRowMapper(), productId);
+    }
+
+    @Override
     public Optional<CartItem> findByCartItem(CartItem cartItem) {
         String sql = "SELECT * FROM cart_items WHERE member_id = ? and product_id = ?";
         try {

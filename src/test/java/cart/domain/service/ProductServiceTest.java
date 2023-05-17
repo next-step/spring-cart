@@ -1,7 +1,10 @@
 package cart.domain.service;
 
+import cart.domain.entity.CartItem;
 import cart.domain.entity.Product;
+import cart.domain.repository.CartItemRepository;
 import cart.domain.repository.ProductRepository;
+import cart.testdouble.InMemoryCartItemRepository;
 import cart.testdouble.InMemoryProductRepository;
 import org.junit.jupiter.api.Test;
 
@@ -12,7 +15,8 @@ import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 class ProductServiceTest {
 
     private ProductRepository productRepository = new InMemoryProductRepository();
-    private ProductService productService = new ProductService(productRepository);
+    private CartItemRepository cartItemRepository = new InMemoryCartItemRepository();
+    private ProductService productService = new ProductService(productRepository, cartItemRepository);
 
     @Test
     void getAll() {
@@ -55,10 +59,13 @@ class ProductServiceTest {
     void delete() {
         Product product = new Product(1L, "a", 1000, "http://a.com");
         productRepository.insert(product);
+        CartItem cartItem = new CartItem(1L, 1L, 1L);
 
         productService.delete(1L);
 
         Collection<Product> products = productRepository.findAll();
+        Collection<CartItem> allByMemberId = cartItemRepository.findAllByMemberId(1L);
         assertThat(products.size()).isEqualTo(0);
+        assertThat(allByMemberId.size()).isEqualTo(0);
     }
 }

@@ -32,6 +32,14 @@ public class InMemoryCartItemRepository implements CartItemRepository {
     }
 
     @Override
+    public Collection<CartItem> findAllByProductId(Long productId) {
+        return cartItemMap.values()
+                .stream()
+                .filter(item -> productId.equals(item.getProductId()))
+                .collect(Collectors.toList());
+    }
+
+    @Override
     public Optional<CartItem> findByCartItem(CartItem cartItem) {
         return cartItemMap.values()
                 .stream()
