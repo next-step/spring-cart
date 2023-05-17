@@ -21,24 +21,25 @@ public class ProductService {
 	}
 
 	@Transactional
-	public ProductResponseDto create(ProductRequestDto productRequestDto) {
-		Product product = productRequestDto.toProduct();
+	public ProductResponseDto create(ProductCreateRequestDto productCreateRequestDto) {
+		Product product = productCreateRequestDto.toProduct();
 		return ProductResponseDto.from(productRepository.save(product));
 	}
 
 	@Transactional
 	public ProductResponseDto update(Long id, ProductUpdateRequest productUpdateRequest) {
 		Product product = findProduct(id);
-		product.setName(productUpdateRequest.getName());
-		product.setPrice(productUpdateRequest.getPrice());
-		product.setImage(productUpdateRequest.getImage());
+		String newName = productUpdateRequest.getName();
+		Long newPrice = productUpdateRequest.getPrice();
+		String newImage = productUpdateRequest.getImage();
+		product.update(newName, newImage, newPrice);
 		productRepository.update(product);
 		return ProductResponseDto.from(product);
 	}
 
 	private Product findProduct(Long id) {
 		return productRepository.findById(id)
-			.orElseThrow(() -> new ServiceException(ErrorType.PRODUCT_NOT_FOUND));
+			.orElseThrow(() -> new ServiceException(ErrorType.ACCESS_DENIED));
 	}
 
 	@Transactional
