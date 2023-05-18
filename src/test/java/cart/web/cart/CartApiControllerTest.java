@@ -5,6 +5,8 @@ import cart.infrastructure.dao.CartDao;
 import cart.service.cart.CartService;
 import cart.web.cart.dto.CartAddRequestDto;
 import io.restassured.RestAssured;
+import io.restassured.response.ExtractableResponse;
+import io.restassured.response.Response;
 import org.apache.tomcat.util.codec.binary.Base64;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -18,7 +20,6 @@ import org.springframework.test.context.jdbc.Sql;
 import static cart.service.user.UserServiceTest.USER_1;
 import static cart.service.user.UserServiceTest.USER_2;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
-import static org.hamcrest.Matchers.is;
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 
 @Sql(scripts = "classpath:schema.sql")
@@ -46,26 +47,31 @@ class CartApiControllerTest {
         cartService.add(USER_2, new CartAddRequestDto(1L));
         cartService.add(USER_1, new CartAddRequestDto(1L));
 
-        // when, then
-        RestAssured.given()
+        // when
+        ExtractableResponse<Response> response = RestAssured.given()
                 .contentType(MediaType.APPLICATION_JSON_VALUE)
                 .header("Authorization",
                         authorizationHeader(USER_1.getEmail(), USER_1.getPassword()))
                 .when().get("/api/v1/carts")
-                .then()
-                .statusCode(HttpStatus.OK.value())
-                .body("size()", is(2))
-                .body("[0].name", is("상품B"))
-                .body("[1].name", is("상품A"));
+                .then().extract();
+
+        // then
+        assertThat(response.statusCode()).isEqualTo(HttpStatus.OK.value());
+        assertThat(response.response().jsonPath().getInt("size()")).isEqualTo(2);
+        assertThat(response.response().jsonPath().getString("[0].name")).isEqualTo("상품B");
+        assertThat(response.response().jsonPath().getString("[1].name")).isEqualTo("상품A");
     }
 
     @Test
     void 비정상_모든_장바구니_아이템을_조회한다_유저_정보가_없는_경우() {
-        RestAssured.given()
+        // given, when
+        ExtractableResponse<Response> response = RestAssured.given()
                 .contentType(MediaType.APPLICATION_JSON_VALUE)
                 .when().get("/api/v1/carts")
-                .then()
-                .statusCode(HttpStatus.BAD_REQUEST.value());
+                .then().extract();
+
+        // then
+        assertThat(response.statusCode()).isEqualTo(HttpStatus.BAD_REQUEST.value());
     }
 
     @Test
@@ -74,18 +80,18 @@ class CartApiControllerTest {
         CartAddRequestDto requestDto = new CartAddRequestDto(3L);
 
         // when
-        Long addedCartId = RestAssured.given()
+        ExtractableResponse<Response> response = RestAssured.given()
                 .contentType(MediaType.APPLICATION_JSON_VALUE)
                 .header("Authorization",
                         authorizationHeader(USER_1.getEmail(), USER_1.getPassword()))
                 .body(requestDto)
                 .when().post("/api/v1/carts")
+                .then().extract();
 
         // then
-                .then()
-                .statusCode(HttpStatus.CREATED.value()).extract().as(Long.class);
+        assertThat(response.statusCode()).isEqualTo(HttpStatus.CREATED.value());
 
-        Cart foundCart = assertDoesNotThrow(() -> cartDao.findById(addedCartId).get());
+        Cart foundCart = assertDoesNotThrow(() -> cartDao.findById(response.as(Long.class)).get());
         assertThat(foundCart.getProductId()).isEqualTo(3L);
     }
 
@@ -94,13 +100,15 @@ class CartApiControllerTest {
         // given
         CartAddRequestDto requestDto = new CartAddRequestDto(3L);
 
-        // when, then
-        RestAssured.given()
+        // when
+        ExtractableResponse<Response> response = RestAssured.given()
                 .contentType(MediaType.APPLICATION_JSON_VALUE)
                 .body(requestDto)
                 .when().post("/api/v1/carts")
-                .then()
-                .statusCode(HttpStatus.BAD_REQUEST.value());
+                .then().extract();
+
+        // then
+        assertThat(response.statusCode()).isEqualTo(HttpStatus.BAD_REQUEST.value());
     }
 
     @Test
@@ -109,17 +117,17 @@ class CartApiControllerTest {
         cartService.add(USER_1, new CartAddRequestDto(1L));
 
         // when
-        Long deletedCartId = RestAssured.given()
+        ExtractableResponse<Response> response = RestAssured.given()
                 .contentType(MediaType.APPLICATION_JSON_VALUE)
                 .header("Authorization",
                         authorizationHeader(USER_1.getEmail(), USER_1.getPassword()))
                 .when().delete("/api/v1/carts/1")
+                .then().extract();
 
         // then
-                .then()
-                .statusCode(HttpStatus.OK.value()).extract().as(Long.class);
+        assertThat(response.statusCode()).isEqualTo(HttpStatus.OK.value());
 
-        assertThat(cartDao.findById(deletedCartId)).isEmpty();
+        assertThat(cartDao.findById(response.as(Long.class))).isEmpty();
     }
 
     @Test
@@ -127,12 +135,14 @@ class CartApiControllerTest {
         // given
         cartService.add(USER_1, new CartAddRequestDto(1L));
 
-        // when, then
-        RestAssured.given()
+        // when
+        ExtractableResponse<Response> response = RestAssured.given()
                 .contentType(MediaType.APPLICATION_JSON_VALUE)
                 .when().delete("/api/v1/carts/1")
-                .then()
-                .statusCode(HttpStatus.BAD_REQUEST.value());
+                .then().extract();
+
+        // then
+        assertThat(response.statusCode()).isEqualTo(HttpStatus.BAD_REQUEST.value());
     }
 
     @Test
@@ -140,14 +150,16 @@ class CartApiControllerTest {
         // given
         cartService.add(USER_1, new CartAddRequestDto(1L));
 
-        // when, then
-        RestAssured.given()
+        // when
+        ExtractableResponse<Response> response = RestAssured.given()
                 .contentType(MediaType.APPLICATION_JSON_VALUE)
                 .header("Authorization",
                         authorizationHeader(USER_2.getEmail(), USER_2.getPassword()))
                 .when().delete("/api/v1/carts/1")
-                .then()
-                .statusCode(HttpStatus.UNAUTHORIZED.value());
+                .then().extract();
+
+        // then
+        assertThat(response.statusCode()).isEqualTo(HttpStatus.UNAUTHORIZED.value());
     }
 
     private String authorizationHeader(String email, String password) {

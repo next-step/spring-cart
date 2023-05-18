@@ -5,6 +5,8 @@ import cart.infrastructure.dao.ProductDao;
 import cart.web.product.dto.ProductSaveRequestDto;
 import cart.web.product.dto.ProductUpdateRequestDto;
 import io.restassured.RestAssured;
+import io.restassured.response.ExtractableResponse;
+import io.restassured.response.Response;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,7 +20,6 @@ import java.util.NoSuchElementException;
 
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
-import static org.hamcrest.Matchers.is;
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 
 @Sql(scripts = "classpath:schema.sql")
@@ -42,16 +43,16 @@ class ProductApiControllerTest {
         ProductSaveRequestDto requestDto = new ProductSaveRequestDto("상품A", "image.com/imageA", 10000);
 
         // when
-        Long savedProductId = RestAssured.given()
+        ExtractableResponse<Response> response = RestAssured.given()
                 .contentType(MediaType.APPLICATION_JSON_VALUE)
                 .body(requestDto)
                 .when().post("/api/v1/products")
+                .then().extract();
 
         // then
-                .then()
-                .statusCode(HttpStatus.CREATED.value()).extract().as(Long.class);
+        assertThat(response.statusCode()).isEqualTo(HttpStatus.CREATED.value());
 
-        Product foundProduct = assertDoesNotThrow(() -> productDao.findById(savedProductId).get());
+        Product foundProduct = assertDoesNotThrow(() -> productDao.findById(response.as(Long.class)).get());
         assertThat(foundProduct.getName()).isEqualTo("상품A");
         assertThat(foundProduct.getImageUrl()).isEqualTo("image.com/imageA");
         assertThat(foundProduct.getPrice()).isEqualTo(10000);
@@ -69,17 +70,17 @@ class ProductApiControllerTest {
         ProductUpdateRequestDto requestDto = new ProductUpdateRequestDto("상품B", "image.com/imageB", 20000);
 
         // when
-        Long updatedProductId = RestAssured.given()
+        ExtractableResponse<Response> response = RestAssured.given()
                 .contentType(MediaType.APPLICATION_JSON_VALUE)
                 .body(requestDto)
                 .when().put("/api/v1/products/" + savedProduct.getId())
+                .then().extract();
 
         // then
-                .then()
-                .statusCode(HttpStatus.OK.value())
-                .body(is(savedProduct.getId().toString())).extract().as(Long.class);
+        assertThat(response.statusCode()).isEqualTo(HttpStatus.OK.value());
+        assertThat(response.body().asString()).isEqualTo(savedProduct.getId().toString());
 
-        Product foundProduct = assertDoesNotThrow(() -> productDao.findById(updatedProductId).get());
+        Product foundProduct = assertDoesNotThrow(() -> productDao.findById(response.as(Long.class)).get());
         assertThat(foundProduct.getName()).isEqualTo("상품B");
         assertThat(foundProduct.getImageUrl()).isEqualTo("image.com/imageB");
         assertThat(foundProduct.getPrice()).isEqualTo(20000);
@@ -87,12 +88,15 @@ class ProductApiControllerTest {
 
     @Test
     void 비정상_상품을_수정한다_존재하지_않는_상품인_경우() {
-        RestAssured.given()
+        // given, when
+        ExtractableResponse<Response> response = RestAssured.given()
                 .contentType(MediaType.APPLICATION_JSON_VALUE)
                 .body(new ProductUpdateRequestDto("", "", 0))
                 .when().put("/api/v1/products/" + 1)
-                .then()
-                .statusCode(HttpStatus.BAD_REQUEST.value());
+                .then().extract();
+
+        // then
+        assertThat(response.statusCode()).isEqualTo(HttpStatus.BAD_REQUEST.value());
     }
 
     @Test
@@ -106,26 +110,30 @@ class ProductApiControllerTest {
         Product savedProduct = productDao.insert(givenProduct);
 
         // when
-        Long deletedProductId = RestAssured.given()
+        ExtractableResponse<Response> response = RestAssured.given()
                 .contentType(MediaType.APPLICATION_JSON_VALUE)
                 .when().delete("/api/v1/products/" + savedProduct.getId())
+                .then().extract();
 
         // then
-                .then()
-                .statusCode(HttpStatus.OK.value())
-                .body(is(savedProduct.getId().toString())).extract().as(Long.class);
+        assertThat(response.statusCode()).isEqualTo(HttpStatus.OK.value());
+        assertThat(response.body().asString()).isEqualTo(savedProduct.getId().toString());
 
-        assertThatThrownBy(() -> productDao.findById(deletedProductId).get())
+
+        assertThatThrownBy(() -> productDao.findById(response.as(Long.class)).get())
                 .isInstanceOf(NoSuchElementException.class);
     }
 
     @Test
     void 정상_상품을_삭제한다_존재하지_않는_상품인_경우() {
-        RestAssured.given()
+        // given, when
+        ExtractableResponse<Response> response = RestAssured.given()
                 .contentType(MediaType.APPLICATION_JSON_VALUE)
                 .body(new ProductUpdateRequestDto("", "", 0))
                 .when().delete("/api/v1/products/" + 1)
-                .then()
-                .statusCode(HttpStatus.BAD_REQUEST.value());
+                .then().extract();
+
+        // then
+        assertThat(response.statusCode()).isEqualTo(HttpStatus.BAD_REQUEST.value());
     }
 }
