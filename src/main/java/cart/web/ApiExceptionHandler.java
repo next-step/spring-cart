@@ -23,8 +23,8 @@ public class ApiExceptionHandler {
     }
 
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
-    @ExceptionHandler(RuntimeException.class)
-    public String defaultExceptionHandler(RuntimeException exception) {
+    @ExceptionHandler(Exception.class)
+    public String defaultExceptionHandler(Exception exception) {
         return "알 수 없는 오류가 발생했습니다. 관리자에게 문의주세요!";
     }
 
