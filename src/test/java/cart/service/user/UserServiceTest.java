@@ -14,11 +14,18 @@ import static org.assertj.core.api.Assertions.*;
 
 @Sql(scripts = "classpath:schema.sql")
 @SpringBootTest
-class UserServiceTest {
+public class UserServiceTest {
 
-    private static final User USER = User.builder()
+    public static final User USER_1 = User.builder()
+            .id(1L)
             .email("a@a.com")
             .password("passwordA")
+            .build();
+
+    public static final User USER_2 = User.builder()
+            .id(2L)
+            .email("b@b.com")
+            .password("passwordB")
             .build();
 
     @Autowired
@@ -29,8 +36,8 @@ class UserServiceTest {
     @Test
     void 모든_유저를_조회한다() {
         // given
-        usersDao.insert(USER);
-        usersDao.insert(User.builder().email("b@b.com").password("passwordB").build());
+        usersDao.insert(USER_1);
+        usersDao.insert(USER_2);
 
         // when
         List<User> users = userService.findAll();
@@ -45,7 +52,7 @@ class UserServiceTest {
     @Test
     void 정상_유저가_로그인_한다() {
         // given
-        User insertedUser = usersDao.insert(USER);
+        User insertedUser = usersDao.insert(USER_1);
 
         // when
         User loginedUser = userService.login("a@a.com", "passwordA");
@@ -59,7 +66,7 @@ class UserServiceTest {
     @Test
     void 비정상_유저가_로그인_한다_존재하지_않는_이메일인_경우() {
         // given
-        User insertedUser = usersDao.insert(USER);
+        User insertedUser = usersDao.insert(USER_1);
 
         // when, then
         assertThatThrownBy(() -> userService.login("b@b.com", ""))
@@ -69,7 +76,7 @@ class UserServiceTest {
     @Test
     void 비정상_유저가_로그인_한다_비밀번호가_틀린_경우() {
         // given
-        User insertedUser = usersDao.insert(USER);
+        User insertedUser = usersDao.insert(USER_1);
 
         // when, then
         assertThatThrownBy(() -> userService.login("a@a.com", "passwordB"))
