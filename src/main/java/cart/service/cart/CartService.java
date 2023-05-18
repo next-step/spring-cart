@@ -6,6 +6,7 @@ import cart.domain.user.User;
 import cart.infrastructure.dao.CartDao;
 import cart.infrastructure.dao.ProductDao;
 import cart.infrastructure.security.AccessDeniedException;
+import cart.service.cart.exception.ProductDoesNotExistException;
 import cart.web.cart.dto.CartAddRequestDto;
 import cart.web.cart.dto.CartResponseDto;
 import lombok.RequiredArgsConstructor;
@@ -28,7 +29,8 @@ public class CartService {
     public List<CartResponseDto> findAll(User user) {
         List<Cart> userCarts = cartDao.findAllByUserId(user.getId());
         List<Product> userProducts = userCarts.stream()
-                .map(userCart -> productDao.findById(userCart.getProductId()).get())
+                .map(userCart -> productDao.findById(userCart.getProductId())
+                        .orElseThrow(ProductDoesNotExistException::new))
                 .collect(Collectors.toList());
 
         return IntStream.range(0, userCarts.size())
