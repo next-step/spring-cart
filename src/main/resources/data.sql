@@ -14,3 +14,18 @@ values ('샐러드','https://i.namu.wiki/i/ZoB2vB9L_Do-LeBWyob8D0h2ibeQ0xBdqxA8K
 
 insert into product (NAME, IMAGE, PRICE)
 values ('피자','https://i.namu.wiki/i/HiqfW42Vm1Fblprs59MT3pFS0CSGlwBel5cem5ILozlV6Q9dCyATb9KzoBMiRd43S9eyJ4bfi8nPvCCfrSjtqNhoa7W_cHbM8YbuuNVAlsRfVRvmxqgEt6xMuvjmHAUjCvbeLOk7Ka6Vff3f8oHB8w.webp',13000);
+
+CREATE TABLE `member` (
+                        `id` INT AUTO_INCREMENT PRIMARY KEY,
+                        `email` VARCHAR(50),
+                        `password` VARCHAR(20)
+);
+
+
+insert into `member`(email, password)
+values ('123@gmail.com','123');
+
+insert into `member`(email, password)
+values ('321@gmail.com','321');
+
+select * from  `member`;
