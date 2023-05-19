@@ -1,4 +1,4 @@
-package cart.web.product.dto;
+package cart.service.product.dto;
 
 import cart.domain.product.Product;
 import lombok.AccessLevel;

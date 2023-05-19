@@ -1,6 +1,6 @@
 package cart.infrastructure.security;
 
-import cart.web.user.dto.UserDto;
+import cart.service.user.dto.UserDto;
 import org.apache.tomcat.util.codec.binary.Base64;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.EmptySource;

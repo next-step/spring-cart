@@ -1,4 +1,4 @@
-package cart.web.cart.dto;
+package cart.service.cart.dto;
 
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;

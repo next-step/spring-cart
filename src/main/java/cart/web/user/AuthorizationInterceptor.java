@@ -2,7 +2,7 @@ package cart.web.user;
 
 import cart.infrastructure.security.BasicAuthorizationParser;
 import cart.service.user.UserService;
-import cart.web.user.dto.UserDto;
+import cart.service.user.dto.UserDto;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;

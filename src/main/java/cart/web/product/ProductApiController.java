@@ -1,9 +1,9 @@
 package cart.web.product;
 
 import cart.service.product.ProductService;
-import cart.web.product.dto.ProductResponseDto;
-import cart.web.product.dto.ProductSaveRequestDto;
-import cart.web.product.dto.ProductUpdateRequestDto;
+import cart.service.product.dto.ProductResponseDto;
+import cart.service.product.dto.ProductSaveRequestDto;
+import cart.service.product.dto.ProductUpdateRequestDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;

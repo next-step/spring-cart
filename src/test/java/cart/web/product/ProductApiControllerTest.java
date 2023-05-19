@@ -2,8 +2,8 @@ package cart.web.product;
 
 import cart.domain.product.Product;
 import cart.infrastructure.dao.ProductDao;
-import cart.web.product.dto.ProductSaveRequestDto;
-import cart.web.product.dto.ProductUpdateRequestDto;
+import cart.service.product.dto.ProductSaveRequestDto;
+import cart.service.product.dto.ProductUpdateRequestDto;
 import io.restassured.RestAssured;
 import io.restassured.response.ExtractableResponse;
 import io.restassured.response.Response;

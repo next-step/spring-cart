@@ -2,8 +2,8 @@ package cart.web.cart;
 
 import cart.domain.user.User;
 import cart.service.cart.CartService;
-import cart.web.cart.dto.CartAddRequestDto;
-import cart.web.cart.dto.CartResponseDto;
+import cart.service.cart.dto.CartAddRequestDto;
+import cart.service.cart.dto.CartResponseDto;
 import cart.web.user.CurrentUser;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;

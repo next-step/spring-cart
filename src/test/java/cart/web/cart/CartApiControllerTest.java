@@ -3,7 +3,7 @@ package cart.web.cart;
 import cart.domain.cart.Cart;
 import cart.infrastructure.dao.CartDao;
 import cart.service.cart.CartService;
-import cart.web.cart.dto.CartAddRequestDto;
+import cart.service.cart.dto.CartAddRequestDto;
 import io.restassured.RestAssured;
 import io.restassured.response.ExtractableResponse;
 import io.restassured.response.Response;
