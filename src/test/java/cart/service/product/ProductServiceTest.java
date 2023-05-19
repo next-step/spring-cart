@@ -17,6 +17,8 @@ import org.springframework.test.context.jdbc.Sql;
 import java.util.List;
 import java.util.NoSuchElementException;
 
+import static cart.service.user.UserServiceTest.USER_1;
+import static cart.service.user.UserServiceTest.USER_2;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
@@ -97,16 +99,16 @@ class ProductServiceTest {
     @Test
     void 유저의_장바구니에_담긴_상품을_삭제한다() {
         // given
-        Long insertedProductId = insertProduct("상품A", "image.com/imageA", 10000).getId();
+        Product insertedProduct = insertProduct("상품A", "image.com/imageA", 10000);
 
         usersDao.insert(User.builder().email("a@a.com").password("passwordA").build());
         usersDao.insert(User.builder().email("b@b.com").password("passwordB").build());
 
-        cartDao.insert(Cart.builder().userId(1L).productId(1L).build());
-        cartDao.insert(Cart.builder().userId(2L).productId(1L).build());
+        cartDao.insert(Cart.builder().user(USER_1).product(insertedProduct).build());
+        cartDao.insert(Cart.builder().user(USER_2).product(insertedProduct).build());
 
         // when
-        Long deletedProductId = productService.delete(insertedProductId);
+        Long deletedProductId = productService.delete(insertedProduct.getId());
 
         // then
         assertThat(productDao.findById(deletedProductId)).isEmpty();

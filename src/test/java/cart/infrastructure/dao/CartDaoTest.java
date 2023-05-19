@@ -27,15 +27,15 @@ class CartDaoTest {
     @Autowired
     private DataSource dataSource;
 
-    private CartDao cartDao;
-    private UsersDao usersDao;
     private ProductDao productDao;
+    private UsersDao usersDao;
+    private CartDao cartDao;
 
     @BeforeEach
     void setUp() {
-        cartDao = new CartDao(jdbcTemplate, dataSource);
-        usersDao = new UsersDao(jdbcTemplate, dataSource);
         productDao = new ProductDao(jdbcTemplate, dataSource);
+        usersDao = new UsersDao(jdbcTemplate, dataSource);
+        cartDao = new CartDao(jdbcTemplate, dataSource, productDao, usersDao);
     }
 
     @Test
@@ -45,7 +45,7 @@ class CartDaoTest {
         Product insertedProduct = insertProduct("상품A", "image.com/imageA", 10000);
 
         // when
-        Cart insertedCart = insertCart(insertedUser.getId(), insertedProduct.getId());
+        Cart insertedCart = insertCart(insertedUser, insertedProduct);
 
         // then
         assertThat(insertedCart.getId()).isNotNull();
@@ -56,14 +56,14 @@ class CartDaoTest {
         // given
         User insertedUser = insertUser("a@a.com", "passwordA");
         Product insertedProduct = insertProduct("상품A", "image.com/imageA", 10000);
-        Cart insertedCart = insertCart(insertedUser.getId(), insertedProduct.getId());
+        Cart insertedCart = insertCart(insertedUser, insertedProduct);
 
         // when
         Cart foundCart = assertDoesNotThrow(() -> cartDao.findById(insertedCart.getId()).get());
 
         // then
-        assertThat(foundCart.getUserId()).isEqualTo(insertedCart.getUserId());
-        assertThat(foundCart.getProductId()).isEqualTo(insertedCart.getProductId());
+        assertThat(foundCart.getUser()).isEqualTo(insertedCart.getUser());
+        assertThat(foundCart.getProduct()).isEqualTo(insertedCart.getProduct());
     }
 
     @Test
@@ -75,15 +75,15 @@ class CartDaoTest {
         Product insertedProduct1 = insertProduct("상품A", "image.com/imageA", 10000);
         Product insertedProduct2 = insertProduct("상품B", "image.com/imageB", 20000);
 
-        insertCart(insertedUser.getId(), insertedProduct1.getId());
-        insertCart(insertedUser.getId(), insertedProduct2.getId());
+        insertCart(insertedUser, insertedProduct1);
+        insertCart(insertedUser, insertedProduct2);
 
         // when
         List<Cart> carts = cartDao.findAllByUserId(insertedUser.getId());
 
         // then
-        assertThat(carts).flatExtracting(Cart::getProductId)
-                .containsExactly(insertedProduct1.getId(), insertedProduct2.getId());
+        assertThat(carts).flatExtracting(Cart::getProduct)
+                .containsExactly(insertedProduct1, insertedProduct2);
 
         assertThat(cartDao.findAllByUserId(anotherUser.getId())).hasSize(0);
     }
@@ -96,15 +96,15 @@ class CartDaoTest {
 
         Product insertedProduct = insertProduct("상품A", "image.com/imageA", 10000);
 
-        insertCart(insertedUser1.getId(), insertedProduct.getId());
-        insertCart(insertedUser2.getId(), insertedProduct.getId());
+        insertCart(insertedUser1, insertedProduct);
+        insertCart(insertedUser2, insertedProduct);
 
         // when
         List<Cart> carts = cartDao.findAllByProductId(insertedProduct.getId());
 
         // then
-        assertThat(carts).flatExtracting(Cart::getUserId)
-                .containsExactly(insertedUser1.getId(), insertedUser2.getId());
+        assertThat(carts).flatExtracting(Cart::getUser)
+                .containsExactly(insertedUser1, insertedUser2);
     }
 
     @Test
@@ -112,7 +112,7 @@ class CartDaoTest {
         // given
         User insertedUser = insertUser("a@a.com", "passwordA");
         Product insertedProduct = insertProduct("상품A", "image.com/imageA", 10000);
-        Cart insertedCart = insertCart(insertedUser.getId(), insertedProduct.getId());
+        Cart insertedCart = insertCart(insertedUser, insertedProduct);
 
         // when
         cartDao.delete(insertedCart.getId());
@@ -128,8 +128,8 @@ class CartDaoTest {
         User insertedUser1 = insertUser("a@a.com", "passwordA");
         User insertedUser2 = insertUser("b@b.com", "passwordB");
         Product insertedProduct = insertProduct("상품A", "image.com/imageA", 10000);
-        Cart insertedCart1 = insertCart(insertedUser1.getId(), insertedProduct.getId());
-        Cart insertedCart2 = insertCart(insertedUser2.getId(), insertedProduct.getId());
+        Cart insertedCart1 = insertCart(insertedUser1, insertedProduct);
+        Cart insertedCart2 = insertCart(insertedUser2, insertedProduct);
 
         // when
         cartDao.batchDelete(List.of(insertedCart1.getId(), insertedCart2.getId()));
@@ -141,10 +141,10 @@ class CartDaoTest {
                 .isInstanceOf(NoSuchElementException.class);
     }
 
-    private Cart insertCart(Long userId, Long productId) {
+    private Cart insertCart(User user, Product product) {
         Cart givenCart = Cart.builder()
-                .userId(userId)
-                .productId(productId)
+                .user(user)
+                .product(product)
                 .build();
 
         return cartDao.insert(givenCart);

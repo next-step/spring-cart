@@ -92,7 +92,7 @@ class CartApiControllerTest {
         assertThat(response.statusCode()).isEqualTo(HttpStatus.CREATED.value());
 
         Cart foundCart = assertDoesNotThrow(() -> cartDao.findById(response.as(Long.class)).get());
-        assertThat(foundCart.getProductId()).isEqualTo(3L);
+        assertThat(foundCart.getProduct().getId()).isEqualTo(3L);
     }
 
     @Test

@@ -59,8 +59,8 @@ class CartServiceTest {
 
         // then
         Cart foundCart = assertDoesNotThrow(() -> cartDao.findById(addedCartId).get());
-        assertThat(foundCart.getUserId()).isEqualTo(USER_1.getId());
-        assertThat(foundCart.getProductId()).isEqualTo(requestDto.getProductId());
+        assertThat(foundCart.getUser()).isEqualTo(USER_1);
+        assertThat(foundCart.getProduct().getId()).isEqualTo(requestDto.getProductId());
     }
 
     @Test
