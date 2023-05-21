@@ -55,7 +55,7 @@ public class CartController {
     String email = splitCredentials[0];
     String password = splitCredentials[1];
 
-    cartService.add(createDto, email, password);
+    cartService.addItem(createDto, email, password);
 
     return ResponseEntity.ok("상품이 장바구니에 추가되었습니다.");
   }

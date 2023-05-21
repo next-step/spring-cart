@@ -6,7 +6,6 @@ const addCartItem = (productId) => {
         return;
     }
     const createDto = {
-        memberId: 1,  // 멤버 아이디를 적절한 값으로 설정해야 합니다.
         productId: productId
     };
     // TODO: [2단계] 장바구니 CRUD API에 맞게 변경

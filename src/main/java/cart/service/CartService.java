@@ -38,11 +38,11 @@ public class CartService {
 
     List<Cart> carts = cartRepository.findById(member.getId());
     return carts.stream()
-        .map(cart -> CartDetailDto.of(cart, this.productService.findById(cart.getId())))
+        .map(cart -> CartDetailDto.of(cart, this.productService.findById(cart.getProductId())))
         .collect(Collectors.toList());
   }
 
-  public void add(CartCreateDto createDto, String email, String password) {
+  public void addItem(CartCreateDto createDto, String email, String password) {
     // 회원 인증 처리
     if (!authenticate(email, password)) {
       throw new IllegalArgumentException("인증 실패");
