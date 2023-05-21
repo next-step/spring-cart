@@ -28,13 +28,8 @@ public class CartService {
     return carts;
   }
 
-  public List<CartDetailDto> cartProducts(String email, String password) {
-    // 회원 인증 처리
-    if (!authenticate(email, password)) {
-      throw new IllegalArgumentException("인증 실패");
-    }
-
-    Member member = memberService.findByEmail(email);
+  public List<CartDetailDto> cartProducts(Member member) {
+    authenticate(member);
 
     List<Cart> carts = cartRepository.findById(member.getId());
     return carts.stream()
@@ -42,29 +37,31 @@ public class CartService {
         .collect(Collectors.toList());
   }
 
-  public void addItem(CartCreateDto createDto, String email, String password) {
-    // 회원 인증 처리
-    if (!authenticate(email, password)) {
-      throw new IllegalArgumentException("인증 실패");
-    }
-
-    // 회원 정보 조회
-    Member member = memberService.findByEmail(email);
-
+  public void addItem(CartCreateDto createDto, Long memberId) {
     // 상품을 장바구니에 추가하는 비즈니스 로직 구현
-    cartRepository.addProduct(member.getId(), createDto.getProductId());
+    cartRepository.addProduct(memberId, createDto.getProductId());
   }
 
-  private boolean authenticate(String email, String password) {
-    return memberService.authenticate(email, password);
+  private void authenticate(Member member) {
+    if (!memberService.authenticate(member.getEmail(), member.getPassword())) {
+      throw new IllegalArgumentException("인증 실패");
+    }
   }
 
   public void removeCart(Long cartId, Member member) {
-    // 회원 인증 처리
-    if (!authenticate(member.getEmail(), member.getPassword())) {
-      throw new IllegalArgumentException("인증 실패");
-    }
+    authenticate(member);
+    List<Cart> carts = cartRepository.findById(member.getId());
+    isUserCart(member, carts);
 
-    cartRepository.removeCart(cartId,member.getId());
+    cartRepository.removeCart(cartId, member.getId());
+  }
+
+  private static void isUserCart(Member member, List<Cart> carts) {
+    boolean isOwnedByMember = carts.stream()
+        .anyMatch(cart -> cart.getMemberId().equals(member.getId()));
+
+    if (!isOwnedByMember) {
+      throw new IllegalArgumentException("본인 카트가 아닙니다.");
+    }
   }
 }

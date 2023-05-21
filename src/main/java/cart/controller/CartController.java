@@ -1,6 +1,7 @@
 package cart.controller;
 
 import cart.domain.Member;
+import cart.dto.AuthInfo;
 import cart.dto.CartCreateDto;
 import cart.dto.CartDetailDto;
 import cart.infrastructure.BasicAuthorizationExtractor;
@@ -9,6 +10,7 @@ import cart.service.MemberService;
 import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -30,7 +32,7 @@ public class CartController {
     String email = basicAuthorizationExtractor.extract(request).getEmail();
     Member member = memberService.findByEmail(email);
 
-    List<CartDetailDto> responses = cartService.cartProducts(email, member.getPassword());
+    List<CartDetailDto> responses = cartService.cartProducts(member);
     return ResponseEntity.ok(responses);
   }
 
@@ -40,7 +42,7 @@ public class CartController {
 
     String email = basicAuthorizationExtractor.extract(request).getEmail();
     Member member = memberService.findByEmail(email);
-    cartService.addItem(createDto, email, member.getPassword());
+    cartService.addItem(createDto, member.getId());
 
     return ResponseEntity.ok("상품이 장바구니에 추가되었습니다.");
   }
