@@ -58,4 +58,13 @@ public class CartService {
   private boolean authenticate(String email, String password) {
     return memberService.authenticate(email, password);
   }
+
+  public void removeCart(Long cartId, Member member) {
+    // 회원 인증 처리
+    if (!authenticate(member.getEmail(), member.getPassword())) {
+      throw new IllegalArgumentException("인증 실패");
+    }
+
+    cartRepository.removeCart(cartId,member.getId());
+  }
 }

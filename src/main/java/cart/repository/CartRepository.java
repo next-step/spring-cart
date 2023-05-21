@@ -36,5 +36,9 @@ public class CartRepository {
             .memberId(rs.getLong("member_id"))
             .build());
   }
+  public void removeCart(Long cartId, Long memberId) {
+    String sql = "DELETE FROM cart WHERE id = ? AND PRODUCT_ID = ?";
+    jdbcTemplate.update(sql, cartId, memberId);
+  }
 
 }
