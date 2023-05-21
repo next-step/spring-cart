@@ -29,14 +29,6 @@ public class ViewController {
     return model;
   }
 
-  @GetMapping("/settings")
-  public ModelAndView showSetting(ModelAndView model) {
-    List<User> members = userService.getAll();
-    model.addObject("members", members);
-    model.setViewName("settings");
-    return model;
-  }
-
   @GetMapping("/cart")
   public String getAll() {
     return "cart";
