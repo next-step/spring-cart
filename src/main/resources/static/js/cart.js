@@ -5,10 +5,12 @@ const addCartItem = (productId) => {
         window.location.href = '/settings';
         return;
     }
-
+    const createDto = {
+        memberId: 1,  // 멤버 아이디를 적절한 값으로 설정해야 합니다.
+        productId: productId
+    };
     // TODO: [2단계] 장바구니 CRUD API에 맞게 변경
-    axios.request({
-        url: '',
+    axios.post('/add-to-cart', createDto, {
         headers: {
             'Authorization': `Basic ${credentials}`
         }

@@ -28,3 +28,12 @@ values ('a@a.com','password1');
 
 insert into member (EMAIL, PASSWORD)
 values ('b@b.com','password2');
+
+create table cart
+(
+    ID INT AUTO_INCREMENT PRIMARY KEY,
+    PRODUCT_ID INT ,
+    MEMBER_ID INT,
+    COUNT INT
+);
+

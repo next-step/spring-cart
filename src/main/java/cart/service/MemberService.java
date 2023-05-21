@@ -20,4 +20,14 @@ public class MemberService {
     }
     return members;
   }
+
+  public Member findByEmail(String email) {
+    return memberRepository.findByEmail(email)
+        .orElseThrow(() -> new NotFoundEntityException("회원을 찾을 수 없습니다."));
+  }
+
+  public boolean authenticate(String email, String password) {
+    Member member = findByEmail(email);
+    return member.getPassword().equals(password);
+  }
 }

@@ -22,4 +22,9 @@ public class ViewController {
     model.addAttribute("products", products);
     return "index";
   }
+
+  @GetMapping("/cart")
+  public String getAll() {
+    return "cart";
+  }
 }

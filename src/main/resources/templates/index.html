@@ -29,10 +29,7 @@
                     <p class="product-name" th:text="${product.name}"></p> <!-- 상품 이름 -->
                     <p class="product-price" th:text="${product.price}"></p> <!-- 상품 가격 -->
                 </div>
-<!--                <form method="post" action="#" th:object="${cartItem}">-->
-<!--                    <input type="hidden" th:value="${product.id}" th:field="${product.id}" />-->
-<!--                    <button type="submit" class="product-btn">담기</button>-->
-<!--                </form>-->
+                    <button type="submit" class="product-btn" th:onclick="addCartItem([[${product.id}]])">담기</button>
             </div>
         </li>
     </ul>
