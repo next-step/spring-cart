@@ -13,16 +13,28 @@ import org.springframework.web.servlet.ModelAndView;
 public class ViewController {
 
   private final ProductService productService;
+  private final UserService userService;
 
-  public ViewController(ProductService productService) {
+  public ViewController(ProductService productService, UserService userService) {
     this.productService = productService;
+    this.userService = userService;
   }
 
   @GetMapping("/")
-  public String getAll(Model model) {
+  public ModelAndView getAll(ModelAndView model) {
     List<Product> products = productService.getAll();
-    model.addAttribute("products", products);
-    return "index";
+
+    model.addObject("products", products);
+    model.setViewName("index");
+    return model;
+  }
+
+  @GetMapping("/settings")
+  public ModelAndView showSetting(ModelAndView model) {
+    List<User> members = userService.getAll();
+    model.addObject("members", members);
+    model.setViewName("settings");
+    return model;
   }
 
   @GetMapping("/cart")
