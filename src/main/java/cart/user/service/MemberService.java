@@ -38,4 +38,8 @@ public class MemberService {
         Member member = memberDao.findById(id).orElseThrow(() -> new MemberNotFoundException(ErrorCode.NOT_FOUND_MEMBER));
         memberDao.deleteById(member.getId());
     }
+
+    public Member findByEmailAndPassword(String email, String password) {
+        return memberDao.findByEmailAndPassword(email, password).orElseThrow(() -> new MemberNotFoundException(ErrorCode.NOT_FOUND_MEMBER));
+    }
 }

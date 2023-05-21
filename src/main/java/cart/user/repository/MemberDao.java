@@ -39,4 +39,9 @@ public class MemberDao {
         String SQL = "SELECT * FROM MEMBER WHERE id = ?";
         return Optional.ofNullable(jdbcTemplate.queryForObject(SQL , (rs, nowNum) -> new Member(rs.getLong("id"), rs.getString("email"), rs.getString("password"), rs.getTimestamp("created_at").toLocalDateTime()), id));
     }
+
+    public Optional<Member> findByEmailAndPassword(String email, String password) {
+        String SQL = "SELECT * FROM MEMBER WHERE email = ? AND password = ?";
+        return Optional.ofNullable(jdbcTemplate.queryForObject(SQL , (rs, nowNum) -> new Member(rs.getLong("id"), rs.getString("email"), rs.getString("password"), rs.getTimestamp("created_at").toLocalDateTime()), email, password));
+    }
 }
