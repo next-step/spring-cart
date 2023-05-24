@@ -41,7 +41,7 @@ public class JdbcProductRepository implements ProductRepository{
             ps.setInt(3, product.getPrice());
             return ps;
         }, keyHolder);
-        product.setId(keyHolder.getKey().longValue());
+        new Product(keyHolder.getKey().longValue());
         return product;
     }
 
@@ -57,12 +57,12 @@ public class JdbcProductRepository implements ProductRepository{
     }
 
     @Override
-    public void edit(Long id, ProductEditRequest productEditRequest) {
+    public void edit(Long id, Product product) {
         String sql = "update products set name=?, image=?, price=? where id=?";
         jdbcTemplate.update(sql,
-                productEditRequest.getName(),
-                productEditRequest.getImage(),
-                productEditRequest.getPrice(), id);
+                product.getName(),
+                product.getImage(),
+                product.getPrice(), id);
     }
 
     @Override

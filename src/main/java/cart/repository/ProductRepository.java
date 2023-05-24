@@ -13,7 +13,7 @@ public interface ProductRepository {
 
     Optional<Product> findById(Long id);
 
-    void edit(Long id, ProductEditRequest productEditRequest);
+    void edit(Long id, Product product);
 
     void delete(Long id);
 

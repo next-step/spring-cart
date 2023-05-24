@@ -8,7 +8,10 @@ import org.springframework.http.HttpStatus;
 @AllArgsConstructor
 public enum ErrorCode {
     INTERNAL_SERVER_ERROR(HttpStatus.INTERNAL_SERVER_ERROR, "내부 서버 오류가 발생했습니다."),
-    PRODUCT_NOT_FOUND(HttpStatus.NOT_FOUND, "상품이 존재하지 않습니다.");
+    PRODUCT_NOT_FOUND(HttpStatus.NOT_FOUND, "상품이 존재하지 않습니다."),
+    NOT_VALID_PATH(HttpStatus.BAD_REQUEST, "요청하려는 path가 잘못되었습니다.")
+    ;
+
 
     private HttpStatus status;
     private String message;

@@ -1,5 +1,6 @@
 package cart.domain;
 
+import cart.controller.dto.ProductEditRequest;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
@@ -18,8 +19,15 @@ public class Product {
         this.price = price;
     }
 
-    public void setId(Long id) {
+    public Product(Long id) {
         this.id = id;
+    }
+
+    public Product edit(ProductEditRequest productEditRequest) {
+        this.name = productEditRequest.getName();
+        this.image = productEditRequest.getImage();
+        this.price = productEditRequest.getPrice();
+        return this;
     }
 
     public static Product of(String name, String image, int price) {
