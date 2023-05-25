@@ -1,6 +1,5 @@
 package cart.repository;
 
-import cart.controller.dto.ProductEditRequest;
 import cart.domain.Product;
 import java.util.List;
 import java.util.Optional;

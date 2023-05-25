@@ -5,7 +5,7 @@ import lombok.Getter;
 
 @Getter
 @AllArgsConstructor
-public class JwpCartApplicationException extends RuntimeException{
+public class JwpCartApplicationException extends RuntimeException {
 
     private ErrorCode errorCode;
     private String message;

@@ -1,6 +1,7 @@
 package cart.domain;
 
-import cart.controller.dto.ProductEditRequest;
+import cart.controller.dto.request.ProductEditRequest;
+import cart.controller.dto.request.ProductRequest;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
@@ -19,10 +20,6 @@ public class Product {
         this.price = price;
     }
 
-    public Product(Long id) {
-        this.id = id;
-    }
-
     public Product edit(ProductEditRequest productEditRequest) {
         this.name = productEditRequest.getName();
         this.image = productEditRequest.getImage();
@@ -30,8 +27,8 @@ public class Product {
         return this;
     }
 
-    public static Product of(String name, String image, int price) {
-        return new Product(name, image, price);
+    public static Product of(ProductRequest productRequest) {
+        return new Product(productRequest.getName(), productRequest.getImage(), productRequest.getPrice());
     }
 
 }

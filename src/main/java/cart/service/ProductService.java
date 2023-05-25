@@ -1,9 +1,9 @@
 package cart.service;
 
-import cart.controller.dto.ProductEditRequest;
-import cart.controller.dto.ProductRequest;
-import cart.controller.dto.ProductResponse;
-import cart.controller.dto.ProductsResponse;
+import cart.controller.dto.request.ProductEditRequest;
+import cart.controller.dto.request.ProductRequest;
+import cart.controller.dto.response.ProductResponse;
+import cart.controller.dto.response.ProductsResponse;
 import cart.domain.Product;
 import cart.exception.JwpCartApplicationException;
 import cart.repository.ProductRepository;
@@ -11,7 +11,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.stream.Collectors;
-
 import static cart.exception.ErrorCode.PRODUCT_NOT_FOUND;
 
 @Service
@@ -34,8 +33,8 @@ public class ProductService {
         return ProductResponse.of(product);
     }
 
-    public ProductResponse save(ProductRequest pr) {
-        Product product = productRepository.save(Product.of(pr.getName(), pr.getImage(), pr.getPrice()));
+    public ProductResponse save(ProductRequest productRequest) {
+        Product product = productRepository.save(Product.of(productRequest));
         return ProductResponse.of(product);
     }
 

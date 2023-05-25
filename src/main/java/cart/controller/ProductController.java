@@ -1,9 +1,9 @@
 package cart.controller;
 
-import cart.controller.dto.ProductEditRequest;
-import cart.controller.dto.ProductRequest;
-import cart.controller.dto.ProductResponse;
-import cart.controller.dto.ProductsResponse;
+import cart.controller.dto.request.ProductEditRequest;
+import cart.controller.dto.request.ProductRequest;
+import cart.controller.dto.response.ProductResponse;
+import cart.controller.dto.response.ProductsResponse;
 import cart.service.ProductService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -34,7 +34,7 @@ public class ProductController {
     }
 
     @PostMapping
-    public ResponseEntity<ProductResponse> post(@RequestBody @Valid ProductRequest productRequest) {
+    public ResponseEntity<Void> post(@RequestBody @Valid ProductRequest productRequest) {
         ProductResponse response = productService.save(productRequest);
         return ResponseEntity.created(URI.create("/products/" + response.getId())).build();
     }

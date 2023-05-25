@@ -1,8 +1,8 @@
 package cart.acceptance;
 
-import cart.controller.dto.ProductEditRequest;
-import cart.controller.dto.ProductRequest;
-import cart.controller.dto.ProductResponse;
+import cart.controller.dto.request.ProductEditRequest;
+import cart.controller.dto.request.ProductRequest;
+import cart.controller.dto.response.ProductResponse;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;

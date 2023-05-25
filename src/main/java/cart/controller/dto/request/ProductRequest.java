@@ -1,4 +1,4 @@
-package cart.controller.dto;
+package cart.controller.dto.request;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -7,7 +7,7 @@ import javax.validation.constraints.NotNull;
 
 @Getter
 @AllArgsConstructor
-public class ProductEditRequest {
+public class ProductRequest {
 
     @NotBlank(message = "상품 이름은 필수 값 입니다.")
     private String name;
@@ -17,4 +17,5 @@ public class ProductEditRequest {
 
     @NotNull(message = "상품의 가격은 필수 값 입니다.")
     private int price;
+
 }

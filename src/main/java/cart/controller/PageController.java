@@ -1,6 +1,6 @@
 package cart.controller;
 
-import cart.controller.dto.ProductsResponse;
+import cart.controller.dto.response.ProductsResponse;
 import cart.service.ProductService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;

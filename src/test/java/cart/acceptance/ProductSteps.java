@@ -1,7 +1,7 @@
 package cart.acceptance;
 
-import cart.controller.dto.ProductEditRequest;
-import cart.controller.dto.ProductRequest;
+import cart.controller.dto.request.ProductEditRequest;
+import cart.controller.dto.request.ProductRequest;
 import io.restassured.RestAssured;
 import io.restassured.response.ExtractableResponse;
 import io.restassured.response.Response;

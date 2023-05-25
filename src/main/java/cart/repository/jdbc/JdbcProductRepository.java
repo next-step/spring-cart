@@ -1,7 +1,7 @@
-package cart.repository;
+package cart.repository.jdbc;
 
-import cart.controller.dto.ProductEditRequest;
 import cart.domain.Product;
+import cart.repository.ProductRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -14,7 +14,7 @@ import java.util.Optional;
 
 @Repository
 @RequiredArgsConstructor
-public class JdbcProductRepository implements ProductRepository{
+public class JdbcProductRepository implements ProductRepository {
 
     private final JdbcTemplate jdbcTemplate;
 
@@ -41,7 +41,6 @@ public class JdbcProductRepository implements ProductRepository{
             ps.setInt(3, product.getPrice());
             return ps;
         }, keyHolder);
-        new Product(keyHolder.getKey().longValue());
         return product;
     }
 
