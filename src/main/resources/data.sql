@@ -17,4 +17,4 @@ CREATE TABLE USERS (
     PRIMARY KEY(id)
 );
 
-insert into users (email, password) values ("admin@gmail.com", "aabbcc");
+insert into users (email, password) values ('admin@gmail.com', 'aaaa12345');
