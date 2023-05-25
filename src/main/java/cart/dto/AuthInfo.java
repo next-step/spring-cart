@@ -1,8 +1,8 @@
 package cart.dto;
 
 public class AuthInfo {
-    private String email;
-    private String password;
+    final private String email;
+    final private String password;
 
     public AuthInfo(String email, String password) {
         this.email = email;

@@ -2,9 +2,9 @@ package cart.repository;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import cart.domain.Member;
 import cart.domain.Product;
 import cart.dto.ProductCreateDto;
-import cart.dto.ProductUpdateDto;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -14,16 +14,12 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.jdbc.core.JdbcTemplate;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.NONE)
 class ProductRepositoryTest {
 
   private ProductRepository repository;
-
-  @MockBean
-  private ProductUpdateDto updateDto;
   @Autowired
   private JdbcTemplate jdbcTemplate;
 
@@ -93,5 +89,45 @@ class ProductRepositoryTest {
 
     List<Product> products = repository.getAll();
     assertThat(products).hasSize(4);
+  }
+
+  @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.NONE)
+  static
+  class MemberServiceTest {
+
+    private MemberRepository repository;
+
+    @Autowired
+    private JdbcTemplate jdbcTemplate;
+
+    @BeforeEach
+    void setUp() {
+      repository = new MemberRepository(jdbcTemplate);
+      jdbcTemplate.execute("DROP TABLE IF EXISTS member");
+      jdbcTemplate.execute("create table member\n"
+          + "(\n"
+          + "    ID INT AUTO_INCREMENT PRIMARY KEY,\n"
+          + "    EMAIL  CHARACTER VARYING(50),\n"
+          + "    PASSWORD CHARACTER VARYING(50)\n"
+          + ")");
+    }
+
+    @Test
+    void findAll() {
+      List<Member> members =repository.findAll();
+      System.out.println(members.size());
+
+      System.out.println(members==null);
+
+      System.out.println(members.isEmpty());
+    }
+
+    @Test
+    void findByEmail() {
+    }
+
+    @Test
+    void authenticate() {
+    }
   }
 }

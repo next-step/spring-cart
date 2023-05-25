@@ -4,12 +4,12 @@ import cart.domain.Cart;
 import cart.domain.Member;
 import cart.dto.CartCreateDto;
 import cart.dto.CartDetailDto;
-import cart.exception.NotFoundEntityException;
 import cart.repository.CartRepository;
 import java.util.List;
 import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 
 @RequiredArgsConstructor
@@ -20,14 +20,6 @@ public class CartService {
   private final MemberService memberService;
   private final ProductService productService;
 
-  public List<Cart> findAll() {
-    List<Cart> carts = cartRepository.findAll();
-    if (carts == null) {
-      throw new NotFoundEntityException("Product");
-    }
-    return carts;
-  }
-
   public List<CartDetailDto> cartProducts(Member member) {
     authenticate(member);
 
@@ -37,6 +29,7 @@ public class CartService {
         .collect(Collectors.toList());
   }
 
+  @Transactional
   public void addItem(CartCreateDto createDto, Long memberId) {
     // 상품을 장바구니에 추가하는 비즈니스 로직 구현
     cartRepository.addProduct(memberId, createDto.getProductId());

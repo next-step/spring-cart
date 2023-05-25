@@ -15,7 +15,7 @@ public class MemberService {
 
   public List<Member> findAll() {
     List<Member> members = memberRepository.findAll();
-    if (members == null) {
+    if (members.isEmpty()) {
       throw new NotFoundEntityException("Member");
     }
     return members;
