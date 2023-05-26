@@ -31,14 +31,12 @@ public class UserArgumentResolver implements HandlerMethodArgumentResolver {
 
     @Override
     public Object resolveArgument(MethodParameter parameter, ModelAndViewContainer mavContainer, NativeWebRequest webRequest, WebDataBinderFactory binderFactory) throws Exception {
-        HttpServletRequest request = (HttpServletRequest) webRequest.getNativeRequest();
-        String authorization = request.getHeader("Authorization");
+        String authorization = webRequest.getHeader("Authorization");
         if (!StringUtils.hasText(authorization)) {
             throw new JwpCartApplicationException(INVALID_AUTHORIZATION);
         }
         AuthInfo authInfo = convert(authorization);
-        User user = userService.login(authInfo);
-        return UserResponse.of(user);
+        return userService.login(authInfo);
     }
 
     private AuthInfo convert(String authorizationHeader) {

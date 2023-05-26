@@ -38,4 +38,15 @@ public class JdbcUserRepository implements UserRepository {
     public List<User> findAll() {
         return jdbcTemplate.query("select * from users", userRowMapper);
     }
+
+    @Override
+    public Optional<User> findById(Long id) {
+        String sql = "select * from users where id = ?";
+        try {
+            User user = jdbcTemplate.queryForObject(sql, userRowMapper, id);
+            return Optional.of(user);
+        } catch (EmptyResultDataAccessException e) {
+            return Optional.empty();
+        }
+    }
 }

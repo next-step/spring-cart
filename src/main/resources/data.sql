@@ -18,3 +18,13 @@ CREATE TABLE USERS (
 );
 
 insert into users (email, password) values ('admin@gmail.com', 'aaaa12345');
+
+
+CREATE TABLE CARTS (
+    id          INT         NOT NULL AUTO_INCREMENT,
+    user_id       INT     NOT NULL,
+    product_id    INT     NOT NULL,
+    PRIMARY KEY(id),
+    FOREIGN KEY (user_id) REFERENCES users (id),
+    FOREIGN KEY (product_id) REFERENCES products (id)
+);
