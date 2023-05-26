@@ -10,7 +10,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import java.net.URI;
-
+import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
@@ -25,9 +25,9 @@ public class CartController {
         return ResponseEntity.ok().body(response);
     }
 
-    @PostMapping("/{productId}")
-    public ResponseEntity<Void> post(@AuthenticationUser User user, @PathVariable Long productId) {
-        CartResponse response = cartService.add(user, productId);
+    @PostMapping
+    public ResponseEntity<Void> post(@AuthenticationUser User user, @RequestBody CartAddRequest cartAddRequest) {
+        CartResponse response = cartService.add(user, cartAddRequest);
         return ResponseEntity.created(URI.create("/carts/" + response.getId())).build();
     }
 

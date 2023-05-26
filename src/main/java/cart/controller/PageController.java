@@ -2,6 +2,7 @@ package cart.controller;
 
 import cart.controller.dto.response.ProductsResponse;
 import cart.controller.dto.response.UsersResponse;
+import cart.service.CartService;
 import cart.service.ProductService;
 import cart.service.UserService;
 import lombok.RequiredArgsConstructor;
@@ -16,6 +17,7 @@ public class PageController {
 
     private final ProductService productService;
     private final UserService userService;
+    private final CartService cartService;
 
     @GetMapping("/")
     public String get(Model model) {
@@ -36,5 +38,10 @@ public class PageController {
         UsersResponse users = userService.findAll();
         model.addAttribute("users", users.getUserResponses());
         return "settings";
+    }
+
+    @GetMapping("/cart")
+    public String cart() {
+        return "cart";
     }
 }

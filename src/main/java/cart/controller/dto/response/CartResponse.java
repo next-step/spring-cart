@@ -1,7 +1,6 @@
 package cart.controller.dto.response;
 
 import cart.domain.Cart;
-import cart.domain.Product;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 

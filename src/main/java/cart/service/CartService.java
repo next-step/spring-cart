@@ -1,5 +1,6 @@
 package cart.service;
 
+import cart.controller.dto.request.CartAddRequest;
 import cart.controller.dto.response.CartResponse;
 import cart.controller.dto.response.CartsResponse;
 import cart.domain.Cart;
@@ -26,8 +27,8 @@ public class CartService {
         return CartsResponse.of(carts.stream().map(CartResponse::of).collect(Collectors.toList()));
     }
 
-    public CartResponse add(User user, Long productId) {
-        Product product = productService.findById(productId);
+    public CartResponse add(User user, CartAddRequest cartAddRequest) {
+        Product product = productService.findById(cartAddRequest.getProductId());
         Cart cart = new Cart(user, product);
         cartRepository.add(cart);
         return CartResponse.of(cart);

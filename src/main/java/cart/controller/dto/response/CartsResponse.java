@@ -1,6 +1,5 @@
 package cart.controller.dto.response;
 
-
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
@@ -10,7 +9,7 @@ import java.util.List;
 @AllArgsConstructor
 public class CartsResponse {
 
-    private List<CartResponse> cartsResponses;
+    private List<CartResponse> cartsResponse;
 
     public static CartsResponse of (List<CartResponse> cartResponses) {
         return new CartsResponse(cartResponses);
