@@ -36,7 +36,7 @@ public class CartService {
   }
 
   private void authenticate(Member member) {
-    if (!memberService.authenticate(member.getEmail(), member.getPassword())) {
+    if (!memberService.authenticate(member)) {
       throw new IllegalArgumentException("인증 실패");
     }
   }
