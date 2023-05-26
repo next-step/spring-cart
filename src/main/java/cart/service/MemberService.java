@@ -27,7 +27,7 @@ public class MemberService {
   }
 
   public boolean authenticate(Member member) {
-    Member finedMember = findByEmail(member.getEmail());
-    return finedMember.getPassword().equals(member.getPassword());
+    Member foundMember = findByEmail(member.getEmail());
+    return foundMember.getPassword().equals(member.getPassword());
   }
 }
