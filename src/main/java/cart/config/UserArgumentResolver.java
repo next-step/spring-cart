@@ -1,6 +1,5 @@
 package cart.config;
 
-import cart.domain.Member;
 import cart.dto.MemberDto;
 import cart.infrastructure.BasicAuthorizationExtractor;
 import javax.servlet.http.HttpServletRequest;

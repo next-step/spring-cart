@@ -1,7 +1,6 @@
 package cart.controller;
 
 import cart.domain.Product;
-import cart.service.MemberService;
 import cart.service.ProductService;
 import java.util.List;
 import org.springframework.stereotype.Controller;
@@ -12,11 +11,9 @@ import org.springframework.web.servlet.ModelAndView;
 public class ViewController {
 
   private final ProductService productService;
-  private final MemberService memberService;
 
-  public ViewController(ProductService productService, MemberService memberService) {
+  public ViewController(ProductService productService) {
     this.productService = productService;
-    this.memberService = memberService;
   }
 
   @GetMapping("/")

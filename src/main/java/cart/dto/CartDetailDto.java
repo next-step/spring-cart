@@ -17,17 +17,7 @@ public class CartDetailDto {
   private final String cartItemImageUrl;
   private final BigDecimal cartItemPrice;
 
-  public static CartDetailDto toDto(Product product) {
-    return CartDetailDto.builder()
-        .id(product.getId())
-        .cartItemName(product.getName())
-        .cartItemPrice(product.getPrice())
-        .cartItemImageUrl(product.getImage())
-        .build();
-
-  }
-
-  public static CartDetailDto of(Cart cart,Product product){
+  public static CartDetailDto of(Cart cart, Product product) {
     return new CartDetailDto(
         cart.getId(),
         product.getName(),
