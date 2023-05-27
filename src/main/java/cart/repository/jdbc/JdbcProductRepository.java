@@ -1,7 +1,8 @@
-package cart.repository;
+package cart.repository.jdbc;
 
-import cart.controller.dto.ProductEditRequest;
+import cart.controller.dto.request.ProductRequest;
 import cart.domain.Product;
+import cart.repository.ProductRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -14,7 +15,7 @@ import java.util.Optional;
 
 @Repository
 @RequiredArgsConstructor
-public class JdbcProductRepository implements ProductRepository{
+public class JdbcProductRepository implements ProductRepository {
 
     private final JdbcTemplate jdbcTemplate;
 
@@ -31,18 +32,22 @@ public class JdbcProductRepository implements ProductRepository{
     }
 
     @Override
-    public Product save(Product product) {
+    public Product save(ProductRequest productRequest) {
         String sql = "INSERT INTO products (name, image, price) VALUES (?, ?, ?)";
         GeneratedKeyHolder keyHolder = new GeneratedKeyHolder();
         jdbcTemplate.update(con -> {
             PreparedStatement ps = con.prepareStatement(sql, new String[]{"id"});
-            ps.setString(1, product.getName());
-            ps.setString(2, product.getImage());
-            ps.setInt(3, product.getPrice());
+            ps.setString(1, productRequest.getName());
+            ps.setString(2, productRequest.getImage());
+            ps.setInt(3, productRequest.getPrice());
             return ps;
         }, keyHolder);
-        product.setId(keyHolder.getKey().longValue());
-        return product;
+        return Product.builder()
+                .id(keyHolder.getKey().longValue())
+                .name(productRequest.getName())
+                .image(productRequest.getImage())
+                .price(productRequest.getPrice())
+                .build();
     }
 
     @Override
@@ -57,12 +62,12 @@ public class JdbcProductRepository implements ProductRepository{
     }
 
     @Override
-    public void edit(Long id, ProductEditRequest productEditRequest) {
+    public void edit(Long id, Product product) {
         String sql = "update products set name=?, image=?, price=? where id=?";
         jdbcTemplate.update(sql,
-                productEditRequest.getName(),
-                productEditRequest.getImage(),
-                productEditRequest.getPrice(), id);
+                product.getName(),
+                product.getImage(),
+                product.getPrice(), id);
     }
 
     @Override

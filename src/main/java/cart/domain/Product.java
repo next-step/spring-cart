@@ -1,10 +1,14 @@
 package cart.domain;
 
+import cart.controller.dto.request.ProductEditRequest;
+import cart.controller.dto.request.ProductRequest;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
 
 @Getter
 @AllArgsConstructor
+@Builder
 public class Product {
 
     private Long id; // 상품 id
@@ -18,12 +22,14 @@ public class Product {
         this.price = price;
     }
 
-    public void setId(Long id) {
-        this.id = id;
+    public Product edit(ProductEditRequest productEditRequest) {
+        this.name = productEditRequest.getName();
+        this.image = productEditRequest.getImage();
+        this.price = productEditRequest.getPrice();
+        return this;
     }
 
-    public static Product of(String name, String image, int price) {
-        return new Product(name, image, price);
+    public static Product of(ProductRequest productRequest) {
+        return new Product(productRequest.getName(), productRequest.getImage(), productRequest.getPrice());
     }
-
 }

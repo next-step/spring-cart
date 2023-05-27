@@ -3,10 +3,12 @@ package cart.exception;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
+import java.util.List;
+
 @Getter
 @AllArgsConstructor
-public class ErrorResponse {
+public class ValidErrorResponse {
 
-    private int code;
-    private String message;
+    private List<ErrorResponse> errorResponses;
+
 }

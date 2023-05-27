@@ -1,9 +1,9 @@
 package cart.unit;
 
-import cart.controller.dto.ProductEditRequest;
-import cart.controller.dto.ProductRequest;
-import cart.controller.dto.ProductResponse;
-import cart.domain.Product;
+import cart.controller.dto.request.ProductEditRequest;
+import cart.controller.dto.request.ProductRequest;
+import cart.controller.dto.response.ProductResponse;
+import cart.controller.dto.response.ProductsResponse;
 import cart.exception.JwpCartApplicationException;
 import cart.repository.ProductRepository;
 import cart.service.ProductService;
@@ -13,7 +13,6 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import java.util.List;
 import static org.assertj.core.api.Assertions.*;
 import static org.junit.jupiter.api.Assertions.assertAll;
 
@@ -26,8 +25,8 @@ class ProductServiceTest {
     @Autowired
     ProductRepository productRepository;
 
-    private final ProductRequest createRequest = new ProductRequest("아이스크림", "https://shopping-phinf.pstatic.net/main_3859196/38591967419.20230313011518.jpg?type=f640", 2000);
-    private final ProductEditRequest editRequest = new ProductEditRequest("햄버거", "https://www.mcdonalds.co.kr/upload/product/pcList/1683098039703.png", 10000);
+    public static final ProductRequest createRequest = new ProductRequest("아이스크림", "https://shopping-phinf.pstatic.net/main_3859196/38591967419.20230313011518.jpg?type=f640", 2000);
+    public static final ProductEditRequest editRequest = new ProductEditRequest("햄버거", "https://www.mcdonalds.co.kr/upload/product/pcList/1683098039703.png", 10000);
 
     @BeforeEach
     void setUp() {
@@ -79,16 +78,16 @@ class ProductServiceTest {
         productService.save(createRequest2);
 
         // when
-        List<Product> products = productService.findAll();
+        ProductsResponse productsResponse = productService.findAll();
 
         // then
         assertAll(
-                () -> assertThat(products.get(0).getName()).isEqualTo(createRequest.getName()),
-                () -> assertThat(products.get(0).getImage()).isEqualTo(createRequest.getImage()),
-                () -> assertThat(products.get(0).getPrice()).isEqualTo(createRequest.getPrice()),
-                () -> assertThat(products.get(1).getName()).isEqualTo(createRequest2.getName()),
-                () -> assertThat(products.get(1).getImage()).isEqualTo(createRequest2.getImage()),
-                () -> assertThat(products.get(1).getPrice()).isEqualTo(createRequest2.getPrice())
+                () -> assertThat(productsResponse.getProductResponses().get(0).getName()).isEqualTo(createRequest.getName()),
+                () -> assertThat(productsResponse.getProductResponses().get(0).getImage()).isEqualTo(createRequest.getImage()),
+                () -> assertThat(productsResponse.getProductResponses().get(0).getPrice()).isEqualTo(createRequest.getPrice()),
+                () -> assertThat(productsResponse.getProductResponses().get(1).getName()).isEqualTo(createRequest2.getName()),
+                () -> assertThat(productsResponse.getProductResponses().get(1).getImage()).isEqualTo(createRequest2.getImage()),
+                () -> assertThat(productsResponse.getProductResponses().get(1).getPrice()).isEqualTo(createRequest2.getPrice())
         );
     }
 
