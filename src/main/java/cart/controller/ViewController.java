@@ -1,9 +1,8 @@
 package cart.controller;
 
 import cart.domain.Product;
-import cart.domain.User;
+import cart.service.MemberService;
 import cart.service.ProductService;
-import cart.service.UserService;
 import java.util.List;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -13,11 +12,11 @@ import org.springframework.web.servlet.ModelAndView;
 public class ViewController {
 
   private final ProductService productService;
-  private final UserService userService;
+  private final MemberService memberService;
 
-  public ViewController(ProductService productService, UserService userService) {
+  public ViewController(ProductService productService, MemberService memberService) {
     this.productService = productService;
-    this.userService = userService;
+    this.memberService = memberService;
   }
 
   @GetMapping("/")

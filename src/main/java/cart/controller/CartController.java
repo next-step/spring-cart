@@ -1,16 +1,13 @@
 package cart.controller;
 
 import cart.domain.Member;
-import cart.dto.AuthInfo;
 import cart.dto.CartCreateDto;
 import cart.dto.CartDetailDto;
-import cart.infrastructure.BasicAuthorizationExtractor;
+import cart.dto.MemberDto;
 import cart.service.CartService;
 import cart.service.MemberService;
 import java.util.List;
-import javax.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -25,33 +22,27 @@ public class CartController {
 
   private final CartService cartService;
   private final MemberService memberService;
-  private final BasicAuthorizationExtractor basicAuthorizationExtractor = new BasicAuthorizationExtractor();
 
   @GetMapping("/carts")
-  public ResponseEntity<List<CartDetailDto>> cartItemsForMember(HttpServletRequest request) {
-    String email = basicAuthorizationExtractor.extract(request).getEmail();
-    Member member = memberService.findByEmail(email);
-
+  public ResponseEntity<List<CartDetailDto>> cartItemsForMember(MemberDto memberDto) {
+    Member member = memberService.findByEmail(memberDto.getEmail());
     List<CartDetailDto> responses = cartService.cartProducts(member);
+
     return ResponseEntity.ok(responses);
   }
 
   @PostMapping("/add-to-cart")
-  public ResponseEntity<String> addItemToCart(HttpServletRequest request,
+  public ResponseEntity<String> addItemToCart(MemberDto memberDto,
       @RequestBody CartCreateDto createDto) {
-
-    String email = basicAuthorizationExtractor.extract(request).getEmail();
-    Member member = memberService.findByEmail(email);
+    Member member = memberService.findByEmail(memberDto.getEmail());
     cartService.addItem(createDto, member.getId());
 
     return ResponseEntity.ok("상품이 장바구니에 추가되었습니다.");
   }
 
   @DeleteMapping("/cart/{cartId}")
-  public ResponseEntity<Void> removeCart(HttpServletRequest request, @PathVariable Long cartId) {
-    String email = basicAuthorizationExtractor.extract(request).getEmail();
-    Member member = memberService.findByEmail(email);
-
+  public ResponseEntity<Void> removeCart(MemberDto memberDto, @PathVariable Long cartId) {
+    Member member = memberService.findByEmail(memberDto.getEmail());
     cartService.removeCart(cartId, member);
 
     return ResponseEntity.noContent().build();
