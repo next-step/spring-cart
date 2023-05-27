@@ -9,8 +9,6 @@ import cart.exception.JwpCartApplicationException;
 import cart.repository.ProductRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-
 import java.util.List;
 import java.util.stream.Collectors;
 import static cart.exception.ErrorCode.PRODUCT_NOT_FOUND;

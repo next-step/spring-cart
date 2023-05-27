@@ -16,12 +16,12 @@ import static org.springframework.http.HttpStatus.*;
 @DisplayName("장바구니 관련 기능 인수테스트")
 class CartAcceptanceTest {
 
-    @Autowired
-    UserRepository userRepository;
-
     private final CartAddRequest cartAddRequest = new CartAddRequest(1);
     private final CartAddRequest cartAddRequest2 = new CartAddRequest(2);
     private final CartAddRequest cartAddRequest3 = new CartAddRequest(3);
+
+    @Autowired
+    UserRepository userRepository;
 
     @Test
     @DisplayName("/cart 로 접근할 경우 장바구니 목록 조회에 성공한다.")
