@@ -1,7 +1,6 @@
 package cart.service;
 
 import cart.config.data.AuthInfo;
-import cart.controller.dto.request.UserLoginRequest;
 import cart.controller.dto.response.UserResponse;
 import cart.controller.dto.response.UsersResponse;
 import cart.domain.User;

@@ -1,8 +1,6 @@
 package cart.config;
 
 import cart.config.data.AuthInfo;
-import cart.controller.dto.response.UserResponse;
-import cart.domain.User;
 import cart.exception.JwpCartApplicationException;
 import cart.service.UserService;
 import lombok.RequiredArgsConstructor;
@@ -13,7 +11,6 @@ import org.springframework.web.bind.support.WebDataBinderFactory;
 import org.springframework.web.context.request.NativeWebRequest;
 import org.springframework.web.method.support.HandlerMethodArgumentResolver;
 import org.springframework.web.method.support.ModelAndViewContainer;
-import javax.servlet.http.HttpServletRequest;
 import java.util.Base64;
 import static cart.exception.ErrorCode.INVALID_AUTHORIZATION;
 

@@ -3,10 +3,12 @@ package cart.domain;
 import cart.controller.dto.request.ProductEditRequest;
 import cart.controller.dto.request.ProductRequest;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
 
 @Getter
 @AllArgsConstructor
+@Builder
 public class Product {
 
     private Long id; // 상품 id
@@ -30,5 +32,4 @@ public class Product {
     public static Product of(ProductRequest productRequest) {
         return new Product(productRequest.getName(), productRequest.getImage(), productRequest.getPrice());
     }
-
 }

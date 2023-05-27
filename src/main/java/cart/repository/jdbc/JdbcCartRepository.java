@@ -1,6 +1,8 @@
 package cart.repository.jdbc;
 
 import cart.domain.Cart;
+import cart.domain.Product;
+import cart.domain.User;
 import cart.exception.JwpCartApplicationException;
 import cart.repository.CartRepository;
 import cart.repository.ProductRepository;
@@ -58,21 +60,35 @@ public class JdbcCartRepository implements CartRepository {
     }
 
     @Override
-    public Cart add(Cart cart) {
+    public Cart add(User user, Product product) {
         String sql = "insert into carts (user_id, product_id) VALUES (?, ?)";
         GeneratedKeyHolder keyHolder = new GeneratedKeyHolder();
         jdbcTemplate.update(con -> {
             PreparedStatement ps = con.prepareStatement(sql, new String[]{"id"});
-            ps.setLong(1, cart.getUser().getId());
-            ps.setLong(2, cart.getProduct().getId());
+            ps.setLong(1, user.getId());
+            ps.setLong(2, product.getId());
             return ps;
         }, keyHolder);
-        return cart;
+        return Cart.builder()
+                .id(keyHolder.getKey().longValue())
+                .user(user)
+                .product(product)
+                .build();
     }
 
     @Override
     public void delete(Long cartId) {
         String sql = "delete from carts where id = ?";
         jdbcTemplate.update(sql, cartId);
+    }
+
+    @Override
+    public void deleteAll() {
+        jdbcTemplate.update("delete from carts");
+    }
+
+    @Override
+    public int count() {
+        return jdbcTemplate.queryForObject("select count(*) from carts", Integer.class);
     }
 }

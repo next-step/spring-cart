@@ -9,5 +9,5 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class CartAddRequest {
 
-    private Long productId;
+    private int productId;
 }

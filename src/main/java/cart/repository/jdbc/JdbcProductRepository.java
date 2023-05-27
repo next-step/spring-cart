@@ -1,5 +1,6 @@
 package cart.repository.jdbc;
 
+import cart.controller.dto.request.ProductRequest;
 import cart.domain.Product;
 import cart.repository.ProductRepository;
 import lombok.RequiredArgsConstructor;
@@ -31,17 +32,22 @@ public class JdbcProductRepository implements ProductRepository {
     }
 
     @Override
-    public Product save(Product product) {
+    public Product save(ProductRequest productRequest) {
         String sql = "INSERT INTO products (name, image, price) VALUES (?, ?, ?)";
         GeneratedKeyHolder keyHolder = new GeneratedKeyHolder();
         jdbcTemplate.update(con -> {
             PreparedStatement ps = con.prepareStatement(sql, new String[]{"id"});
-            ps.setString(1, product.getName());
-            ps.setString(2, product.getImage());
-            ps.setInt(3, product.getPrice());
+            ps.setString(1, productRequest.getName());
+            ps.setString(2, productRequest.getImage());
+            ps.setInt(3, productRequest.getPrice());
             return ps;
         }, keyHolder);
-        return product;
+        return Product.builder()
+                .id(keyHolder.getKey().longValue())
+                .name(productRequest.getName())
+                .image(productRequest.getImage())
+                .price(productRequest.getPrice())
+                .build();
     }
 
     @Override

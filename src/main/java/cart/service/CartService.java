@@ -22,16 +22,16 @@ public class CartService {
     private final ProductService productService;
     private final CartRepository cartRepository;
 
+
     public CartsResponse findAll(User user) {
         List<Cart> carts = cartRepository.findAllByUserId(user.getId());
         return CartsResponse.of(carts.stream().map(CartResponse::of).collect(Collectors.toList()));
     }
 
     public CartResponse add(User user, CartAddRequest cartAddRequest) {
-        Product product = productService.findById(cartAddRequest.getProductId());
-        Cart cart = new Cart(user, product);
-        cartRepository.add(cart);
-        return CartResponse.of(cart);
+        Product product = productService.findById((long) cartAddRequest.getProductId());
+        Cart saveCart = cartRepository.add(user, product);
+        return CartResponse.of(saveCart);
     }
 
     public void delete(User user, Long cartId) {
@@ -41,4 +41,6 @@ public class CartService {
         }
         cartRepository.delete(cartId);
     }
+
+
 }
