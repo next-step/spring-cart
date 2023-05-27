@@ -11,7 +11,7 @@ public enum ErrorCode {
     PRODUCT_NOT_FOUND(HttpStatus.NOT_FOUND, "상품이 존재하지 않습니다."),
     NOT_VALID_PATH(HttpStatus.BAD_REQUEST, "요청하려는 path가 잘못되었습니다."),
     DUPLICATED_USER_EMAIL(HttpStatus.CONFLICT, "가입하려는 email이 이미 존재합니다."),
-    USER_NOT_FOUND(HttpStatus.NOT_FOUND, "회원이 존재하지 않습니다."),
+    USER_NOT_FOUND(HttpStatus.UNAUTHORIZED, "회원이 존재하지 않습니다."),
     INVALID_PASSWORD_INFORMATION(HttpStatus.BAD_REQUEST, "비밀번호가 일치하지 않습니다"),
     INVALID_AUTHORIZATION(HttpStatus.UNAUTHORIZED, "유효하지 않은 토큰입니다."),
     CART_NOT_FOUND(HttpStatus.NOT_FOUND, "장바구니가 존재하지 않습니다."),

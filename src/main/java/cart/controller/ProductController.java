@@ -34,9 +34,9 @@ public class ProductController {
     }
 
     @PostMapping
-    public ResponseEntity<Void> post(@RequestBody @Valid ProductRequest productRequest) {
+    public ResponseEntity<ProductResponse> post(@RequestBody @Valid ProductRequest productRequest) {
         ProductResponse response = productService.save(productRequest);
-        return ResponseEntity.created(URI.create("/products/" + response.getId())).build();
+        return ResponseEntity.created(URI.create("/products/" + response.getId())).body(response);
     }
 
     @PatchMapping("/{productId}")

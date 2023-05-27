@@ -11,6 +11,8 @@ import org.springframework.http.HttpStatus;
 import static cart.acceptance.ProductSteps.*;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertAll;
+import static org.springframework.http.HttpStatus.NOT_FOUND;
+import static org.springframework.http.HttpStatus.NO_CONTENT;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.DEFINED_PORT)
 @DisplayName("상품 관련 기능 인수테스트")
@@ -47,7 +49,7 @@ class ProductAcceptanceTest {
         var productResponse = 상품_조회_단건_요청(id).as(ProductResponse.class);
 
         Assertions.assertAll(
-                () -> assertThat(response.statusCode()).isEqualTo(HttpStatus.OK.value()),
+                () -> assertThat(response.statusCode()).isEqualTo(HttpStatus.CREATED.value()),
                 () -> assertThat(productResponse.getName()).isEqualTo(createRequest.getName()),
                 () -> assertThat(productResponse.getImage()).isEqualTo(createRequest.getImage()),
                 () -> assertThat(productResponse.getPrice()).isEqualTo(createRequest.getPrice())
@@ -89,7 +91,7 @@ class ProductAcceptanceTest {
 
         var response = 상품_삭제_요청(id);
 
-        assertThat(response.statusCode()).isEqualTo(HttpStatus.NO_CONTENT.value());
+        assertThat(response.statusCode()).isEqualTo(NO_CONTENT.value());
     }
 
     @Test
@@ -98,7 +100,7 @@ class ProductAcceptanceTest {
 
         var response = 상품_삭제_요청(3L);
 
-        assertThat(response.statusCode()).isEqualTo(HttpStatus.NOT_FOUND.value());
+        assertThat(response.statusCode()).isEqualTo(NOT_FOUND.value());
     }
 
 }
