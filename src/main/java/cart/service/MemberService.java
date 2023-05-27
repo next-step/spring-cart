@@ -21,7 +21,7 @@ public class MemberService {
     return members;
   }
 
-  public Member findByEmail(String email) {
+  public Member findByEmail(String email) throws NotFoundEntityException {
     return memberRepository.findByEmail(email)
         .orElseThrow(() -> new NotFoundEntityException("회원을 찾을 수 없습니다."));
   }

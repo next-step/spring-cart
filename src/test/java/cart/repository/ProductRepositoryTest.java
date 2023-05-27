@@ -114,10 +114,10 @@ class ProductRepositoryTest {
 
     @Test
     void findAll() {
-      List<Member> members =repository.findAll();
+      List<Member> members = repository.findAll();
       System.out.println(members.size());
 
-      System.out.println(members==null);
+      System.out.println(members == null);
 
       System.out.println(members.isEmpty());
     }
