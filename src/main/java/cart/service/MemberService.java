@@ -26,8 +26,8 @@ public class MemberService {
         .orElseThrow(() -> new NotFoundEntityException("회원을 찾을 수 없습니다."));
   }
 
-  public boolean authenticate(String email, String password) {
-    Member member = findByEmail(email);
-    return member.getPassword().equals(password);
+  public boolean authenticate(Member member) {
+    Member foundMember = findByEmail(member.getEmail());
+    return foundMember.getPassword().equals(member.getPassword());
   }
 }
