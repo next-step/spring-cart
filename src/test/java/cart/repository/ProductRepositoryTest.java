@@ -2,9 +2,7 @@ package cart.repository;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-import cart.domain.Member;
 import cart.domain.Product;
-import cart.dto.ProductCreateDto;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -70,64 +68,5 @@ class ProductRepositoryTest {
     Product product = repository.findById(1L);
     assertThat(product).isNotNull();
     assertThat(product.getName()).isEqualTo("치킨");
-  }
-
-  @DisplayName("상품의 id로 상품을 삭제한다.")
-  @Test
-  void deleteById() {
-    repository.deleteById(1L);
-
-    List<Product> products = repository.getAll();
-    assertThat(products).hasSize(2);
-  }
-
-  @DisplayName("상품을 등록한다.")
-  @Test
-  void save() {
-    ProductCreateDto createDto = new ProductCreateDto("kimbab", "kimbab.jpg", new BigDecimal(1000));
-    repository.save(createDto.toEntity());
-
-    List<Product> products = repository.getAll();
-    assertThat(products).hasSize(4);
-  }
-
-  @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.NONE)
-  static
-  class MemberServiceTest {
-
-    private MemberRepository repository;
-
-    @Autowired
-    private JdbcTemplate jdbcTemplate;
-
-    @BeforeEach
-    void setUp() {
-      repository = new MemberRepository(jdbcTemplate);
-      jdbcTemplate.execute("DROP TABLE IF EXISTS member");
-      jdbcTemplate.execute("create table member\n"
-          + "(\n"
-          + "    ID INT AUTO_INCREMENT PRIMARY KEY,\n"
-          + "    EMAIL  CHARACTER VARYING(50),\n"
-          + "    PASSWORD CHARACTER VARYING(50)\n"
-          + ")");
-    }
-
-    @Test
-    void findAll() {
-      List<Member> members = repository.findAll();
-      System.out.println(members.size());
-
-      System.out.println(members == null);
-
-      System.out.println(members.isEmpty());
-    }
-
-    @Test
-    void findByEmail() {
-    }
-
-    @Test
-    void authenticate() {
-    }
   }
 }

@@ -3,11 +3,11 @@ package cart.repository;
 import cart.domain.Member;
 import java.util.List;
 import java.util.Optional;
-import lombok.RequiredArgsConstructor;
+import lombok.AllArgsConstructor;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
-@RequiredArgsConstructor
+@AllArgsConstructor
 @Repository
 public class MemberRepository {
 

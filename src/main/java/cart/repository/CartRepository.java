@@ -42,4 +42,14 @@ public class CartRepository {
     String sql = "DELETE FROM cart WHERE id = ? AND MEMBER_ID = ?";
     jdbcTemplate.update(sql, cartId, memberId);
   }
+
+  public List<Cart> findAll() {
+    String sql = "SELECT * FROM CART";
+    return jdbcTemplate.query(sql, (((rs, rowNum) ->
+        Cart.builder()
+            .id(rs.getLong("id"))
+            .productId(rs.getLong("productId"))
+            .memberId(rs.getLong("memberId"))
+            .build())));
+  }
 }

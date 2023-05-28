@@ -6,6 +6,7 @@ import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import cart.domain.Cart;
 import cart.domain.Member;
 import cart.dto.CartCreateDto;
+import cart.dto.CartDetailDto;
 import cart.repository.CartRepository;
 import cart.service.CartService;
 import cart.service.MemberService;
@@ -22,8 +23,10 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.server.LocalServerPort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
+import org.springframework.test.context.jdbc.Sql;
 
 @DisplayName("장바구니 컨트롤러 테스트")
+@Sql(scripts = {"classpath:data.sql"})
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 class CartControllerTest {
 
@@ -102,19 +105,19 @@ class CartControllerTest {
   @DisplayName("로그인한 유저의 장바구니 상품을 삭제한다.")
   @Test
   void removeCart() {
-    cartService.removeCart(1L, member);
+    CartDetailDto dto = cartService.cartProducts(member).get(0);
 
     var result = given()
         .contentType(MediaType.APPLICATION_JSON_VALUE)
         .header(MEMBER1_AUTHORIZATION_VALUE)
         .accept(MediaType.APPLICATION_JSON_VALUE)
         .when()
-        .delete("/cart/" + 1L)
+        .delete("/cart/" + dto.getId())
         .then()
         .log().all()
         .extract();
 
-    assertThat(cartRepository.findById(member.getId()).size()).isEqualTo(1);
+    assertThat(cartRepository.findById(member.getId()).size()).isEqualTo(0);
     assertThat(result.statusCode()).isEqualTo(HttpStatus.NO_CONTENT.value());
   }
 }
