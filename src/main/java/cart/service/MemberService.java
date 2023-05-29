@@ -7,6 +7,7 @@ import java.util.List;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+
 @Slf4j
 @RequiredArgsConstructor
 @Service
@@ -31,9 +32,7 @@ public class MemberService {
     Member foundMember = memberRepository.findByEmail(email)
         .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 이메일 입니다."));
 
-    if (!foundMember.getPassword().equals(password)) {
-      throw new IllegalArgumentException("비밀번호가 유효하지 않습니다.");
-    }
+    foundMember.validatePassword(password);
 
     return foundMember;
   }

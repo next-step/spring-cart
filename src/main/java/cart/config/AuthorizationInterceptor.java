@@ -1,5 +1,6 @@
 package cart.config;
 
+import cart.exception.NotFoundEntityException;
 import cart.infrastructure.BasicAuthorizationExtractor;
 import cart.service.MemberService;
 import javax.servlet.http.HttpServletRequest;
@@ -16,8 +17,7 @@ public class AuthorizationInterceptor implements HandlerInterceptor {
   private final BasicAuthorizationExtractor basicAuthorizationExtractor;
 
   @Override
-  public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler)
-      throws Exception {
+  public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler){
     String header = request.getHeader("Authorization");
     if (header == null) {
       throw new IllegalArgumentException("로그인이 필요합니다. 로그인 정보를 입력하세요.");
@@ -28,7 +28,7 @@ public class AuthorizationInterceptor implements HandlerInterceptor {
     Object user = memberService.login(email, password);
 
     if (user == null) {
-      throw new IllegalArgumentException("로그인 정보가 유효하지 않습니다.");
+      throw new NotFoundEntityException("사용자");
     }
 
     request.setAttribute("current_user", user);
