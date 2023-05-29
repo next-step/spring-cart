@@ -1,5 +1,6 @@
 package cart.controller;
 
+import cart.config.Login;
 import cart.domain.Member;
 import cart.dto.CartCreateDto;
 import cart.dto.CartDetailDto;
@@ -24,7 +25,7 @@ public class CartController {
   private final MemberService memberService;
 
   @GetMapping("/carts")
-  public ResponseEntity<List<CartDetailDto>> cartItemsForMember(MemberDto memberDto) {
+  public ResponseEntity<List<CartDetailDto>> cartItemsForMember(@Login MemberDto memberDto) {
     Member member = memberService.findByEmail(memberDto.getEmail());
     List<CartDetailDto> responses = cartService.cartProducts(member);
 
@@ -32,7 +33,7 @@ public class CartController {
   }
 
   @PostMapping("/add-to-cart")
-  public ResponseEntity<String> addItemToCart(MemberDto memberDto,
+  public ResponseEntity<String> addItemToCart(@Login MemberDto memberDto,
       @RequestBody CartCreateDto createDto) {
     Member member = memberService.findByEmail(memberDto.getEmail());
     cartService.addItem(createDto, member.getId());
@@ -41,7 +42,7 @@ public class CartController {
   }
 
   @DeleteMapping("/cart/{cartId}")
-  public ResponseEntity<Void> removeCart(MemberDto memberDto, @PathVariable Long cartId) {
+  public ResponseEntity<Void> removeCart(@Login MemberDto memberDto, @PathVariable Long cartId) {
     Member member = memberService.findByEmail(memberDto.getEmail());
     cartService.removeCart(cartId, member);
 
