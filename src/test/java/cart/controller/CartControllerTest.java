@@ -74,7 +74,7 @@ class CartControllerTest {
         .get("/carts")
         .then()
         .log().all()
-        .extract();
+        .statusCode(HttpStatus.UNAUTHORIZED.value());
 
     assertThatThrownBy(() -> {throw new AuthenticationException();
     }).isInstanceOf(AuthenticationException.class);
