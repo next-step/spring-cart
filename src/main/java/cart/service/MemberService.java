@@ -4,7 +4,6 @@ import cart.domain.Member;
 import cart.exception.NotFoundEntityException;
 import cart.repository.MemberRepository;
 import java.util.List;
-import javax.security.sasl.AuthenticationException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -33,8 +32,6 @@ public class MemberService {
         .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 이메일 입니다."));
 
     if (!foundMember.getPassword().equals(password)) {
-      log.info("foundMember.getPassword()",foundMember.getPassword());
-      log.info("password",password);
       throw new IllegalArgumentException("비밀번호가 유효하지 않습니다.");
     }
 
