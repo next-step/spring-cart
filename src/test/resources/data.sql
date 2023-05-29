@@ -18,12 +18,6 @@ create table member
     PASSWORD CHARACTER VARYING(50)
 );
 
-insert into member (EMAIL, PASSWORD)
-values ('a@a.com','password1');
-
-insert into member (EMAIL, PASSWORD)
-values ('b@b.com','password2');
-
 create table cart
 (
     ID INT AUTO_INCREMENT PRIMARY KEY,

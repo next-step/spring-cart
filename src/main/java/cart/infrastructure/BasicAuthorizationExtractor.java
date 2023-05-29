@@ -14,10 +14,6 @@ public class BasicAuthorizationExtractor implements AuthorizationExtractor<AuthI
     public AuthInfo extract(HttpServletRequest request) {
         String header = request.getHeader(AUTHORIZATION);
 
-        if (header == null) {
-            return null;
-        }
-
         if ((header.toLowerCase().startsWith(BASIC_TYPE.toLowerCase()))) {
             String authHeaderValue = header.substring(BASIC_TYPE.length()).trim();
             byte[] decodedBytes = Base64.decodeBase64(authHeaderValue);
