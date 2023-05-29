@@ -30,7 +30,6 @@ public class CartService {
   }
 
   public List<CartDetailDto> cartProducts(Member member) {
-    authenticate(member);
 
     List<Cart> carts = cartRepository.findById(member.getId());
     return carts.stream()
@@ -44,14 +43,7 @@ public class CartService {
     cartRepository.addProduct(memberId, createDto.getProductId());
   }
 
-  private void authenticate(Member member) {
-    if (!memberService.authenticate(member)) {
-      throw new IllegalArgumentException("인증 실패");
-    }
-  }
-
   public void removeCart(Long cartId, Member member) {
-    authenticate(member);
     List<Cart> carts = cartRepository.findById(member.getId());
     isUserCart(member, carts);
 

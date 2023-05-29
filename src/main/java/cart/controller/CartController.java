@@ -25,25 +25,22 @@ public class CartController {
   private final MemberService memberService;
 
   @GetMapping("/carts")
-  public ResponseEntity<List<CartDetailDto>> cartItemsForMember(@Login MemberDto memberDto) {
-    Member member = memberService.findByEmail(memberDto.getEmail());
+  public ResponseEntity<List<CartDetailDto>> cartItemsForMember(@Login Member member) {
     List<CartDetailDto> responses = cartService.cartProducts(member);
 
     return ResponseEntity.ok(responses);
   }
 
   @PostMapping("/add-to-cart")
-  public ResponseEntity<String> addItemToCart(@Login MemberDto memberDto,
+  public ResponseEntity<String> addItemToCart(@Login Member member,
       @RequestBody CartCreateDto createDto) {
-    Member member = memberService.findByEmail(memberDto.getEmail());
     cartService.addItem(createDto, member.getId());
 
     return ResponseEntity.ok("상품이 장바구니에 추가되었습니다.");
   }
 
   @DeleteMapping("/cart/{cartId}")
-  public ResponseEntity<Void> removeCart(@Login MemberDto memberDto, @PathVariable Long cartId) {
-    Member member = memberService.findByEmail(memberDto.getEmail());
+  public ResponseEntity<Void> removeCart(@Login Member member, @PathVariable Long cartId) {
     cartService.removeCart(cartId, member);
 
     return ResponseEntity.noContent().build();
