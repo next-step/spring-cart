@@ -28,13 +28,12 @@ public class UserArgumentResolver implements HandlerMethodArgumentResolver {
   public Object resolveArgument(MethodParameter parameter, ModelAndViewContainer mavContainer,
       NativeWebRequest webRequest, WebDataBinderFactory binderFactory)
       throws AuthenticationException {
-    try{
+    try {
       HttpServletRequest httpServletRequest = webRequest.getNativeRequest(HttpServletRequest.class);
       String email = basicAuthorizationExtractor.extract(httpServletRequest).getEmail();
-      String password = basicAuthorizationExtractor.extract(httpServletRequest).getPassword();
 
       return memberService.findByEmail(email);
-    } catch (Exception e){
+    } catch (Exception e) {
       throw new AuthenticationException("인증 관련 오류가 발생했습니다.");
     }
   }

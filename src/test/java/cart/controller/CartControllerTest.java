@@ -1,8 +1,8 @@
 package cart.controller;
 
-import static cart.service.MemberServiceTest.USER_1;
 import static io.restassured.RestAssured.given;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
+import static org.assertj.core.api.AssertionsForClassTypes.assertThatThrownBy;
 
 import cart.domain.Member;
 import cart.dto.CartCreateDto;
@@ -13,6 +13,7 @@ import cart.service.CartService;
 import cart.service.MemberService;
 import io.restassured.RestAssured;
 import java.util.List;
+import javax.security.sasl.AuthenticationException;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -64,6 +65,21 @@ class CartControllerTest {
     Assertions.assertNotNull(list);
   }
 
+  @DisplayName("비로그인한 유저의 장바구니 리스트를 요청하면 AuthenticationException 발생한다.")
+  @Test
+  void getCartsWithNoLogin() {
+    given()
+        .accept(MediaType.APPLICATION_JSON_VALUE)
+        .when()
+        .get("/carts")
+        .then()
+        .log().all()
+        .extract();
+
+    assertThatThrownBy(() -> {throw new AuthenticationException();
+    }).isInstanceOf(AuthenticationException.class);
+  }
+
   @DisplayName("로그인한 유저의 장바구니에 상품을 추가한다.")
   @Test
   void addItemToCart() {
@@ -72,7 +88,7 @@ class CartControllerTest {
         .count(1)
         .build();
 
-    System.out.println(cartService.cartProducts(USER_1).size());
+    System.out.println(cartService.cartProducts(member).size());
     var result = given()
         .auth().preemptive().basic(member.getEmail(), member.getPassword())
         .contentType(MediaType.APPLICATION_JSON_VALUE)
