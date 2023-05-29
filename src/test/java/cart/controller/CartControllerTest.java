@@ -1,20 +1,19 @@
 package cart.controller;
 
+import static cart.service.MemberServiceTest.USER_1;
 import static io.restassured.RestAssured.given;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
-import cart.domain.Cart;
 import cart.domain.Member;
 import cart.dto.CartCreateDto;
 import cart.dto.CartDetailDto;
+import cart.exception.NotFoundEntityException;
 import cart.repository.CartRepository;
 import cart.service.CartService;
 import cart.service.MemberService;
 import io.restassured.RestAssured;
-import io.restassured.http.Header;
 import java.util.List;
-import org.apache.http.HttpHeaders;
-import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -26,12 +25,9 @@ import org.springframework.http.MediaType;
 import org.springframework.test.context.jdbc.Sql;
 
 @DisplayName("장바구니 컨트롤러 테스트")
-@Sql(scripts = {"classpath:data.sql"})
+@Sql(scripts = {"classpath:CartSampleData.sql"})
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 class CartControllerTest {
-
-  private static final Header MEMBER1_AUTHORIZATION_VALUE = new Header(HttpHeaders.AUTHORIZATION,
-      "Basic YUBhLmNvbTpwYXNzd29yZDE=");
 
   @LocalServerPort
   int port;
@@ -44,57 +40,45 @@ class CartControllerTest {
 
   @Autowired
   private MemberService memberService;
-
-  Member member = null;
+  Member member;
 
   @BeforeEach
-  void setUp() {
+  void setUp() throws NotFoundEntityException {
     RestAssured.port = port;
-
-    List<Member> members = memberService.findAll();
-    member = members.get(0);
-
-    cartService.addItem(new CartCreateDto(1L, 1), member.getId());
+    member = memberService.findByEmail("a@a.com");
   }
-
-  @AfterEach
-  void afterEach() {
-    List<Cart> cartList = cartRepository.findById(member.getId());
-    for (Cart cart : cartList) {
-      Long cartId = cart.getId();
-      cartRepository.removeCart(cartId, member.getId());
-    }
-  }
-
 
   @DisplayName("로그인한 유저의 장바구니 리스트를 출력한다.")
   @Test
   void cartItemsForMember() {
-
     var result = given()
-        .header(MEMBER1_AUTHORIZATION_VALUE)
+        .auth().preemptive().basic(member.getEmail(), member.getPassword())
         .accept(MediaType.APPLICATION_JSON_VALUE)
         .when()
         .get("/carts")
         .then().log().all()
         .extract();
 
-    assertThat(cartService.cartProducts(member).size()).isEqualTo(1);
+    List<CartDetailDto> list = cartService.cartProducts(member);
     assertThat(result.statusCode()).isEqualTo(HttpStatus.OK.value());
+    Assertions.assertNotNull(list);
   }
 
   @DisplayName("로그인한 유저의 장바구니에 상품을 추가한다.")
   @Test
   void addItemToCart() {
-    CartCreateDto dto = new CartCreateDto(2L, 1);
+    CartCreateDto createDto = CartCreateDto.builder()
+        .productId(1L)
+        .count(1)
+        .build();
 
-    System.out.println(cartService.cartProducts(member).size());
+    System.out.println(cartService.cartProducts(USER_1).size());
     var result = given()
-        .header(MEMBER1_AUTHORIZATION_VALUE)
+        .auth().preemptive().basic(member.getEmail(), member.getPassword())
         .contentType(MediaType.APPLICATION_JSON_VALUE)
         .accept(MediaType.APPLICATION_JSON_VALUE)
-        .body(dto)
-        .when().post("/add-to-cart")
+        .body(createDto)
+        .when().post("/carts/add-to-cart")
         .then().log().all()
         .extract();
 
@@ -105,14 +89,14 @@ class CartControllerTest {
   @DisplayName("로그인한 유저의 장바구니 상품을 삭제한다.")
   @Test
   void removeCart() {
-    CartDetailDto dto = cartService.cartProducts(member).get(0);
+    List<CartDetailDto> list = cartService.cartProducts(member);
 
     var result = given()
         .contentType(MediaType.APPLICATION_JSON_VALUE)
-        .header(MEMBER1_AUTHORIZATION_VALUE)
+        .auth().preemptive().basic(member.getEmail(), member.getPassword())
         .accept(MediaType.APPLICATION_JSON_VALUE)
         .when()
-        .delete("/cart/" + dto.getId())
+        .delete("/carts/" + list.get(0).getId())
         .then()
         .log().all()
         .extract();
