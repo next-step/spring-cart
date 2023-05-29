@@ -1,7 +1,5 @@
 package cart.controller;
 
-import static org.hamcrest.Matchers.is;
-
 import cart.dto.ProductCreateDto;
 import io.restassured.RestAssured;
 import java.math.BigDecimal;
