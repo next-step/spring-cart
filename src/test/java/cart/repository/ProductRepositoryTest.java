@@ -2,6 +2,7 @@ package cart.repository;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import cart.domain.Product;
 import java.math.BigDecimal;
@@ -48,6 +49,9 @@ class ProductRepositoryTest {
     List<Product> products = repository.getAll();
 
     assertThat(products).hasSize(3);
+    assertEquals(insertedProduct1.getName(),products.get(0).getName());
+    assertEquals(insertedProduct2.getName(),products.get(1).getName());
+    assertEquals(insertedProduct3.getName(),products.get(2).getName());
   }
 
   @DisplayName("상품의 정보를 수정한다.")
