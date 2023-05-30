@@ -13,11 +13,11 @@ import lombok.NonNull;
 public class ProductCreateDto {
 
   @NonNull
-  private String name;
+  private final String name;
   @NonNull
-  private String image;
+  private final String image;
   @NonNull
-  private BigDecimal price;
+  private final BigDecimal price;
 
   public Product toEntity() {
     return Product.builder()

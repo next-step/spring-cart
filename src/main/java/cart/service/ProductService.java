@@ -1,10 +1,10 @@
 package cart.service;
 
-import cart.exception.NotFoundEntityException;
-import cart.repository.ProductRepository;
 import cart.domain.Product;
 import cart.dto.ProductCreateDto;
 import cart.dto.ProductUpdateDto;
+import cart.exception.NotFoundEntityException;
+import cart.repository.ProductRepository;
 import java.util.List;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -24,8 +24,9 @@ public class ProductService {
     return productRepository.getAll();
   }
 
-  public void updateProduct(ProductUpdateDto updateDto) {
-    productRepository.update(updateDto.toEntity());
+  public void updateProduct(ProductUpdateDto updateDto, Long productId) {
+    Product product = this.findById(productId);
+    productRepository.update(updateDto.toEntity(product));
   }
 
   @Transactional(readOnly = true)

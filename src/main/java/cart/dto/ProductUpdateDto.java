@@ -13,17 +13,17 @@ import lombok.NonNull;
 public class ProductUpdateDto {
 
   @NonNull
-  private Long id;
+  private final Long id;
   @NonNull
-  private String name;
+  private final String name;
   @NonNull
-  private String image;
+  private final String image;
   @NonNull
-  private BigDecimal price;
+  private final BigDecimal price;
 
-  public Product toEntity() {
+  public Product toEntity(Product product) {
     return Product.builder()
-        .id(getId())
+        .id(product.getId())
         .name(getName())
         .image(getImage())
         .price(getPrice())

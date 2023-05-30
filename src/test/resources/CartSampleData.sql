@@ -4,10 +4,26 @@ DROP TABLE IF EXISTS product;
 
 create table product
 (
-    ID    INT AUTO_INCREMENT PRIMARY KEY,
+    ID INT AUTO_INCREMENT PRIMARY KEY,
     NAME  CHARACTER VARYING(50),
     IMAGE CHARACTER VARYING(300),
     PRICE DOUBLE PRECISION
+);
+
+
+create table member
+(
+    ID INT AUTO_INCREMENT PRIMARY KEY,
+    EMAIL  CHARACTER VARYING(50),
+    PASSWORD CHARACTER VARYING(50)
+);
+
+create table cart
+(
+    ID INT AUTO_INCREMENT PRIMARY KEY,
+    PRODUCT_ID INT ,
+    MEMBER_ID INT,
+    COUNT INT
 );
 
 insert into product (NAME, IMAGE, PRICE)
@@ -24,20 +40,6 @@ insert into product (NAME, IMAGE, PRICE)
 values ('피자',
         'https://i.namu.wiki/i/HiqfW42Vm1Fblprs59MT3pFS0CSGlwBel5cem5ILozlV6Q9dCyATb9KzoBMiRd43S9eyJ4bfi8nPvCCfrSjtqNhoa7W_cHbM8YbuuNVAlsRfVRvmxqgEt6xMuvjmHAUjCvbeLOk7Ka6Vff3f8oHB8w.webp',
         13000);
-
-
-create table member
-(
-    ID       INT AUTO_INCREMENT PRIMARY KEY,
-    EMAIL    CHARACTER VARYING(50),
-    PASSWORD CHARACTER VARYING(50)
-);
-
-create table cart
-(
-    ID         INT AUTO_INCREMENT PRIMARY KEY,
-    PRODUCT_ID INT,
-    MEMBER_ID  INT,
-    COUNT      INT
-);
-
+INSERT INTO member(email, password) VALUES('a@a.com', 'passwordA');
+INSERT INTO member(email, password) VALUES('b@b.com', 'passwordB');
+INSERT INTO cart(PRODUCT_ID, MEMBER_ID,COUNT) VALUES(1,1,1);

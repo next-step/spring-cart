@@ -1,6 +1,5 @@
 package cart.domain;
 
-import java.math.BigDecimal;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.EqualsAndHashCode;
@@ -10,10 +9,11 @@ import lombok.Getter;
 @Getter
 @AllArgsConstructor
 @Builder
-public class Product {
+public class Cart {
 
   private final Long id;
-  private final String name;
-  private final String image;
-  private final BigDecimal price;
+  private final Long productId;
+  private final Long memberId;
+  private final int count;
+
 }

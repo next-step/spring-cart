@@ -32,8 +32,7 @@ public class ProductController {
   @PutMapping(value = "/products/{id}")
   public void updateProduct(@PathVariable Long id,
       @RequestBody ProductUpdateDto updateDto) {
-    productService.findById(id);
-    productService.updateProduct(updateDto);
+    productService.updateProduct(updateDto, id);
   }
 
   @DeleteMapping("/products/{id}")

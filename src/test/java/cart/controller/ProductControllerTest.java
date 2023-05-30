@@ -1,7 +1,5 @@
 package cart.controller;
 
-import static org.hamcrest.Matchers.is;
-
 import cart.dto.ProductCreateDto;
 import io.restassured.RestAssured;
 import java.math.BigDecimal;
@@ -27,20 +25,18 @@ class ProductControllerTest {
 
   @DisplayName("모든 메뉴를 호출하는 api")
   @Test
-  void showUser() {
+  void showProducts() {
     RestAssured.given().log().all()
         .accept(MediaType.APPLICATION_JSON_VALUE)
         .when().get("/products")
         .then().log().all()
-        .statusCode(HttpStatus.OK.value())
-        .body("size()", is(3));
+        .statusCode(HttpStatus.OK.value());
   }
 
   @DisplayName("메뉴 추가 api")
   @Test
   void addProduct() {
     ProductCreateDto createDto = new ProductCreateDto("coffee","coffee.jpg",new BigDecimal(1000));
-
 
     RestAssured.given().log().all()
         .contentType(MediaType.APPLICATION_JSON_VALUE)

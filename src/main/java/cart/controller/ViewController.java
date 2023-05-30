@@ -4,8 +4,8 @@ import cart.domain.Product;
 import cart.service.ProductService;
 import java.util.List;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.servlet.ModelAndView;
 
 @Controller
 public class ViewController {
@@ -17,9 +17,16 @@ public class ViewController {
   }
 
   @GetMapping("/")
-  public String getAll(Model model) {
+  public ModelAndView getAll(ModelAndView model) {
     List<Product> products = productService.getAll();
-    model.addAttribute("products", products);
-    return "index";
+
+    model.addObject("products", products);
+    model.setViewName("index");
+    return model;
+  }
+
+  @GetMapping("/cart")
+  public String getAll() {
+    return "cart";
   }
 }

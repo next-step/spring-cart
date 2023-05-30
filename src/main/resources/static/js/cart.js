@@ -5,10 +5,11 @@ const addCartItem = (productId) => {
         window.location.href = '/settings';
         return;
     }
-
+    const createDto = {
+        productId: productId
+    };
     // TODO: [2단계] 장바구니 CRUD API에 맞게 변경
-    axios.request({
-        url: '',
+    axios.post('/add-to-cart', createDto, {
         headers: {
             'Authorization': `Basic ${credentials}`
         }
@@ -26,10 +27,9 @@ const removeCartItem = (id) => {
         window.location.href = '/settings';
         return;
     }
-
+    debugger;
     // TODO: [2단계] 장바구니 CRUD API에 맞게 변경
-    axios.request({
-        url: '',
+    axios.delete('/cart/'+id, {
         headers: {
             'Authorization': `Basic ${credentials}`
         }
@@ -39,3 +39,4 @@ const removeCartItem = (id) => {
         console.error(error);
     });
 }
+
